@@ -84,8 +84,9 @@ deploy:
 
 backup:
   type: git
+  theme: next
   repository:
-      github: git@github.com:913647909/913647909.github.io.git,hexo
+    github: git@github.com:913647909/913647909.github.io.git,hexo
 
 search:
   enable: true
