@@ -85,7 +85,7 @@ deploy:
 backup:
     type: git
     repository:
-       github: git@github.com:xxx/xxx.git,hexo
+       github: git@github.com:913647909/913647909.github.io.git,hexo
 
 search:
   enable: true
