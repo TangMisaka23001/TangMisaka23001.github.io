@@ -83,10 +83,9 @@ deploy:
   message: "update"
 
 backup:
-    type: git
-    theme: landscape,next
-    repository:
-       github: git@github.com:913647909/913647909.github.io.git,hexo
+  type: git
+  repository:
+      github: git@github.com:913647909/913647909.github.io.git,hexo
 
 search:
   enable: true
