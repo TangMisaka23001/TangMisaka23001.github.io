@@ -32,10 +32,12 @@ tags: [函数式编程]
 下面是一个简单的例子(并不对特定的语言讨论,可以看成是伪代码):  
 ```
 // 一般的写法
-func add(x, y) = x + yprint add(a,b)
+func add(x, y) = x + y
+print add(a,b)
 
 // CPS风格的写法
-func add(x, y, fun) = fun(x+y)add(a, b, print)
+func add(x, y, fun) = fun(x+y)
+add(a, b, print)
 ```
 对上面代码的解释:在一般的写法中我们定义了一个相加函数然后向控制台打印了a+b的结果.而CPS风格的写法是将一个print函数传递给函数add,在执行完add之后将结果**传递**给打印函数然后输出.也可以理解为add函数做完了自己的活之后将结果和控制权交到了print手里然后print输出了结果并返回了,但是print也可以继续传递这个结果给别人.
 
