@@ -131,9 +131,9 @@ Question.objects.filter(question_text__startswith='What')
 `$ python manage.py createsuperuser`  
 接下来就会需要你填写Username,Email和password,输入正确之后就打开了Django的admin模块了.  
 接下来启动服务器,然后在浏览器中输入[http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)就可以访问admin后台了.  
-[![图片](http://osjwl2nd9.bkt.clouddn.com/201707311.jpg)](http://osjwl2nd9.bkt.clouddn.com/201707311.jpg "图片")  
+[![图片](http://misakatang.oss-cn-beijing.aliyuncs.com/201707311.jpg)](http://misakatang.oss-cn-beijing.aliyuncs.com/201707311.jpg "图片")  
 进入之后就可以看到如下的页面:  
-[![tupian](http://osjwl2nd9.bkt.clouddn.com/201707312.jpg)](http://osjwl2nd9.bkt.clouddn.com/201707312.jpg "tupian")
+[![tupian](http://misakatang.oss-cn-beijing.aliyuncs.com/201707312.jpg)](http://misakatang.oss-cn-beijing.aliyuncs.com/201707312.jpg "tupian")
 
 [](#添加管理模块 "添加管理模块")添加管理模块
 --------------------------
@@ -146,7 +146,7 @@ from .models import Question
 admin.site.register(Question)
 ```
 刷新页面之后,就可以在后台页面看到polls app中多了Questions的管理页面:  
-[![图片](http://osjwl2nd9.bkt.clouddn.com/201707313.jpg)](http://osjwl2nd9.bkt.clouddn.com/201707313.jpg "图片")  
+[![图片](http://misakatang.oss-cn-beijing.aliyuncs.com/201707313.jpg)](http://misakatang.oss-cn-beijing.aliyuncs.com/201707313.jpg "图片")  
 然后就可以对Question进行操作了~
 
 [](#总结 "总结")总结

@@ -211,9 +211,9 @@ deploy:
 ```
 repo填写自己的github仓库对应的地址就可以。
 
-*   然后在public目录下面添加一个CNAME文件，里面写上自己购买的域名就好 [![](http://osjwl2nd9.bkt.clouddn.com/cnamejietu.jpg)](http://osjwl2nd9.bkt.clouddn.com/cnamejietu.jpg)
+*   然后在public目录下面添加一个CNAME文件，里面写上自己购买的域名就好 [![](http://misakatang.oss-cn-beijing.aliyuncs.com/cnamejietu.jpg)](http://misakatang.oss-cn-beijing.aliyuncs.com/cnamejietu.jpg)
 *   接着在cmd里使用ping来确定自己githubPage的IP地址，然后对于该IP在域名里创建一个A记录的解析  
-    [![](http://osjwl2nd9.bkt.clouddn.com/jiexi1.jpg)](http://osjwl2nd9.bkt.clouddn.com/jiexi1.jpg)
+    [![](http://misakatang.oss-cn-beijing.aliyuncs.com/jiexi1.jpg)](http://misakatang.oss-cn-beijing.aliyuncs.com/jiexi1.jpg)
 *   接着在hexo的博客目录下面输入
     
     > hexo d  
@@ -227,7 +227,7 @@ repo填写自己的github仓库对应的地址就可以。
 > npm install hexo-deployer-git —save
 
 接下来就可以通过自己的域名来访问博客页面了。  
-[![](http://osjwl2nd9.bkt.clouddn.com/2017741.jpg)](http://osjwl2nd9.bkt.clouddn.com/2017741.jpg)  
+[![](http://misakatang.oss-cn-beijing.aliyuncs.com/2017741.jpg)](http://misakatang.oss-cn-beijing.aliyuncs.com/2017741.jpg)  
 **注：** 之后可以在写完博客之后使用`hexo s -g`调试或者`hexo d -g`来提交，可以少敲一行代码。
 
 [](#自己的搭建体会以及注意点 "自己的搭建体会以及注意点")自己的搭建体会以及注意点

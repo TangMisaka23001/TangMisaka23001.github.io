@@ -50,9 +50,9 @@ mysite/
 -----------------------------------------------------
 
 我们点击**File**->**New Project**->在选项卡中选择**Django**然后更改项目名称为mysite即可.如下:  
-[![图片](http://osjwl2nd9.bkt.clouddn.com/201707301.jpg)](http://osjwl2nd9.bkt.clouddn.com/201707301.jpg "图片")  
+[![图片](http://misakatang.oss-cn-beijing.aliyuncs.com/201707301.jpg)](http://misakatang.oss-cn-beijing.aliyuncs.com/201707301.jpg "图片")  
 创建完成之后会在ide中看到如下的目录:  
-[![图片](http://osjwl2nd9.bkt.clouddn.com/201707302.jpg)](http://osjwl2nd9.bkt.clouddn.com/201707302.jpg "图片")
+[![图片](http://misakatang.oss-cn-beijing.aliyuncs.com/201707302.jpg)](http://misakatang.oss-cn-beijing.aliyuncs.com/201707302.jpg "图片")
 
 [](#文件的解释 "文件的解释")文件的解释
 -----------------------

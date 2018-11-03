@@ -107,7 +107,7 @@ def index(request):
 ```
 
 在网页中的运行效果如下:  
-[![图片](http://osjwl2nd9.bkt.clouddn.com/201707314.jpg)](http://osjwl2nd9.bkt.clouddn.com/201707314.jpg "图片")
+[![图片](http://misakatang.oss-cn-beijing.aliyuncs.com/201707314.jpg)](http://misakatang.oss-cn-beijing.aliyuncs.com/201707314.jpg "图片")
 
 [](#一种简单的写法 "一种简单的写法")一种简单的写法
 -----------------------------

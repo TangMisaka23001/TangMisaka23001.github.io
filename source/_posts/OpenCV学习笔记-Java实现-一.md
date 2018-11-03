@@ -32,15 +32,15 @@ IDE使用的是IDEA开发
 ### [](#IDEA配置 "IDEA配置")IDEA配置
 
 在IDEA的**Project Structure**窗口中选择**Libraries**选项,添加opencv目录下的jar包即可.对应opencv目录下jar包的路径为:\\opencv\\build\\java.  
-[![opencv文件路径](http://osjwl2nd9.bkt.clouddn.com/201707081.jpg)](http://osjwl2nd9.bkt.clouddn.com/201707081.jpg "opencv文件路径")  
-[![IDEA配置路径](http://osjwl2nd9.bkt.clouddn.com/201707082.jpg)](http://osjwl2nd9.bkt.clouddn.com/201707082.jpg "IDEA配置路径")  
+[![opencv文件路径](http://misakatang.oss-cn-beijing.aliyuncs.com/201707081.jpg)](http://misakatang.oss-cn-beijing.aliyuncs.com/201707081.jpg "opencv文件路径")  
+[![IDEA配置路径](http://misakatang.oss-cn-beijing.aliyuncs.com/201707082.jpg)](http://misakatang.oss-cn-beijing.aliyuncs.com/201707082.jpg "IDEA配置路径")  
 成功之后会在Libraries中出现OpenCV的Jar包  
-[![成功](http://osjwl2nd9.bkt.clouddn.com/201707083.jpg)](http://osjwl2nd9.bkt.clouddn.com/201707083.jpg "成功")
+[![成功](http://misakatang.oss-cn-beijing.aliyuncs.com/201707083.jpg)](http://misakatang.oss-cn-beijing.aliyuncs.com/201707083.jpg "成功")
 
 ### [](#运行环境配置 "运行环境配置")运行环境配置
 
 在IDEA右上角的**Run/Debug Configurations**选项中的**VM options**中添加如下代码:`-Djava.library.path=D:\opencv\opencv\build\java\x64;D:\opencv\opencv\build\x64\vc14\bin`  
-[![图示](http://osjwl2nd9.bkt.clouddn.com/201707084.jpg)](http://osjwl2nd9.bkt.clouddn.com/201707084.jpg "图示")
+[![图示](http://misakatang.oss-cn-beijing.aliyuncs.com/201707084.jpg)](http://misakatang.oss-cn-beijing.aliyuncs.com/201707084.jpg "图示")
 
 [](#测试代码 "测试代码")测试代码
 ====================
@@ -70,7 +70,7 @@ IDE使用的是IDEA开发
 ```    
 
 显示运行结果为:  
-[![运行结果](http://osjwl2nd9.bkt.clouddn.com/201707085.jpg)](http://osjwl2nd9.bkt.clouddn.com/201707085.jpg "运行结果")  
+[![运行结果](http://misakatang.oss-cn-beijing.aliyuncs.com/201707085.jpg)](http://misakatang.oss-cn-beijing.aliyuncs.com/201707085.jpg "运行结果")  
 至此,OpenCV在Java环境下的配置就结束了.
 
 [](#参考文章 "参考文章")参考文章
