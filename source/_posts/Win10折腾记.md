@@ -45,7 +45,8 @@ tags: [windows]
 12. [VsCode](https://code.visualstudio.com/):写博客
 13. [Steam](https://store.steampowered.com/):理财工具
 14. [Sumatra PDF](https://www.sumatrapdfreader.org/download-free-pdf-viewer.html):pdf工具
-14. 酸酸乳
+14. [pandownload](https://pandownload.com/):百度网盘下载工具(只是想看电影的我)
+15. 酸酸乳
 
 
 
