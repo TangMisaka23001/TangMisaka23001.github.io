@@ -25,7 +25,7 @@ after_script:
   - git config user.email "mikasatang@gmail.com"
   - git add .
   - git commit -m "update by Travis-CI"
-  - git push --force --quiet "https://6abd39233d904d122eeca510edd6d8f0abd3249d@${GH_REF}" master:master
+  - git push --force --quiet "https://28e9f260842a441de51d6c2ead7e414a4b1ea426@${GH_REF}" master:master
 branches:
   only:
   - backup  #只监测这个分支，一有动静就开始构建
