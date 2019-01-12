@@ -1,0 +1,17 @@
+language: node_js
+branches:
+  only:
+  - master
+before_install:
+- npm install -g hexo
+- npm install -g hexo-cli
+before_script:
+  - git config user.name "misakatang"
+  - git config user.email "mikasatang@gmail.com"
+  - sed -i'' "s~https://github.com/913647909/913647909.github.io.git~https://${a01b6d043b7a41974b7be5e92d440795452aebab}@github.com/<913647909>/913647909.github.io.git~" _config.yml
+install:
+- npm install
+script:
+- hexo generate
+after_success:
+- hexo deploy
