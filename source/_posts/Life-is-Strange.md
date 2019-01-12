@@ -22,6 +22,7 @@ date: 2019-01-12 15:19:54
 
 > March comes in like a lion, and goes out like a lamb
 
+
 一切也终将归于平静不论是拯救了克洛伊还是小镇,在一切寂静之后的麦克斯又会是怎样的心态呢?
 ![](https://i.loli.net/2019/01/12/5c399e40652e8.jpg)
 
