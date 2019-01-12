@@ -20,8 +20,6 @@ after_script:
   - cd ./public
   - touch CNAME
   - echo "misakatang.cn" > CNAME
-  - touch README.md
-  - echo "# 913647909.github.io [![Build Status](https://travis-ci.org/913647909/913647909.github.io.svg?branch=backup)](https://travis-ci.org/913647909/913647909.github.io)" > README.md
   - git init
   - git config --global user.name "misakatang"
   - git config --global user.email "mikasatang@gmail.com"
