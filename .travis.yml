@@ -21,8 +21,8 @@ after_script:
   - touch CNAME
   - echo "misakatang.cn" > CNAME
   - git init
-  - git config user.name "913647909"
-  - git config user.email "mikasatang@gmail.com"
+  - git config --global user.name "misakatang"
+  - git config --global user.email "mikasatang@gmail.com"
   - git add .
   - git commit -m "update by Travis-CI"
   - git push --force --quiet "https://${Travis_CI}@${GH_REF}" master:master
