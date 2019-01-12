@@ -20,6 +20,8 @@ after_script:
   - cd ./public
   - touch CNAME
   - echo "misakatang.cn" > CNAME
+  - touch README.md
+  - echo "# 913647909.github.io [![Build Status](https://travis-ci.org/913647909/913647909.github.io.svg?branch=backup)](https://travis-ci.org/913647909/913647909.github.io)" > README.md
   - git init
   - git config --global user.name "misakatang"
   - git config --global user.email "mikasatang@gmail.com"
@@ -28,7 +30,7 @@ after_script:
   - git push --force --quiet "https://${Travis_CI}@${GH_REF}" master:master
 branches:
   only:
-  - backup  #只监测这个分支，一有动静就开始构建 11
+  - backup  #只监测这个分支，一有动静就开始构建
 env:
     global:
         - GH_REF: github.com/913647909/913647909.github.io.git
