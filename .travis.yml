@@ -12,9 +12,12 @@ before_script:
   - npm install -g mocha
   - git clone --branch master https://github.com/913647909/913647909.github.io.git public
 script:
+  - hexo cl   #清除
   - hexo g   #生成
 after_script:
   - cd ./public
+  - touch CNAME
+  - echo "misakatang.cn" > CNAME
   - git init
   - git config user.name "misakatang"
   - git config user.email "mikasatang@gmail.com"
