@@ -1,21 +1,19 @@
 language: node_js
-branches:
-  only:
-  - master
-before_install:
-- npm install -g hexo
-- npm install -g hexo-cli
-before_script:
-  - git config user.name "misakatang"
-  - git config user.email "mikasatang@gmail.com"
-  - sed -i'' "s~https://github.com/913647909/913647909.github.io.git~https://${a01b6d043b7a41974b7be5e92d440795452aebab}@github.com/<913647909>/913647909.github.io.git~" _config.yml
 install:
-- npm install
+    - npm install
 script:
-- hexo generate
-after_success:
-<<<<<<< HEAD
-- hexo deploy
-=======
-- hexo deploy
->>>>>>> 57b94efd762d82447d81e8d37ae1f03f68f2862f
+    - hexo g
+after_script:
+    - cd ./public
+    - git init
+    - git config user.name "misakatang"
+    - git config user.email "mikasatang@gmail.com"
+    - git add .
+    - git commit -m "Travis CI Auto Builder"
+    - git push --force --quiet "https://${6abd39233d904d122eeca510edd6d8f0abd3249d}@${GH_REF}" master:master
+branches:
+    only:
+        - backup
+env:
+    global:
+        - GH_REF: github.com/913647909/913647909.github.io.git
