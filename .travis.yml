@@ -28,7 +28,7 @@ after_script:
   - git push --force --quiet "https://${Travis_CI}@${GH_REF}" master:master
 branches:
   only:
-  - backup  #只监测这个分支，一有动静就开始构建
+  - backup  #只监测这个分支，一有动静就开始构建 11
 env:
     global:
         - GH_REF: github.com/913647909/913647909.github.io.git
