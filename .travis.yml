@@ -14,4 +14,8 @@ install:
 script:
 - hexo generate
 after_success:
+<<<<<<< HEAD
 - hexo deploy
+=======
+- hexo deploy
+>>>>>>> 57b94efd762d82447d81e8d37ae1f03f68f2862f
