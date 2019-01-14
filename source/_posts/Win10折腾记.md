@@ -42,7 +42,7 @@ tags: [windows]
 9. [qBittorrent](https://www.qbittorrent.org/):bt下载工具,不用aria的原因是懒得再去配一遍了
 10. [Driverthelife国际版](https://www.drivethelife.com/):其实没用到,因为amd的驱动都集成在自家软件中了,但是聊胜于无吧
 11. [FreeDownloadManager](https://www.freedownloadmanager.org/zh/):代替chrome的下载,习惯问题
-12. [VsCode](https://code.visualstudio.com/):写博客
+12. [VSCode](https://code.visualstudio.com/):写博客
 13. [Steam](https://store.steampowered.com/):理财工具
 14. [Sumatra PDF](https://www.sumatrapdfreader.org/download-free-pdf-viewer.html):pdf工具
 14. [pandownload](https://pandownload.com/):百度网盘下载工具(只是想看电影的我)
