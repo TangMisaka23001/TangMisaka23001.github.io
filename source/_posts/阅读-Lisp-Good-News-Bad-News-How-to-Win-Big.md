@@ -6,9 +6,6 @@ tags: [Lisp]
 ---
 在愁事交织的时候不由感到烦闷,就会变得无所事事,顾左而右,一天就过去了,这时候博客似乎变成了另一种集中精力的方式.这篇文章以前也是没有耳闻,一开始是来看[**“The Rise of Worse is Better”**](http://dreamsongs.com/RiseOfWorseIsBetter.html)的,又被一个html引到了这篇文章,Google了一下竟然还是推荐必读的10篇文章之一,那么就权做解闷来阅读一下,做成翻译又怕水平不够,就当做自己的理解来写这篇翻译罢.
 
-[](#Lisp-Good-News-Bad-News-How-to-Win-Big "Lisp: Good News, Bad News, How to Win Big")Lisp: Good News, Bad News, How to Win Big
-================================================================================================================================
-
 [](#Abstract "Abstract")Abstract
 --------------------------------
 
