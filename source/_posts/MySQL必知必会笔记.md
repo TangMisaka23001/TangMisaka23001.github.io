@@ -3,7 +3,7 @@ title: MySQL必知必会笔记
 mathjax: false
 date: 2018-09-18 21:25:09
 categories: [笔记]
-tags: [Mysql]
+tags: [MySQL]
 ---
 [](#主键 "主键")主键
 ==============
