@@ -1,7 +1,8 @@
 language: node_js   #设置语言
 node_js: stable     #设置相应的版本
 notifications:
-  email: true # 开启邮件通知
+  email:
+    - mikasatang@gmail.com # 开启邮件通知
 cache:
     directories:
         - node_modules    #据说可以减少travis构建时间
