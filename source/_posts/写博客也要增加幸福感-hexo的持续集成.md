@@ -24,7 +24,7 @@ hexo b
 ![](https://i.loli.net/2019/01/12/5c398a979e286.png) 
 
 ## 获取github的ACCESS_TOKEN
-在gayhub的Settings ==> Developer settings ==> Personal access tokens选择生成一个新的token,这里的token名字需要记住:
+在github的Settings ==> Developer settings ==> Personal access tokens选择生成一个新的token,这里的token名字需要记住:
 ![](https://i.loli.net/2019/01/12/5c398b30e0e36.png) 
 
 ## 配置Travis CI环境
