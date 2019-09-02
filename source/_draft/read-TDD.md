@@ -20,4 +20,15 @@ programing order:
 
 ![](https://i.loli.net/2019/09/02/4znXftjkJRSgiYp.jpg)
 
-# CHAPTER 2
+# Section I: MoneyExample
+- a **to-do list** to remind what need to do.
+- when write a test,imagine the perfect interface for operation.
+- Dependency is the key problem in software development at all scales.
+- If you can make steps too small, you can certainly make steps the right size.(为什么测试要足够小)
+
+TDD cycle:
+1. write a test.
+2. make it run.
+3. make it right.
+
+the goal is clean code works.
