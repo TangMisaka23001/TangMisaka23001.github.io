@@ -48,3 +48,6 @@ the goal is clean code works.
 
 TDD开发的风险:测试和编码同时进行会引入缺陷.
 
+> The different phases have different purposes. They call for different styles of solution, different aesthetic viewpoints.
+
+不同的阶段所注重的点是不同的,所以在初期设计阶段我们可以忍受重复的设计和复制粘贴代码,一切都是为了尽快完成这个阶段(clean code是重构的任务).
