@@ -33,3 +33,6 @@ TDD cycle:
 
 the goal is clean code works.
 
+> First we can talk about whether the system should work like this or like that. Once we decide on the correct behavior, we can talk about the best way of achieving that behavior
+
+首先需要考虑系统是怎么样的,确定实现的思路之后就找到最佳的实现办法.(TDD难点:对系统的总体认识和设计)
