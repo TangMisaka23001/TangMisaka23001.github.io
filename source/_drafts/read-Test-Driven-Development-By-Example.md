@@ -1,15 +1,22 @@
-# PERFACE
-TDD rules:
+---
+title: '阅读:Test-Driven Development By Example'
+mathjax: false
+date: 2019-09-03 17:00:13
+categories: [笔记]
+tags: [TDD, 看书]
+---
+# Perface
+**TDD rules:**
 1. write new code only if you first have a failing automated test.
 2. eliminate duplication. 消除重复设计
 
-technical implications:
+**Technical implications:**
 1. design organically: running code providing feedback between decisions.
 2. write your own test.
 3. development env must provide rapid response to small change.
 4. design must be *highly cohesive, loosely coupled components(高内聚,低耦合)* to make **testing easy**.
 
-programing order:
+**Programing order:**
 1. Red-write a little that doesn't work.
 2. Green-make the test work quickly.
 3. Refactor-eliminate all the duplication created.
@@ -26,7 +33,7 @@ programing order:
 - Dependency is the key problem in software development at all scales.
 - If you can make steps too small, you can certainly make steps the right size.(为什么测试要足够小)
 
-TDD cycle:
+**TDD cycle:**
 1. write a test.
 2. make it run.
 3. make it right.
@@ -36,3 +43,8 @@ the goal is clean code works.
 > First we can talk about whether the system should work like this or like that. Once we decide on the correct behavior, we can talk about the best way of achieving that behavior
 
 首先需要考虑系统是怎么样的,确定实现的思路之后就找到最佳的实现办法.(TDD难点:对系统的总体认识和设计)
+
+> That is a risk you actively manage in TDD. We aren’t striving for perfection. By saying everything two ways, as both code and tests, we hope to reduce our defects enough to move forward with confidence.
+
+TDD开发的风险:测试和编码同时进行会引入缺陷.
+
