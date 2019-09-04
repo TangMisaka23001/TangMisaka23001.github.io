@@ -51,3 +51,24 @@ TDD开发的风险:测试和编码同时进行会引入缺陷.
 > The different phases have different purposes. They call for different styles of solution, different aesthetic viewpoints.
 
 不同的阶段所注重的点是不同的,所以在初期设计阶段我们可以忍受重复的设计和复制粘贴代码,一切都是为了尽快完成这个阶段(clean code是重构的任务).
+
+消除类冗余的过程:
+1. 把子类的公共代码移到父类中.
+2. 对父类的其他子类进行简化.
+3. 合并equals()函数到父类.
+
+对equals()和hashCode()函数的覆盖和重写过程是发生在重构中的,并且已经有许多的测试来对重构做支撑.
+
+在制造对象的时候使用工厂方法(factory method).
+
+使用工厂模式和合理的构造器参数将重复代码移动到父类中去.
+
+> With the tests you can decide whether an experiment would answer the question faster. Sometimes you should just ask the computer.
+
+在TDD中,重构时由于有足够多的测试来支撑改动所以可以使用测试来迅速验证想法而如果没有测试验证想法就只能依赖思考和论证.
+
+在重构的过程中将子类代码消除后就要将其删除.
+
+使用多态来消除显式的类型判定.
+
+# Section II: Example: xUnit
