@@ -72,3 +72,32 @@ TDD开发的风险:测试和编码同时进行会引入缺陷.
 使用多态来消除显式的类型判定.
 
 # Section II: Example: xUnit
+**对TDD测试的要求:**
+- Easy to write for programmers. 易于编写
+- Easy to read for programmers. 易于阅读
+- Quick to execute. 快速执行
+- Order independent. 顺序无关
+- Deterministic. 确定的:执行结果不随执行次数变化
+- Piecemeal. 零碎(足够小)
+- Composable. 可组合:可以以各种组合方式运行测试
+- Versionable. 多版本
+- A priori. 先验(在代码能运行之前就写好测试)
+- Automatic. 自动化
+- Helpful when thinking about design. 对系统的设计的思考有帮助(测试先行需要对系统有良好的组织).
+
+> Lots of refactoring has this feel—separating two parts so you can work on the separately. If they go back together when you are finished, fine, if not, you can leave them separate.
+
+> Here is another general pattern of refactoring—take code that works in one instance and generalize it to work in many by replacing constants with variables. 
+
+先用常量进行测试,通过之后将常量位置改为变量就能在更多情况下使用.
+
+**测试模式:**
+1. 创建对象
+2. 激活(测试)对象
+3. 检查结果
+
+**测试的矛盾:**
+- Performance 性能:测试的执行要越快越好
+- Isolation 隔离:测试之间不要互相耦合并且测试执行不依赖于其执行顺序
+
+# Section III: Patterns
