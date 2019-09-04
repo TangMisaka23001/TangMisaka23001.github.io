@@ -14,7 +14,7 @@ tags: [公开课, CS6.00]
 *   table lookup(查表)
 
 **Optimal substructure(最优子结构):**Global optimal solution can be contructed from optimal solutions to sub-problems:全局最优解可以被分解成每一个子问题的最优解
-
+<!-- more -->
 **背包问题:(knapsack)**
 
 *   decision tree(决策树): ==> 先序遍历 ==> 复杂度O(2**n)(爆炸增长)

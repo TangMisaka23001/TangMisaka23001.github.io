@@ -21,7 +21,7 @@ tags: [公开课, CS6.00]
 *   inheritance:继承
 *   shadow/override methods
 *   hierarchy of classes
-
+<!-- more -->
 [](#Lec17-amp-Lec18 "Lec17.&Lec18.")Lec17.&Lec18.
 =================================================
 

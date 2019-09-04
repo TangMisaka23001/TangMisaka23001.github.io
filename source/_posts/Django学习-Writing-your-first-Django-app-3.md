@@ -19,7 +19,7 @@ tags: [Django, Web]
 *   Question的detail页面—显示一个问题的详细信息,可以投票
 *   Question的results页面—显示一个问题的结果
 *   投票功能—能够处理投票信息
-
+<!-- more -->
 [](#视图 "视图")视图
 --------------
 

@@ -17,7 +17,7 @@ Output: "s'teL ekat edoCteeL tsetnoc"
 ```
 
 **Note:** In the string, each word is separated by single space and there will not be any extra space in the string.
-
+<!-- more -->
 [](#理解 "理解")理解
 --------------
 

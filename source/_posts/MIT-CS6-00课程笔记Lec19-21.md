@@ -20,7 +20,7 @@ tags: [公开课, CS6.00]
 *   generate a simple of representation scenarios
 *   experimental devices
 *   description not prescriptive:optimization,描述性
-
+<!-- more -->
 [](#Lec20 "Lec20.")Lec20.
 =========================
 

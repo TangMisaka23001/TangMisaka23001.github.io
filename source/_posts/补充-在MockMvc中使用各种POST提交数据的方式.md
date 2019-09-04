@@ -19,7 +19,7 @@ MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/test")
         .andExpect(status().isOk()).andReturn();
 ```
 主要使用的是`UrlEncodedFormEntity`类,要注意的是需要设置字符集否则传参的时候中文会变成`???`.
-
+<!-- more -->
 # application/json
 我使用的是用阿里开源的fastjson直接转换的形式:
 ```java

@@ -22,7 +22,7 @@ hexo b
 ## 登录Travis CI
 这里可以直接使用你的github帐号登录Travis CI不做赘述,登录之后执行下面的操作:
 ![](https://i.loli.net/2019/01/12/5c398a979e286.png) 
-
+<!-- more -->
 ## 获取github的ACCESS_TOKEN
 在github的Settings ==> Developer settings ==> Personal access tokens选择生成一个新的token,这里的token名字需要记住:
 ![](https://i.loli.net/2019/01/12/5c398b30e0e36.png) 

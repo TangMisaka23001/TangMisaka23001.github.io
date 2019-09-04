@@ -27,6 +27,7 @@ mysql> SELECT @@default_storage_engine;
 | InnoDB                   |
 +--------------------------+
 ```
+<!-- more -->
 
 如果你计划使用**mysqldump**或Replication在一个默认存储引擎不是InnoDB的服务器上重用`CREATE TABLE`语句时仍旧可以使用`ENGINE=InnoDB`子句.
 

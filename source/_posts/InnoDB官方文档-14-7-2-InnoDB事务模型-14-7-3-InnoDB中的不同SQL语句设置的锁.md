@@ -16,7 +16,7 @@ InnoDB提供SQL:1992标准描述的四种事务隔离级别:` READ UNCOMMITTED`,
 用户可以改变单个会话(session)的隔离级别或使用`SET TRANSACTION`语句为连接后面所有的语句设置.为了对所有的连接设置服务器默认的隔离级别,在命令行使用` --transaction-isolation`选项或在配置文件中.
 
 InnoDB支持对每个事务隔离级别使用不同的锁策略.你可以对符合ACID规范很重要的关键数据的操作使用默认的`REPEATABLE READ`级别来强制执行高一致性.或者你可以使用` READ COMMITTED`或` READ UNCOMMITTED`放松一致性要求,在例如批量报告等情况下,精确的一致性和可重复结果不如最小化锁的开销那么重要.` SERIALIZABLE`比` REPEATABLE READ`更严格,且主要用于特殊情况,例如XA事务以及并发和死锁的故障问题排除上.
-
+<!-- more -->
 下面列出了MySQL支持的不同事务隔离级别.排列顺序由最常使用到不经常使用:.
 - REPEATABLE READ(可重复读)
 

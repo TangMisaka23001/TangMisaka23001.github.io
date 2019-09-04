@@ -29,7 +29,7 @@ SET GTID_NEXT="AUTOMATIC";
 START SLAVE;
 ```
 然而这样会导致主从的数据可能产生不一致的情况,这是我们想要避免的,并且希望主库可以不锁表导出数据即可进行备份.
-
+<!-- more -->
 # Xtrabackup
 查看阿里云的官方文档:[RDS for MySQL 物理备份文件恢复到自建数据库](https://help.aliyun.com/knowledge_detail/41817.html)发现可以使用[Xtrabackup](https://www.percona.com/doc/percona-xtrabackup/2.4/installation.html?spm=a2c4g.11186623.2.12.3f4d237434ZMpZ)来进行恢复.
 > 操作系统中已安装数据恢复工具Percona XtraBackup。MySQL 5.6及之前的版本需要安装 Percona XtraBackup 2.3。MySQL 5.7版本需要安装 Percona XtraBackup 2.4。可以从Percona XtraBackup官网下载安装，安装指导请参见官方文档 Percona XtraBackup 2.3、Percona XtraBackup 2.4。

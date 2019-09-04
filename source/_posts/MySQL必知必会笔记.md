@@ -22,6 +22,7 @@ tags: [MySQL]
 *   查看表/数据库: `SHOW tables/databases;`
 *   查看列: `SHOW COLUMNS FROM tables;`
 
+<!-- more -->
 [](#检索数据 "检索数据")检索数据
 ====================
 

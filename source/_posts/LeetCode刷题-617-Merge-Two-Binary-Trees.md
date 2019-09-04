@@ -30,7 +30,7 @@ Output: Merged tree:
 
 **Note:** The merging process must start from the root nodes of both trees.
 ```
-
+<!-- more -->
 [](#读题 "读题")读题
 --------------
 

@@ -13,7 +13,7 @@ tags: [公开课, CS6.00]
 
 *   陈述性知识(declarative):描述事实 Ex: 若sqrt(x)=y则y^2=x
 *   程序性知识(imperative):对推论过程的描述 Ex:GCD求法
-
+<!-- more -->
 #### [](#计算机 "计算机:")计算机:
 
 ##### [](#fixed-program-computer-固定程序用来做特定的运算 "fixed-program computer:  固定程序用来做特定的运算")fixed-program computer: 固定程序用来做特定的运算

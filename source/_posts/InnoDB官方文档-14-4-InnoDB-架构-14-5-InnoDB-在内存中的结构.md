@@ -8,7 +8,7 @@ tags: [MySQL, InnoDB, 翻译]
 ### 14.4 InnoDB 架构
 
 ![](https://dev.mysql.com/doc/refman/5.7/en/images/innodb-architecture.png)
-
+<!-- more -->
 ### 14.5 InnoDB 在内存中的结构
 
 #### 14.5.1 缓冲池(Buffer Pool)

@@ -28,7 +28,7 @@ tags: [公开课, CS6.00]
 
 [](#Lec24 "Lec24.")Lec24.
 =========================
-
+<!-- more -->
 **think computationly**
 
 **computational thinking:**

@@ -13,7 +13,7 @@ tags: [Flume, Nginx, Hive]
 
 [](#nginx-Lua收集上传日志并生成日志文件 "nginx+Lua收集上传日志并生成日志文件")nginx+Lua收集上传日志并生成日志文件
 --------------------------------------------------------------------------
-
+<!-- more -->
 ### [](#Lua环境安装 "Lua环境安装")Lua环境安装
 
 1.  [Lua官网](http://luajit.org/download.html)下载Lua安装包,当前版本为LuaJIT-2.0.5.

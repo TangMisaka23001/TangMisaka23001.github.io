@@ -11,7 +11,7 @@ tags: [OpenCV]
 
 [](#开始 "开始")开始
 ==============
-
+<!-- more -->
 在官方的这个介绍中还介绍了Scala以及SBT的知识,这里我并没有按照他的方式来进行第二个人脸检测例子的测试.
 
 *   首先我们需要一个人脸识别的配置文件,官方是在构建时自动下载的,没有使用SBT的方式的话,可以直接在Github上来下载这个配置文件[lbpcascade_frontalface.xml](https://github.com/opencv/opencv/blob/master/data/lbpcascades/lbpcascade_frontalface.xml).

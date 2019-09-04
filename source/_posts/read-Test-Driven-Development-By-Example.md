@@ -3,7 +3,7 @@ title: '阅读:Test-Driven Development By Example'
 mathjax: false
 date: 2019-09-03 17:00:13
 categories: [笔记]
-tags: [TDD, 看书]
+tags: [TDD, 看书, 测试]
 ---
 # Perface
 **TDD rules:**
@@ -20,6 +20,8 @@ tags: [TDD, 看书]
 1. Red-write a little that doesn't work.
 2. Green-make the test work quickly.
 3. Refactor-eliminate all the duplication created.
+
+<!-- more -->
 
 - 红:写测试
 - 绿:写代码通过测试
@@ -115,3 +117,11 @@ TDD开发的风险:测试和编码同时进行会引入缺陷.
 - 冗余的设置 -> 对象间耦合
 - 测试运行时间过长 -> 测试不会被运行或运行有问题
 
+# Is TDD Dead?
+在大略阅读了[Google软件测试之道](https://book.douban.com/subject/25742200/)和TDD之后,感觉TDD最明显的特征就是快速的实现和重构,自然这其中需要很强的"clean code"的能力,例如自然的使用工厂模式和提取参数使子类的方法向上转移到父类之上.
+
+而TDD的难点也就在于在系统开发之前,如何进行合理有效的拆分,而一旦没有清晰的思路,所谓的测试先行也就变成了冥思测试用例而不得,导致开发速度变得更慢.
+
+TDD的难以施行在结合Google的测试历程之后会发现,精通测试确实是"太难了",需要开发人员在编码和测试两个方向都有较好的能力才能比较顺利的施行,而开发编写测试本身就会"遭到质疑".哪怕强如Google也花了很长时间才让开发人员能够适应自己测试的开发节奏,可见在全新的组织中尝试实行TDD会是很痛苦的过程.
+
+当然,TDD也并非是开发方法论的全部.个人感觉关键还是需要在编程时有时刻重构的思维和编写"clean code"的能力,而TDD更像是对这两种要求的结合.当你习惯了重构和能够写出"clean code"的时候,T不TDD也就变得没有那么重要了.

@@ -13,7 +13,7 @@ ACID模型是一系列的数据库设计准则,强调对业务数据和关键应
 - C: 一致性(consistency).
 - I:  隔离性(isolation).
 - D: 持久性(durability).
-
+<!-- more -->
 #### 原子性
 主要涉及InnoDB事务,相关MySQL特性:
 - 自动提交(autocommit) 设置

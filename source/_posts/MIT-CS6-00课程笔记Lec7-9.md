@@ -15,7 +15,7 @@ tags: [公开课, CS6.00]
 *   mutable
 *   not ordered
 *   generalized indexing
-
+<!-- more -->
 **Pseudo code(伪代码)**:利用伪代码来控制程序流,拆分模块以及搞清对数据的操作
 
 **模块性和封装**:不需要关心内部的具体实现,只需要调用就可以

@@ -17,6 +17,7 @@ class QuestionAdmin(admin.ModelAdmin):
     admin.site.register(Question, QuestionAdmin)
 ```
 这样就可以交换2个字段的位置了~  
+<!-- more -->
 [![](https://docs.djangoproject.com/en/1.11/_images/admin07.png)](https://docs.djangoproject.com/en/1.11/_images/admin07.png)  
 如果说表单的字段很多的话,可能就需要分块来处理了,这时候就可以这么写:  
 

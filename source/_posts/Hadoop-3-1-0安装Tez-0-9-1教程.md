@@ -25,7 +25,7 @@ Hadoop生态的安装还是坑很多,很多时候安装配置之后能启动起�
 [Tez-0.9.1官网下载](https://tez.apache.org/releases/apache-tez-0-9-1.html)
 
 下载时需要下载源码自己进行编译,因为官网的编译好的bin包默认的_Hadoop版本_是**2.6**的,安装时参照[官网的安装教程](https://tez.apache.org/install.html)
-
+<!-- more -->
 [](#安装protobuf-2-5-0 "安装protobuf-2.5.0")安装protobuf-2.5.0
 --------------------------------------------------------
 
