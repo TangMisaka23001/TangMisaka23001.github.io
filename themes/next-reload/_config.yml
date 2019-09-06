@@ -206,7 +206,7 @@ avatar:
   # in theme directory(source/images): /images/avatar.gif
   # in site  directory(source/uploads): /uploads/avatar.gif
   # You can also use other linking images.
-  url: https://avatars1.githubusercontent.com/u/20449782?s=400&u=79a314d771a3ca71ae1e86388faed5172ac18676&v=4
+  url: /images/misaka.jpg
   # If true, the avatar would be dispalyed in circle.
   rounded: false
   # The value of opacity should be choose from 0 to 1 to set the opacity of the avatar.
