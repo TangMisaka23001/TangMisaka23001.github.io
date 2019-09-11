@@ -81,6 +81,7 @@ deploy:
   repo: git@github.com:913647909/913647909.github.io.git
   branch: master
   message: "update"
+  - type: leancloud_counter_security_sync
 
 search:
   enable: true
@@ -95,3 +96,10 @@ feed:
   content_limit: 140
   content_limit_delim: ' '
   order_by: -date
+
+leancloud_counter_security:
+  enable_sync: true
+  app_id: M1hXHB2YJ8SC7uPYi7vsCKwU-gzGzoHsz
+  app_key: 5Ks1w8pWHHdOYOrOYiU4SX1l
+  username: misakatang
+  password: lRyUvQZUsyXkOszuG78E
