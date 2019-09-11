@@ -81,7 +81,7 @@ deploy:
   repo: git@github.com:913647909/913647909.github.io.git
   branch: master
   message: "update"
-  - type: leancloud_counter_security_sync
+  -type: leancloud_counter_security_sync
 
 search:
   enable: true
