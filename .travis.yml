@@ -20,6 +20,8 @@ script:
   - hexo g   #生成
 after_script:
   - cd ./public
+  - touch CNAME
+  - echo "misakatang.cn" >> CNAME
   - git init
   - git config --global user.name "misakatang"
   - git config --global user.email "mikasatang@gmail.com"
