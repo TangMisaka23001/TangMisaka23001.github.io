@@ -77,11 +77,11 @@ theme: next
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type: git
-  repo: git@github.com:913647909/913647909.github.io.git
-  branch: master
-  message: "update"
-  -type: leancloud_counter_security_sync
+  - type: git
+    repo: git@github.com:913647909/913647909.github.io.git
+    branch: master
+    message: "update"
+  - type: leancloud_counter_security_sync
 
 search:
   enable: true
