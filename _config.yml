@@ -82,12 +82,6 @@ deploy:
   branch: master
   message: "update"
 
-backup:
-  type: git
-  theme: next
-  repository:
-    github: git@github.com:913647909/913647909.github.io.git,backup
-
 search:
   enable: true
   path: search.json
