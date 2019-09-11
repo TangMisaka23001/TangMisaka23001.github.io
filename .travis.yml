@@ -9,7 +9,6 @@ cache:
     directories:
         - node_modules    #据说可以减少travis构建时间
 before_install:
-  - npm install -g hexo
   - npm install -g hexo-cli
 install:
   - npm install   #安装hexo及插件
@@ -20,15 +19,12 @@ script:
 after_script:
 # 替换同目录下的_config.yml文件中gh_token字符串为travis后台刚才配置的变量，注意此处sed命令用了双引号。单引号无效！
   - sed -i "s/gh_token/${Travis_CI}/g" ./_config.yml
-  - cd ./public
-  - touch CNAME
-  - echo "misakatang.cn" >> CNAME
+  - grep "repo" ./_config.yml
+  - touch ./public/CNAME
+  - echo "misakatang.cn" >> ./public/CNAME
   - git config --global user.name "misakatang"
   - git config --global user.email "mikasatang@gmail.com"
   - hexo deploy
 branches:
   only:
   - backup  #只监测这个分支，一有动静就开始构建
-env:
-    global:
-        - GH_REF: github.com/913647909/913647909.github.io.git
