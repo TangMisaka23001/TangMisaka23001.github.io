@@ -39,40 +39,38 @@ hexo b
 ## 创建.travis.yml文件
 添加内容如下:
 ```yml
+# 更新了脚本因为用了leancloud来统计访问次数
 language: node_js   #设置语言
 node_js: stable     #设置相应的版本
 notifications:
-  email: false # 关闭邮件通知
+  email:
+    - mikasatang@gmail.com  #开启邮件通知
+  on_success: always
+  on_failure: always
 cache:
     directories:
         - node_modules    #据说可以减少travis构建时间
 before_install:
-  - npm install -g hexo
   - npm install -g hexo-cli
 install:
   - npm install   #安装hexo及插件
-before_script:
-  - npm install -g mocha
-  - git clone --branch master https://github.com/913647909/913647909.github.io.git public
+  - npm install hexo-deployer-git --save
+  - npm install hexo-git-backup --save
 script:
-  - hexo cl   #清除
+  - hexo clean
   - hexo g   #生成
 after_script:
-  - cd ./public
-  - touch CNAME # 因为前面执行了hexo clean所以需要手动添加CNAME文件
-  - echo "misakatang.cn" > CNAME # 自己的域名
-  - git init
+# 替换同目录下的_config.yml文件中gh_token字符串为travis后台刚才配置的变量，注意此处sed命令用了双引号。单引号无效！
+  - sed -i "s/gh_token/${Travis_CI}/g" ./_config.yml
+  - grep "repo" ./_config.yml
+  - touch ./public/CNAME
+  - echo "misakatang.cn" >> ./public/CNAME
   - git config --global user.name "misakatang"
   - git config --global user.email "mikasatang@gmail.com"
-  - git add .
-  - git commit -m "update by Travis-CI"
-  - git push --force --quiet "https://${Travis_CI}@${GH_REF}" master:master # 注意!!!! 这里的${Travis_CI}就是之前在Travis CI设置的环境变量,名称一定要一致
+  - hexo deploy
 branches:
   only:
   - backup  #只监测这个分支，一有动静就开始构建
-env:
-    global:
-        - GH_REF: github.com/913647909/913647909.github.io.git
 ```
 
 # 推送到分支开始构建
