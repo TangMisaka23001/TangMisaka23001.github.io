@@ -18,7 +18,7 @@ before_script:
   - git clone --branch master https://github.com/913647909/913647909.github.io.git public
 script:
   - hexo clean
-  - hexo g   #生成
+  - hexo g -d   #生成
 after_script:
   - cd ./public
   - touch CNAME
