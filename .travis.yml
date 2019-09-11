@@ -17,6 +17,7 @@ before_script:
   - npm install -g mocha
   - git clone --branch master https://github.com/913647909/913647909.github.io.git public
 script:
+  - hexo clean
   - hexo g   #生成
 after_script:
   - cd ./public
