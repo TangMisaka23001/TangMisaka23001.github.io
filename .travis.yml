@@ -13,6 +13,7 @@ before_install:
 install:
   - npm install   #安装hexo及插件
   - npm install hexo-deployer-git --save
+  - npm install hexo-git-backup --save
 script:
   - hexo clean
   - hexo g   #生成
