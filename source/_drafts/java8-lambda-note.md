@@ -78,3 +78,10 @@ allArtists.stream()
                               .min(Comparator.comparing(track -> track.getLength()))
                               .get();
   ```
+  - reduce
+    ![](https://i.loli.net/2019/10/16/eN391KnJkwFd4rR.png)
+    ```java
+    // ex
+    int count = Stream.of(1, 2, 3)
+                      .reduce(0, (acc, element) -> acc + element);
+    
