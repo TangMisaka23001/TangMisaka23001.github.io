@@ -113,3 +113,39 @@ allArtists.stream()
 
 ![](https://i.loli.net/2019/10/17/Zm8BteWY7kdyMUv.png)
 
+# chp5.
+## 方法引用
+```java
+// idea会在写出前一种形式的时候给出修改建议
+artist -> artist.getName() ==> Artist::getName
+
+(name, nationality) -> new Artist(name, nationality) ==> Artist::new
+```
+
+## 元素顺序
+- 在一个有序集合中创建一个流时， 流中的元素就按出现顺序排列
+- 如果集合本身就是无序的， 由此生成的流也是无序的
+
+## 收集器
+- 使用 toCollection， 用定制的集合收集元素 -> `stream.collect(toCollection(TreeSet::new));`
+- 生成值
+  - maxBy: `artists.collect(maxBy(comparing(getCount)));`
+  - averagingInt: `.collect(averagingInt(album -> album.getTrackList().size()));`
+- 分块（partition）->  `return artists.collect(partitioningBy(Artist::isSolo));`
+- 分组（groupby）
+  ```java
+  // 返回Map k,v value为对象的List
+  public Map<Artist, List<Album>> albumsByArtist(Stream<Album> albums) {
+    return albums.collect(groupingBy(album -> album.getMainMusician()));
+  }
+  ```
+- 字符串 -> `.collect(Collectors.joining(", ", "[", "]"));` *joining(分割符，前缀，后缀)*
+- 组合收集器（下游收集器）
+  ```java
+  // counting
+  albums.collect(groupingBy(album -> album.getMainMusician(),
+                            counting()));
+  // mapping
+  return albums.collect(groupingBy(Album::getMainMusician,
+                                    mapping(Album::getName, toList())));
+  ```
