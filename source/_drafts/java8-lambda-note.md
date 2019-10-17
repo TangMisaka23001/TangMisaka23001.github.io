@@ -78,10 +78,23 @@ allArtists.stream()
                               .min(Comparator.comparing(track -> track.getLength()))
                               .get();
   ```
-  - reduce
-    ![](https://i.loli.net/2019/10/16/eN391KnJkwFd4rR.png)
-    ```java
-    // ex
-    int count = Stream.of(1, 2, 3)
-                      .reduce(0, (acc, element) -> acc + element);
-    
+- reduce
+  ![](https://i.loli.net/2019/10/16/eN391KnJkwFd4rR.png)
+  ```java
+  // 使用reduce求和
+  int count = Stream.of(1, 2, 3)
+                    .reduce(0, (acc, element) -> acc + element);
+  // 展开reduce
+  BinaryOperator<Integer> accumulator = (acc, element) -> acc + element;
+  int count = accumulator.apply(
+                accumulator.apply(
+                  accumulator.apply(0, 1),
+                2),
+              3);
+  ```
+
+# chp4.
+## labmda类型推导
+![](https://i.loli.net/2019/10/17/2sAYHGfh5b3uLW7.png)
+
+
