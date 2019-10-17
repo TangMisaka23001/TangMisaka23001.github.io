@@ -129,9 +129,9 @@ artist -> artist.getName() ==> Artist::getName
 ## 收集器
 - 使用 toCollection， 用定制的集合收集元素 -> `stream.collect(toCollection(TreeSet::new));`
 - 生成值
-  - maxBy: `artists.collect(maxBy(comparing(getCount)));`
-  - averagingInt: `.collect(averagingInt(album -> album.getTrackList().size()));`
-- 分块（partition）->  `return artists.collect(partitioningBy(Artist::isSolo));`
+  - maxBy -> `artists.collect(maxBy(comparing(getCount)));`
+  - averagingInt -> `.collect(averagingInt(album -> album.getTrackList().size()));`
+- 分块（partition）-> `return artists.collect(partitioningBy(Artist::isSolo));`
 - 分组（groupby）
   ```java
   // 返回Map k,v value为对象的List
