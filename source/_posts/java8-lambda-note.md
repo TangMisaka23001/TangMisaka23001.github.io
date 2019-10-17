@@ -1,9 +1,9 @@
 ---
-title: java8-lambda-note
+title: Java8函数式编程笔记
 mathjax: false
 date: 2019-10-10 10:28:37
-categories:
-tags:
+categories: [笔记]
+tags: [lambda, Java8]
 ---
 # chp2.
 ## lambda表达式的几种形式
