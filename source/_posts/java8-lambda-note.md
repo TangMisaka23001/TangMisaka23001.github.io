@@ -27,7 +27,7 @@ BinaryOperator<Long> add = (x, y) -> x + y;
 BinaryOperator<Long> addExplicit = (Long x, Long y) -> x + y;
 ```
 Lambda 表达式的类型依赖于上下文环境，是由编译器推断出来的。
-
+<!-- more -->
 ## 变量引用：
 在lambda表达式中可以引用非final变量但该变量在既成事实上必须是final。也就是只能给该变量赋值一次，也就是值引用。
   
