@@ -22,8 +22,8 @@ after_script:
   - sed -i "s/gh_token/${Travis_CI}/g" ./_config.yml
   - touch ./public/CNAME
   - echo "misakatang.cn" >> ./public/CNAME
-  - wget -o ./public/LICENSE https://github.com/913647909/913647909.github.io/blob/backup/LICENSE
-  - wget -o ./public/README.md https://github.com/913647909/913647909.github.io/blob/backup/README.md
+  - wget -P ./public/ https://github.com/913647909/913647909.github.io/blob/backup/LICENSE
+  - wget -P ./public/ https://github.com/913647909/913647909.github.io/blob/backup/README.md
   - git config --global user.name "misakatang"
   - git config --global user.email "mikasatang@gmail.com"
   - hexo deploy
