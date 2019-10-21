@@ -1,23 +1,25 @@
 ---
-title: 用Jenkins pipeline(流水线)实现SpringBoot Application的docker构建和持续集成
+title: 用Jenkins pipeline(流水线)实现SpringBoot Application的docker构建和持续集成(CI)
 mathjax: false
 date: 2019-10-11 10:27:32
 categories: [笔记]
 tags: [Jenkins, docker, CI]
 ---
-<!-- more -->
+# 写在前面
+在看了许多CI的内容之后,正好碰上公司尝试把应用容器化以及进行持续集成(之前还是需要手动执行启停脚本),然后我便成了第一个吃螃蟹的人,在一阵折腾之后也勉强算是把整个流程给走通了便在这里记录一下大致的流程和踩到的坑,也是对最近许久不更新的博客增加一些新东西吧.
 # 部署流程
 首先描述一下整个部署的流程来理清一下整个逻辑，这里仅仅是给出我自己的暂时的解决方案，由于业务和环境的不同必定没有完全一样的流程，并且这也只是暂时的方案还是有很多可以优化的地方。
 
 ```
-更新代码 ==> 触发Jenkins流水线的构建 ==> Maven打包项目 ==> 制作docker image ==> 上传image(这里使用阿里的镜像服务) ==> 远程服务器执行部署脚本 ==> 判断部署状态
+更新代码 ==> 触发Jenkins流水线的构建 ==> Maven打包项目 ==> 制作docker image ==> 
+上传image(这里使用阿里的镜像服务) ==> 远程服务器执行部署脚本 ==> 判断部署状态(nacos api)
 ```
 需要注意的是：
 1. 项目的仓库中包含了Jenkinsfile和部署的脚本(全部交由版本控制)
 2. 由于线上服务器为阿里ECS并且外网无法访问，所以使用了部署服务器(外网IP)来做跳转和部署
 3. 因为项目使用了SpringCloud的微服务框架并且使用了NACOS注册中心，所以在服务的优雅下线重启阶段使用了nacos的服务调度API并没有使用SpringCloud自带的端点，当然本质都是通过接口调用告知注册中心下线服务
 4. 由于线上服务器均没有使用root用户来发布应用所以在这里踩了小坑，暂时的解决方案可能并不完美
-
+<!-- more -->
 # Jenkins
 ## 安装
 官方教程的链接：[Installing Jenkins](https://jenkins.io/doc/book/installing/)
@@ -57,6 +59,8 @@ RUN usermod -aG docker jenkins
 ```
 docker image build -t jenkins-docker .
 ```
+docker run 命令和上面一样
+
 ## pipeline（流水线）
 官方的文档：[流水线语法](https://jenkins.io/zh/doc/book/pipeline/syntax/)
 
@@ -273,6 +277,7 @@ pipeline {
                 // -oStrictHostKeyChecking=no 这个参数比较重要因为脚本执行的时候可不会自动输入yes
                 // ssh xxx@xxx -C "/bin/bash" < xx.sh 可以用来在远程服务器上执行脚本
                 // 在写sh脚本的时候选择使用 “” 还是 '' 来包含参数是很重要的，'' 的形式是完全不转义的也就是说不能使用sh的变量
+                // 注意: 需要在服务器上配置ssh免密
                 sh """
                     cat $SECRET_FILE > pc-libs
                     chmod 400 pc-libs
@@ -287,6 +292,7 @@ pipeline {
 ```
 
 # docker
+下面命令在需要部署的服务器上执行:
 ```
 $ curl -fsSL get.docker.com -o get-docker.sh
 $ sudo sh get-docker.sh --mirror Aliyun
@@ -304,7 +310,7 @@ $ sudo usermod -aG docker $USER
 
 注意： 所有 [容器id] 的地方都可以用空格分割来对多个容器进行操作
 
-## dockerfile
+## Dockerfile
 ```
 FROM java:8
 
@@ -416,10 +422,16 @@ fi
 
 这也可以说是第一次写这么多行的脚本，但是实质还是不是很难的，主要用到的是`awk`,`grep`,`if`和管道`|`，还有一个一行处理json的python(还挺不错)
 
+# 总体使用流程
+1. 在项目中编写Jenkinsfile和deploy.sh
+2. 在Jenkins中新建流水线项目,填写项目的地址并选择Jenkinsfile
+3. 需要部署项目的服务器安装docker并配置ssh免密登陆
+4. Jenkins中点击构建
+
 # 总结
-这次项目向docker化的持续集成的迁移改造，前前后后也大致是花费了1个多星期了，但是整个流程下来也算是能够对Jenkins和docker更加的熟悉一点了吧
+这次项目向docker化的持续集成的迁移改造，前前后后也大致是花费了一个多星期了，但是整个流程下来也算是能够对Jenkins和docker更加的熟悉一点了吧
 ## 不足
-当然由于每个组的技术不可能完全一致，ci的方式也肯定不尽相同，上面的方案也是草草交了的答卷，肯定是有很多优化的地方的。
+当然由于每个组的技术不可能完全一致，CI的方式也肯定不尽相同，上面的方案也是草草交了的答卷，肯定是有很多优化的地方的。
 
 比如像构建并不是在监测到分支改动之后自动执行而是需要手动执行，代码并没有进行从单测到集成测试的任何测试，也没有经过代码质量审查，当然还有一些构建完成之后的工作也没有进行(比如没有通知构建)，等等....
 
