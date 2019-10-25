@@ -1,8 +1,8 @@
 ---
 title: Django学习--Writing your first Django app(5)
 date: 2017-08-01 11:24:33
-categories: [Python]
-tags: [Django, Web]
+categories: [文档翻译]
+tags: [Python, Django]
 ---
 中间还有自动化测试和自定义CSS的部分被我先忽略了,最后一块是讲自定义admin后台的内容的.  
 代码同步在github上[mysite-part5](https://github.com/913647909/mysite/tree/part7)

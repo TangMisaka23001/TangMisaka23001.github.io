@@ -2,7 +2,7 @@
 title: 这周搞的一些新东西
 mathjax: false
 date: 2019-09-08 12:03:52
-categories: [日常]
+categories: [周报]
 tags: [agile-learning, blog, windows]
 ---
 话到嘴边又不知道该怎么描述,也算是拾起了很久没用的博客吧,这也算是自己少见的文字输出方式了所以还是来写一写.

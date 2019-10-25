@@ -2,8 +2,8 @@
 title: Continuation-passing style--CPS变换漫谈
 mathjax: false
 date: 2018-10-04 13:46:52
-categories: [杂思集]
-tags: [函数式编程]
+categories: [随想集]
+tags: [函数式编程, CPS变换]
 ---
 * * *
 

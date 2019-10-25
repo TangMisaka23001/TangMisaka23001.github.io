@@ -2,8 +2,8 @@
 title: InnoDB官方文档--14.6.2 索引(Indexes)
 mathjax: false
 date: 2019-03-10 18:29:07
-categories: [笔记]
-tags: [MySQL, InnoDB, 翻译]
+categories: [文档翻译]
+tags: [MySQL, InnoDB]
 ---
 #### 14.6.2 索引(Indexes)
 ##### 14.6.2.1 聚簇和二级索引(Clustered and Secondary Indexes)

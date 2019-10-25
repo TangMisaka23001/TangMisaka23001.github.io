@@ -1,7 +1,7 @@
 ---
 title: MIT-CS6.00课程笔记Lec7-9
 date: 2018-06-12 15:51:34
-categories: [笔记]
+categories: [课程笔记]
 tags: [公开课, CS6.00]
 ---
 [](#Lec7 "Lec7")Lec7

@@ -2,8 +2,8 @@
 title: InnoDB官方文档--14.6.6 Redo日志|14.6.7 undo日志
 mathjax: false
 date: 2019-03-30 15:24:30
-categories: [笔记]
-tags: [MySQL, InnoDB, 翻译]
+categories: [文档翻译]
+tags: [MySQL, InnoDB]
 ---
 #### 14.6.6 Redo日志
 redo 日志是一个基于磁盘的数据结构,在崩溃恢复期间用于纠正由不完整事务写入的数据.在正常操作期间,redo日志对更改由SQL语句或低级API调用产生的表数据的请求进行编码.未完成更新数据文件的修改会在以外关闭自动重启的初始化期间和连接接受之前完成.

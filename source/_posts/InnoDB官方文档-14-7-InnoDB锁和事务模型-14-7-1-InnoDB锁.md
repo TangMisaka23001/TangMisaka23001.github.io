@@ -2,8 +2,8 @@
 title: InnoDB官方文档--14.7 InnoDB锁和事务模型|14.7.1 InnoDB锁
 mathjax: false
 date: 2019-03-30 15:33:05
-categories: [笔记]
-tags: [MySQL, InnoDB, 翻译]
+categories: [文档翻译]
+tags: [MySQL, InnoDB]
 ---
 ### 14.7 InnoDB锁和事务模型
 为了实现大规模,繁忙或高可靠的数据库应用,从不同的数据库系统移植大量代码或调整MySQL性能,理解InnoDB锁和InnoDB事务模型是很重要的.

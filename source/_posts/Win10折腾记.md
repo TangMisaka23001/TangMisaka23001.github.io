@@ -2,7 +2,7 @@
 title: Win10折腾记
 mathjax: false
 date: 2019-01-05 14:54:36
-categories: [硬件]
+categories: [未分类]
 tags: [windows]
 ---
 > 浪荡了这么久还是过不去又开始写起了博客

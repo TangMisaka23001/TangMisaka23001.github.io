@@ -2,8 +2,8 @@
 title: "InnoDB官方文档--14.7.4 幻影行|14.7.5 InnoDB的死锁"
 mathjax: false
 date: 2019-09-02 14:45:22
-categories: [笔记]
-tags: [MySQL, InnoDB, 翻译]
+categories: [文档翻译]
+tags: [MySQL, InnoDB]
 ---
 #### 14.7.4 幻影行
 所谓的幻读就是同一个事务在不同的时间执行相同的查询产生不同的结果行.例如,如果一个SELECT执行2次,但是第二次返回的行和第一次的不一样,这些行就被称为"幻影行".

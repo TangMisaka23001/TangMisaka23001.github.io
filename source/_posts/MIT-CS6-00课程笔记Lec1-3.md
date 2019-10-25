@@ -1,7 +1,7 @@
 ---
 title: MIT_CS6.00课程笔记Lec1-3
 date: 2018-06-11 21:13:07
-categories: [笔记]
+categories: [课程笔记]
 tags: [公开课, CS6.00]
 ---
 [](#计算机科学及编程导论-Lec1 "计算机科学及编程导论  Lec1.")计算机科学及编程导论 Lec1.

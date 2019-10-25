@@ -2,8 +2,8 @@
 title: '翻译:Spring MVC Test Framework--MockMvc使用'
 mathjax: false
 date: 2018-10-18 20:44:18
-categories: [Java]
-tags: [翻译, MockMvc]
+categories: [文档翻译]
+tags: [Java, MockMvc, JavaTest, Test]
 ---
 # 前言
 国庆回来之后算是正是开始了Spring Boot的工作,而Java组里因为没有写任何的单元测试,每次测试都是靠Swagger的web页面自己填参数来测试,于是在这次新版本的迭代中我变成了第一个被要求贯彻实施每个controller都要写测试的人,不过**单元测试,从我做起**,真的很重要啊.

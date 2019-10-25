@@ -1,7 +1,7 @@
 ---
 title: 阿里云RDS逻辑备份恢复主从
 categories:
-  - 笔记
+  - 问题解决
 tags:
   - MySQL
   - 阿里云

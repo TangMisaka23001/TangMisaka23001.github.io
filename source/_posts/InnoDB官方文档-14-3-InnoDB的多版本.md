@@ -2,8 +2,8 @@
 title: InnoDB官方文档--14.3 InnoDB的多版本
 mathjax: false
 date: 2019-02-16 14:45:55
-categories: [笔记]
-tags: [MySQL, InnoDB, 翻译]
+categories: [文档翻译]
+tags: [MySQL, InnoDB]
 ---
 ### 14.3 InnoDB的多版本
 InnoDB是一个多版本存储引擎:它会保留关于行变动的旧版本信息用来支持事务特性,例如并发和回滚(rollback).这些信息被称为回滚段(rollback segment),存储在表空间中.InnoDB使用回滚段中的信息来执行事务回滚中所需要的撤销操作.还使用该信息构建早期版本以进行一致的行读取.

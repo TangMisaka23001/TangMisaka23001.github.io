@@ -1,7 +1,7 @@
 ---
 title: MIT-CS6.00课程笔记Lec13-15
 date: 2018-06-18 11:23:20
-categories: [笔记]
+categories: [课程笔记]
 tags: [公开课, CS6.00]
 ---
 [](#Lec-13-amp-Lec14 "Lec 13. & Lec14.")Lec 13. & Lec14.

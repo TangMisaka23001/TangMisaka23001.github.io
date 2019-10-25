@@ -1,8 +1,8 @@
 ---
 title: Django学习--Writing your first Django app(4)
 date: 2017-08-01 09:18:04
-categories: [Python]
-tags: [Django, Web]
+categories: [文档翻译]
+tags: [Python, Django]
 ---
 接着第三部分的内容继续app的开发.  
 代码同步在github上[mysite-part4](https://github.com/913647909/mysite/tree/part4)

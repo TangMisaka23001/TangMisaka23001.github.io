@@ -2,8 +2,8 @@
 title: "InnoDB官方文档--14.2\_InnoDB 和 ACID 模型"
 mathjax: false
 date: 2019-02-16 14:44:29
-categories: [笔记]
-tags: [MySQL, InnoDB, 翻译]
+categories: [文档翻译]
+tags: [MySQL, InnoDB]
 ---
 ### 14.2 InnoDB 和 ACID 模型
 ACID模型是一系列的数据库设计准则,强调对业务数据和关键应用非常重要的可靠性方面.MySQL包括了像InnoDB存储引擎这样遵守ACID模型的组件所以数据不会因为例如软件崩溃和硬件故障这样的意外情况而遭到破坏或者丢失.当你依赖ACID相关特性的时候,你不需要重新发明一致性检查和崩溃恢复机制.如果你有其他附加的软件保障,高可用的硬件或者一个可以容忍小部分数据的丢失或者不一致的话,你可以调整MySQL设置用ACID可靠性来交换更好的性能和吞吐量.

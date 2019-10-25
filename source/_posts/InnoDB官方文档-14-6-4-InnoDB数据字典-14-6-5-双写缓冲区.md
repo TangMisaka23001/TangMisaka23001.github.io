@@ -2,8 +2,8 @@
 title: InnoDB官方文档--14.6.4 InnoDB数据字典|14.6.5 双写缓冲区
 mathjax: false
 date: 2019-03-30 15:23:30
-categories: [笔记]
-tags: [MySQL, InnoDB, 翻译]
+categories: [文档翻译]
+tags: [MySQL, InnoDB]
 ---
 #### 14.6.4 InnoDB数据字典(InnoDB Data Dictionary)
 InnoDB数据字典由内部系统表构成,包含用于跟踪对象如表,索引和表的列的元数据.元数据实际位于InnoDB系统表空间内.由于历史原因,数据字典元数据在某种程度上与InnoDB表元数据文件(.frm文件)中存储的信息重叠.

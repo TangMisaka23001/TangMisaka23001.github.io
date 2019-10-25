@@ -2,8 +2,8 @@
 title: '补充:在MockMvc中使用各种POST提交数据的方式'
 mathjax: false
 date: 2018-10-18 21:44:29
-categories: [Java]
-tags: [MockMvc, Web]
+categories: [未分类]
+tags: [MockMvc, Java]
 ---
 # application/x-www-form-urlencoded
 这是比较常用的提交数据的方式,在项目中也使用的是这一种,在MockMvc测试的参数准备时可以这样使用:

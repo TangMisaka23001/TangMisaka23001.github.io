@@ -2,8 +2,8 @@
 title: "InnoDB官方文档--14.1\_InnoDB简介"
 mathjax: false
 date: 2019-02-16 14:41:22
-categories: [笔记]
-tags: [MySQL, InnoDB, 翻译]
+categories: [文档翻译]
+tags: [MySQL, InnoDB]
 ---
 ### 14.1 InnoDB简介
 `InnoDB`是一个平衡了高可用和高性能的通用存储引擎.在Mysql 5.7中已经作为默认的存储引擎使用.

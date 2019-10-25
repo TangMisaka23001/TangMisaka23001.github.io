@@ -1,7 +1,7 @@
 ---
 title: MIT-CS6.00课程笔记Lec10-12
 date: 2018-06-15 15:12:28
-categories: [笔记]
+categories: [课程笔记]
 tags: [公开课, CS6.00]
 ---
 [](#Lec10 "Lec10.")Lec10.

@@ -2,7 +2,7 @@
 title: Java8函数式编程笔记
 mathjax: false
 date: 2019-10-10 10:28:37
-categories: [笔记]
+categories: [读书笔记]
 tags: [lambda, Java8]
 ---
 # chp2.

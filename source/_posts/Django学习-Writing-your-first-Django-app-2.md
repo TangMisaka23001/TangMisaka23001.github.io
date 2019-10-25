@@ -1,8 +1,8 @@
 ---
 title: Django学习--Writing your first Django app(2)
 date: 2017-07-30 20:49:20
-categories: [Python]
-tags: [Django, Web]
+categories: [文档翻译]
+tags: [Python, Django]
 ---
 [](#开始 "开始")开始
 ==============

@@ -2,8 +2,8 @@
 title: "InnoDB官方文档--14.7.2 InnoDB事务模型|14.7.3 InnoDB中的不同SQL语句设置的锁"
 mathjax: false
 date: 2019-09-02 12:01:22
-categories: [笔记]
-tags: [MySQL, InnoDB, 翻译]
+categories: [文档翻译]
+tags: [MySQL, InnoDB]
 ---
 #### 14.7.2 InnoDB事务模型
 在InnoDB事务模型里,其目标就是把多版本数据库的最佳属性和传统的两段锁相结合.InnoDB在行级进行加锁并且默认情况下将查询作为非锁定的一致性读取来运行,这是Oracle的风格.InnoDB中的锁信息是高效存储的所以不需要升级.通常允许多个用户锁定InnoDB表中的每一行,或行的任何随机子集而不会导致InnoDB内存耗尽.

@@ -2,7 +2,7 @@
 title: 用Jenkins pipeline(流水线)实现SpringBoot Application的docker构建和持续集成(CI)
 mathjax: false
 date: 2019-10-11 10:27:32
-categories: [笔记]
+categories: [技术教程]
 tags: [Jenkins, docker, CI]
 ---
 # 写在前面

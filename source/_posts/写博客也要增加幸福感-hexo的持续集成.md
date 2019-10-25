@@ -1,9 +1,10 @@
 ---
 title: 写博客也要增加幸福感--hexo的持续集成
 categories:
-  - Hexo
+  - 技术教程
 tags:
   - CI
+  - hexo
 mathjax: false
 date: 2019-01-12 14:25:58
 ---

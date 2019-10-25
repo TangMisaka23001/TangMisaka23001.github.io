@@ -1,7 +1,7 @@
 ---
 title: Life is Strange
 categories:
-  - 杂思集
+  - 随想集
 tags:
   - 游戏
 mathjax: false

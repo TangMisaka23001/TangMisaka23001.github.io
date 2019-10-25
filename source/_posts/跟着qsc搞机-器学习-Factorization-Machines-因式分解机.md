@@ -2,8 +2,8 @@
 title: 跟着qsc搞机(器学习)--Factorization Machines(因式分解机)
 mathjax: true
 date: 2018-09-16 16:18:39
-categories: [笔记]
-tags: [线性回归, 机器学习]
+categories: [课程笔记]
+tags: [机器学习, 因式分解机]
 ---
 [](#优点 "优点")优点
 ==============
