@@ -10,12 +10,10 @@ cache:
     directories:
         - node_modules    #据说可以减少travis构建时间
 before_install:
-  - npm install --save core-js@^3
   - npm install -g hexo-cli
 install:
   - npm install   #安装hexo及插件
   - npm install hexo-deployer-git --save
-  - npm install hexo-git-backup --save
   - npm install hexo-leancloud-counter-security
 script:
   - hexo clean
@@ -33,7 +31,7 @@ after_script:
   # leancloud统计相关
   - git add source/leancloud.memo
   - git commit -m "update leancloud.memo"
-  - git push https://${Travis_CI}@github.com/TangMisaka23001/TangMisaka23001.github.io.git backup
+  - git push -u https://${Travis_CI}@github.com/TangMisaka23001/TangMisaka23001.github.io.git backup
 branches:
   only:
   - backup  #只监测这个分支，一有动静就开始构建
