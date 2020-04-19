@@ -1,10 +1,11 @@
 language: node_js   #设置语言
 node_js: stable     #设置相应的版本
-notifications:
+notifications: #开启邮件通知
   email:
-    - mikasatang@gmail.com  #开启邮件通知
-  on_success: always
-  on_failure: always
+    recipients:
+    - mikasatang@gmail.com  
+    on_success: always
+    on_failure: always
 cache:
     directories:
         - node_modules    #据说可以减少travis构建时间
