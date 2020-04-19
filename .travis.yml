@@ -31,9 +31,10 @@ after_script:
   - git config --global user.email "mikasatang@gmail.com"
   - hexo deploy
   # leancloud统计相关
-  - git add ./source/leancloud.memo
-  - git commit -m "update leancloud.memo"
-  - git push https://${Travis_CI}@github.com/TangMisaka23001/TangMisaka23001.github.io.git origin backup
+  - git status
+  # - git add ./source/leancloud.memo
+  # - git commit -m "update leancloud.memo"
+  # - git push https://${Travis_CI}@github.com/TangMisaka23001/TangMisaka23001.github.io.git origin backup
 branches:
   only:
   - backup  #只监测这个分支，一有动静就开始构建
