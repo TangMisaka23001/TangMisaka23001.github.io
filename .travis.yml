@@ -29,6 +29,7 @@ after_script:
   - git config --global user.name "misakatang"
   - git config --global user.email "mikasatang@gmail.com"
   - hexo deploy
+after_success:
   # leancloud统计相关
   - cat source/leancloud.memo
   - git add source/leancloud.memo
