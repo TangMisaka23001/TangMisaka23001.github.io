@@ -1,7 +1,7 @@
 ---
 title: 学习Markdown语法
 date: 2017-07-04 13:54:38
-categories: [读书笔记]
+categories: [笔记]
 tags: [Markdown]
 ---
 刚刚进入暑假，就尝试在GithubPages上搭建了自己的博客，在暑假的自学期间尝试把自己的学习体会记录下来。所以就不可避免的要学习一下Markdown来写博客，在写建站记录之前先把学习Markdown的东西先记录一下。

@@ -2,7 +2,7 @@
 title: SICP读书总结-第三章
 mathjax: false
 date: 2018-10-20 15:51:54
-categories: [读书笔记]
+categories: [笔记]
 tags: [SICP, 函数式编程, Lisp]
 ---
 > Even while it changes, it stands still

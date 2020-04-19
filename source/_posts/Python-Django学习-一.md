@@ -1,7 +1,7 @@
 ---
 title: Python-Django学习(一)
 date: 2017-07-20 16:43:54
-categories: [课程笔记]
+categories: [笔记]
 tags: [Django, Web, Python]
 ---
 [](#简述 "简述")简述

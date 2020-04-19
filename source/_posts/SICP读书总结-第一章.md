@@ -1,7 +1,7 @@
 ---
 title: SICP读书总结-第一章
 date: 2018-06-26 19:28:14
-categories: [读书笔记]
+categories: [笔记]
 tags: [SICP, 函数式编程, Lisp]
 ---
 [](#前言 "前言")前言

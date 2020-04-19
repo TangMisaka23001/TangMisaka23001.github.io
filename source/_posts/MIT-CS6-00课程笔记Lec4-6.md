@@ -1,7 +1,7 @@
 ---
-title: MIT_CS6.00课程笔记Lec4-6
+title: MIT_CS6.00笔记Lec4-6
 date: 2018-06-11 21:17:18
-categories: [课程笔记]
+categories: [笔记]
 tags: [公开课, CS6.00]
 ---
 [](#Lec4 "Lec4.")Lec4.
