@@ -5,7 +5,7 @@ categories: [文档翻译]
 tags: [Python, Django]
 ---
 接着上一部分,在这个部分主要是添加网页相关的一些内容.  
-对应的源码也放在了github仓库中[mysite-part3](https://github.com/913647909/mysite/tree/part3)
+对应的源码也放在了github仓库中[mysite-part3](https://github.com/TangMisaka23001/mysite/tree/part3)
 
 [](#开始 "开始")开始
 ==============

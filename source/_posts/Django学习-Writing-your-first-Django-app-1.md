@@ -8,7 +8,7 @@ tags: [Python, Django]
 ==============
 
 这一系列的博客是基于Django官方的Documentation—[Writing your first Django app](https://docs.djangoproject.com/en/1.11)而来的,主要是对文档的翻译和自己的实际操作,使用的IDE是**Pycharm**.  
-对应项目每个part的代码可以在我的github仓库下载[django官方案例的实现](https://github.com/913647909/mysite/tree/part1)
+对应项目每个part的代码可以在我的github仓库下载[django官方案例的实现](https://github.com/TangMisaka23001/mysite/tree/part1)
 
 [](#开始 "开始")开始
 ==============

@@ -5,7 +5,7 @@ categories: [文档翻译]
 tags: [Python, Django]
 ---
 接着第三部分的内容继续app的开发.  
-代码同步在github上[mysite-part4](https://github.com/913647909/mysite/tree/part4)
+代码同步在github上[mysite-part4](https://github.com/TangMisaka23001/mysite/tree/part4)
 
 [](#写一个简单的表单 "写一个简单的表单")写一个简单的表单
 ================================

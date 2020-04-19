@@ -170,7 +170,7 @@ intro_line1: "This is MisakaTang'Blog" ## eg: "Hello ,I'm Larry Page in Google."
 intro_line2: "while true: forever love you;" ## eg: "This is my blog,believe it or not."  
 weibo:      u/1966604454 ## e.g. 436062867 for http://weibo.com/436062867  
 twitter:    ## e.g. yangjiansky for https://twitter.com/yangjiansky  
-github:     913647909 ## e.g. A-limon for https://github.com/A-limon  
+github:     TangMisaka23001 ## e.g. A-limon for https://github.com/A-limon  
 facebook:   ## e.g. yangjian for https://favebook.com/yangjian  
 tsina:      1966604454 ## e.g. 1664838973  Your weibo ID,It will be used in share button.  
 linkedin:   ## e.g. in/jeffweiner08 for https://www.linkedin.com/in/jeffweiner08
@@ -205,7 +205,7 @@ linkedin:   ## e.g. in/jeffweiner08 for https://www.linkedin.com/in/jeffweiner0
 ```yml
 deploy:
     type: 
-    gitrepo: git@github.com:913647909/913647909.github.io.
+    gitrepo: git@github.com:TangMisaka23001/TangMisaka23001.github.io.
     gitbranch: master
     message: "update"
 ```
