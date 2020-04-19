@@ -196,7 +196,7 @@ site_state: true
 # Value before `||` delimiter is the target permalink.
 # Value after `||` delimiter is the name of Font Awesome icon. If icon (with or without delimiter) is not specified, globe icon will be loaded.
 social:
-  GitHub: https://github.com/913647909 || github
+  GitHub: https://github.com/TangMisaka23001 || github
   E-Mail: mailto:mikasatang@gmail.com || envelope
   #Weibo: https://weibo.com/yourname || weibo
   豆瓣主页: https://www.douban.com/people/misakatang/ || 
@@ -223,7 +223,7 @@ links:
   ChenWei的博客: https://xiaoshidefeng.github.io/
   BB chen的漂流记: http://blog.bbchen.top/
   Aurthur_的博客: http://blog.zhuzhenyuan.cn/
-  1ni(阿金)的博客: http://pyking.cn/
+  1ni的博客: http://pyking.cn/
 
 
 # Sidebar Avatar
