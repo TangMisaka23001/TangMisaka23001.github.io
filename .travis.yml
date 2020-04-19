@@ -27,6 +27,7 @@ after_script:
   - git config --global user.name "misakatang"
   - git config --global user.email "mikasatang@gmail.com"
   - hexo deploy
+  - cat ./source/leancloud.memo
 branches:
   only:
   - backup  #只监测这个分支，一有动静就开始构建
