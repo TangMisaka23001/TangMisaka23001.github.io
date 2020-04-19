@@ -16,7 +16,7 @@ tags: [Java, concurrent, Doug Lea]
 2. [Java Fork/Join框架--翻译](https://github.com/oldratlee/translations/tree/master/a-java-fork-join-framework)
 3. [Overview of package util.concurrent Release 1.3.4.](http://gee.cs.oswego.edu/dl/classes/EDU/oswego/cs/dl/util/concurrent/intro.html)(Doug Lea的fork/join代码实现)
 
-整个paper笔记的思维导图就是上面的图片,这里也留一下xmind的文件: https://www.jianguoyun.com/p/DVJEwqQQ08fbBxj8o48D  (访问密码: 8kejk5)
+整个paper笔记的思维导图就是上面的图片,这里也留一下xmind文件链接: [fork-join.xmind](https://github.com/TangMisaka23001/TangMisaka23001.github.io/blob/backup/xmind/fork-join.xmind)
 
 ## 代码
 由于paper以及翻译对实现的思路讲解已经很详细了,这里就不再赘述,主要还是结合代码实现再看一下整个框架.
