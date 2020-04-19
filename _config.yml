@@ -99,6 +99,7 @@ feed:
 
 leancloud_counter_security:
   enable_sync: true
+  server_url: https://leancloud.cn
   app_id: M1hXHB2YJ8SC7uPYi7vsCKwU-gzGzoHsz
   app_key: 5Ks1w8pWHHdOYOrOYiU4SX1l
   username: misakatang

@@ -10,6 +10,7 @@ cache:
     directories:
         - node_modules    #据说可以减少travis构建时间
 before_install:
+  - npm install --save core-js@^3
   - npm install -g hexo-cli
 install:
   - npm install   #安装hexo及插件
