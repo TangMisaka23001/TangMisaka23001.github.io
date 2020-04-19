@@ -14,6 +14,7 @@ before_install:
 install:
   - npm install   #安装hexo及插件
   - npm install hexo-deployer-git --save
+  - npm install hexo-git-backup --save
   - npm install hexo-leancloud-counter-security
 script:
   - hexo clean
@@ -29,6 +30,7 @@ after_script:
   - git config --global user.email "mikasatang@gmail.com"
   - hexo deploy
   # leancloud统计相关
+  - cat source/leancloud.memo
   - git add source/leancloud.memo
   - git commit -m "update leancloud.memo"
   - git push -u https://${Travis_CI}@github.com/TangMisaka23001/TangMisaka23001.github.io.git backup
