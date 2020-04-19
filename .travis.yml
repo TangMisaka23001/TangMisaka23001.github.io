@@ -32,6 +32,7 @@ after_script:
 after_success:
   # leancloud统计相关
   - cat source/leancloud.memo
+  - git remote add origin https://github.com/TangMisaka23001/TangMisaka23001.github.io.git
   - git add source/leancloud.memo
   - git commit -m "update leancloud.memo"
   - git push -u https://${Travis_CI}@github.com/TangMisaka23001/TangMisaka23001.github.io.git backup
