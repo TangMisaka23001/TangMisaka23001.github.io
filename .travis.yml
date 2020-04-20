@@ -1,5 +1,6 @@
 language: node_js   #设置语言
 node_js: stable     #设置相应的版本
+ignore: 
 notifications: #开启邮件通知
   email:
     recipients:
@@ -34,7 +35,7 @@ after_script:
   - cat source/leancloud.memo
   - git checkout backup
   - git add source/leancloud.memo
-  - git commit -m "update leancloud.memo"
+  - git commit -m "update leancloud.memo [skip ci]"
   - git push -u https://${Travis_CI}@github.com/TangMisaka23001/TangMisaka23001.github.io.git backup
 branches:
   only:
