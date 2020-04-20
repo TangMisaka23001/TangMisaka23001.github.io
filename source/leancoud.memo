@@ -1,8 +1,10 @@
 {
-	"message": "test",
+	"message": "travis-ci auto upload for leancloud.memo",
 	"branch": "backup",
 	"committer": {
-		"name": "travis-ci auto upload"
+		"name": "travis-ci auto upload",
+		"email": "mikasatang@gmail.com"
 	},
-	"content": ""
+	"content": "ew0KCSJtZXNzYWdlIjogInRlc3QiLA0KCSJicmFuY2giOiAiYmFja3VwIiwNCgkiY29tbWl0dGVyIjogew0KCQkibmFtZSI6ICJ0cmF2aXMtY2kgYXV0byB1cGxvYWQiDQoJfSwNCgkiY29udGVudCI6ICIiDQp9",
+	"sha": "81f02a9d4669ae2ee711646dab62cf1fbfbdce52"
 }
