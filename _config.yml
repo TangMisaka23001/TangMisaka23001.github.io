@@ -104,9 +104,3 @@ leancloud_counter_security:
   app_key: 5Ks1w8pWHHdOYOrOYiU4SX1l
   username: misakatang
   password: lRyUvQZUsyXkOszuG78E
-
-backup:
-    type: git
-    theme: next,landscape
-    repository:
-       github: https://gh_token@github.com/TangMisaka23001/TangMisaka23001.github.io.git,backup-test
