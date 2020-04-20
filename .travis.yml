@@ -1,6 +1,5 @@
 language: node_js   #设置语言
 node_js: stable     #设置相应的版本
-ignore: 
 notifications: #开启邮件通知
   email:
     recipients:
