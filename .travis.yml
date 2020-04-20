@@ -30,7 +30,6 @@ after_script:
   - git config --global user.email "mikasatang@gmail.com"
   - hexo deploy
   # - hexo backup
-after_success:
   # leancloud统计相关
   - cat source/leancloud.memo
   - git remote add origin https://github.com/TangMisaka23001/TangMisaka23001.github.io.git
