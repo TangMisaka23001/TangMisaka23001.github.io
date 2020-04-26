@@ -5,7 +5,7 @@ date: 2020-04-25 13:58:57
 categories: [周报]
 tags:
 ---
-[](https://misakatang.oss-cn-beijing.aliyuncs.com/snipaste/Snipaste_2020-04-25_14-50-09.png)
+![](https://misakatang.oss-cn-beijing.aliyuncs.com/snipaste/Snipaste_2020-04-25_14-50-09.png)
 <!-- more -->
 # XMind
 在看了[【软件分享 | 硬核】真●全栈工程师的桌面是什么样的？](https://www.bilibili.com/video/BV1F7411u71s)之后决定尝试使用一下xmind来做一些知识和思路的整理,在使用了一段时间之后发现确实是不错,就是画流程图有点累人.前几个blog也是用xmind来整理知识的架构了.
@@ -19,9 +19,9 @@ tags:
 
 # [RAINDROP](https://app.raindrop.io/)
 需求的来源是现在同时使用chrome和Firefox导致标签的整理变得很困难,所以就尝试找一个页面整理和收集的工具,在一顿尝试之后目前觉得还不错.
- [](https://misakatang.oss-cn-beijing.aliyuncs.com/snipaste/Snipaste_2020-04-25_14-40-08.png)
+ ![](https://misakatang.oss-cn-beijing.aliyuncs.com/snipaste/Snipaste_2020-04-25_14-40-08.png)
 # Huginn
-[](https://misakatang.oss-cn-beijing.aliyuncs.com/snipaste/Snipaste_2020-04-25_14-42-48.png)
+ ![](https://misakatang.oss-cn-beijing.aliyuncs.com/snipaste/Snipaste_2020-04-25_14-42-48.png)
 
 主要来源一个自己的想法,想把各个网站上收藏的东西都收集到一个地方.
 
