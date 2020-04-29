@@ -73,4 +73,5 @@
 {"title":"Redis分布式锁设计和实现","url":"/2020/04/19/redis-distributed-lock-summary/"},
 {"title":"重新折腾了一下博客的CI脚本","url":"/2020/04/25/reconfig-blog-ci/"},
 {"title":"我的周报(3)","url":"/2020/04/25/weekly-report-3/"},
+{"title":"The Log: What every software engineer should know about real-time data's unifying abstraction","url":"/2020/04/29/the-log/"},
 ]
