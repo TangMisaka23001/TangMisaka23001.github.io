@@ -65,6 +65,8 @@ jobs:
           git config --global user.email "mikasatang@gmail.com"
           hexo deploy
           git checkout source
-          git add source/leancloud.memo
-          git commit -m "update leancloud.memo [skip ci]"
-          git push -u https://${{ secrets.TRAVIS_CI }}@github.com/TangMisaka23001/TangMisaka23001.github.io.git source
+          ( \
+          git add source/leancloud.memo \
+          git commit -m "update leancloud.memo [skip ci]" \
+          git push -u https://${{ secrets.TRAVIS_CI }}@github.com/TangMisaka23001/TangMisaka23001.github.io.git source \
+          ) || true
