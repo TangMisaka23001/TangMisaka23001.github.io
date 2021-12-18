@@ -57,7 +57,7 @@ jobs:
       - name: upload GitHub repository
          # 将编译后的博客文件推送到指定仓库
         run: |
-          sed -i "s/gh_token/${Travis_CI}/g" ./_config.yml 
+          sed -i "s/gh_token/${{ secrets.TRAVIS_CI }}/g" ./_config.yml 
           echo "misakatang.cn" > ./public/CNAME
           cp LICENSE ./public
           cp README.md ./public
@@ -67,4 +67,4 @@ jobs:
           git checkout source
           git add source/leancloud.memo
           git commit -m "update leancloud.memo [skip ci]"
-          git push -u https://${Travis_CI}@github.com/TangMisaka23001/TangMisaka23001.github.io.git source
+          git push -u https://${{ secrets.TRAVIS_CI }}@github.com/TangMisaka23001/TangMisaka23001.github.io.git source
