@@ -1,5 +1,5 @@
 ---
-title: 中科大-高级计算机体系结构笔记
+title: UCAS-高级计算机体系结构笔记
 mathjax: false
 date: 2022-04-20 20:58:12
 categories: [课程笔记]
