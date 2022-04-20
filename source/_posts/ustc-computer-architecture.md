@@ -135,6 +135,8 @@ CPU指令类型
    - 片上多级cache
    - 加速地址翻译
    - cache访问流水线
+
+
 # 存储系统设计：主存储器
 没有miss rate 只关注命中时间
 操作类型：
@@ -186,6 +188,8 @@ DRAM controller 功能：
 - 缓存和调度请求
 - 保证操作正确（刷新）
 - 管理功耗
+
+
 # flash storage
 是一种非易失存储器
 是EPROM和EEPROM的升级产品
@@ -193,6 +197,8 @@ DRAM controller 功能：
 
 - NAND
 - NOR
+
+
 # ISA tradeoffs
 提供给程序员使用的指令集合 
 design point：
@@ -285,6 +291,8 @@ elements of ISA：
    - non-uniform
 - number of registers
 - addressing mode
+
+
 # availability & reliability
 reliability：
 
@@ -301,6 +309,8 @@ types of faults：
 - environment factors
 - security breaches
 - planned service events
+
+
 # performance engineering
 steps：
 
@@ -328,6 +338,8 @@ evaluation choices：
 - real experiments
 - using analytical models
 - using a simulator
+
+
 # on-chip networks
 shift to multicore  单核很难提升
 amdahl law：串行部分影响加速比
@@ -353,6 +365,8 @@ design：
    - adaptive
    - minimal
    - deadlock free
+
+
 # cache coherence
 communication models
 
@@ -379,6 +393,8 @@ tow rules：
    - MOSI
    - MOESI
 - 基于目录
+
+
 # memory consistency
 顺序一致性模型
 松散一致性模型：
