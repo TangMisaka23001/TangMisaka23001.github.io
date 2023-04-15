@@ -156,13 +156,12 @@ baidu_push: false
 # When running the site in a subdirectory (e.g. domain.tld/blog), remove the leading slash from link value (/archives -> archives).
 # External url should start with http:// or https://
 menu:
-  home: / || home
-  categories: /categories/ || th
-  tags: /tags/ || tags
-  WiKi: /wiki/ || book
-  about: /about/ || user
+  home: / || fa fa-home
+  categories: /categories/ || fa fa-th
+  tags: /tags/ || fa fa-tags
+  about: /about/ || fa fa-user
   #schedule: /schedule/ || calendar
-  # sitemap: /sitemap.xml || sitemap
+  #sitemap: /sitemap.xml || fa fa-sitemap
   #commonweal: /404/ || heartbeat
 
 # Enable / Disable menu icons / item badges.
@@ -196,10 +195,10 @@ site_state: true
 # Value before `||` delimiter is the target permalink.
 # Value after `||` delimiter is the name of Font Awesome icon. If icon (with or without delimiter) is not specified, globe icon will be loaded.
 social:
-  GitHub: https://github.com/TangMisaka23001 || github
-  E-Mail: mailto:mikasatang@gmail.com || envelope
+  GitHub: https://github.com/TangMisaka23001 || fab fa-github
+  E-Mail: mailto:mikasatang@gmail.com || fa fa-envelope
   #Weibo: https://weibo.com/yourname || weibo
-  豆瓣主页: https://www.douban.com/people/misakatang/ || 
+  #豆瓣主页: https://www.douban.com/people/misakatang/ || 
   #Twitter: https://twitter.com/yourname || twitter
   #FB Page: https://www.facebook.com/yourname || facebook
   #VK Group: https://vk.com/yourname || vk
@@ -220,10 +219,10 @@ links_layout: block
 #links_layout: inline
 #links:
 links:
-  ChenWei的博客: https://xiaoshidefeng.github.io/
+  #ChenWei的博客: https://xiaoshidefeng.github.io/
   BB chen的漂流记: http://blog.bbchen.top/
   Aurthur_的博客: http://blog.zhuzhenyuan.cn/
-  1ni的博客: http://pyking.cn/
+  #1ni的博客: http://pyking.cn/
 
 
 # Sidebar Avatar
