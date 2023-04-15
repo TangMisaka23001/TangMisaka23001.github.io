@@ -43,7 +43,6 @@ jobs:
           npm install hexo-cli -g
           npm install hexo-deployer-git --save
           npm install hexo-git-backup --save
-          npm install hexo-leancloud-counter-security
           npm install
            
       
@@ -64,9 +63,3 @@ jobs:
           git config --global user.name "misakatang"
           git config --global user.email "mikasatang@gmail.com"
           hexo deploy
-          git checkout source
-          ( \
-          git add source/leancloud.memo \
-          git commit -m "update leancloud.memo [skip ci]" \
-          git push -u https://${{ secrets.TRAVIS_CI }}@github.com/TangMisaka23001/TangMisaka23001.github.io.git source \
-          ) || true

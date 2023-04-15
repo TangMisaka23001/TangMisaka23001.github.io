@@ -1,5 +1,5 @@
 ---
-title: "InnoDB官方文档--14.6\_InnoDB在磁盘上的结构--14.6.1\_表(Tables)"
+title: "InnoDB官方文档--14.6 InnoDB在磁盘上的结构--14.6.1表(Tables)"
 mathjax: false
 date: 2019-03-01 17:22:22
 categories: [文档翻译]

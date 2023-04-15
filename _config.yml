@@ -14,7 +14,7 @@ timezone:
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: http://misakatang.cn
 root: /
-permalink: :year/:month/:day/:title/
+permalink: :year/:month/:day/:name/
 permalink_defaults:
 
 # Directory
@@ -81,7 +81,6 @@ deploy:
     repo: https://gh_token@github.com/TangMisaka23001/TangMisaka23001.github.io.git
     branch: master
     message: "github action auto build"
-  - type: leancloud_counter_security_sync
 
 search:
   enable: true
@@ -96,11 +95,3 @@ feed:
   content_limit: 140
   content_limit_delim: ' '
   order_by: -date
-
-leancloud_counter_security:
-  enable_sync: true
-  server_url: https://leancloud.cn
-  app_id: M1hXHB2YJ8SC7uPYi7vsCKwU-gzGzoHsz
-  app_key: 5Ks1w8pWHHdOYOrOYiU4SX1l
-  username: misakatang
-  password: lRyUvQZUsyXkOszuG78E
