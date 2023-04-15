@@ -26,7 +26,7 @@ jobs:
        # 设置 node.js 环境
         uses: actions/setup-node@v1
         with:
-          node-version: '13'
+          node-version: 'latest'
           
       - name: Cache node modules
       # 设置包缓存目录，避免每次下载
