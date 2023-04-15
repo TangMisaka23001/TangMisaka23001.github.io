@@ -17,10 +17,8 @@
     "hexo-renderer-ejs": "^2.0.0",
     "hexo-renderer-marked": "^6.0.0",
     "hexo-renderer-stylus": "^2.1.0",
-    "hexo-renderer-swig": "^2.0.0",
     "hexo-server": "^3.0.0",
-    "hexo-theme-next": "^8.15.1",
-    "lodash": "^4.17.21"
+    "hexo-theme-next": "^8.15.1"
   },
   "devDependencies": {
     "cz-conventional-changelog": "^3.3.0"
