@@ -131,6 +131,7 @@ networks:
     external: true
 ```
 最终我们的本地文件如下：
+
 ![](https://misakatang.oss-cn-beijing.aliyuncs.com/blog_picture/2023-04-30-V4tgG7.png)
 
 首先创建网络：`docker network create traefik-public`
@@ -170,4 +171,4 @@ networks:
 
 成功访问：
 
-![](https://misakatang.oss-cn-beijing.aliyuncs.com/blog_picture/2023-04-30-g67GiM.png)
+![](https://misakatang.oss-cn-beijing.aliyuncs.com/blog_picture/2023-04-30-UnZSW6.png)
