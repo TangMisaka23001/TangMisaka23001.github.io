@@ -6,7 +6,7 @@ categories: [生活]
 tags: [骑行, 运动]
 ---
 ![](https://misakatang.oss-cn-beijing.aliyuncs.com/picture/20191022_204648.jpg)
-<!-- more -->
+
 # 开篇
 在日趋增长的体重已经不能再被掩盖之后,健身的计划也是需要提上日程了.也是正好发了补助,就打算好了买辆车开始骑行吧.
 

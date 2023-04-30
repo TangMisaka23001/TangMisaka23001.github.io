@@ -10,7 +10,7 @@ tags: [Python, Django]
 这是**Writing your first Django app, part 2**  
 接着第一部分的例子继续,在这个部分我们要设置数据库,创建第一个模型并且快速介绍一下django的自动生成的admin管理页面.  
 自己写的代码也同步在github的仓库里:[mysite-part2](https://github.com/TangMisaka23001/mysite/tree/part2)
-<!-- more -->
+
 [](#数据库设置 "数据库设置")数据库设置
 =======================
 

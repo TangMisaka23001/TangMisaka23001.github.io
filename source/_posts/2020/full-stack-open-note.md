@@ -8,7 +8,7 @@ tags: [课程, 笔记, Xmind, React, Javascript, Express]
 # 深入浅出现代Web编程:[https://fullstackopen.com/zh/](https://fullstackopen.com/zh/)
 
 ![](https://misakatang.oss-cn-beijing.aliyuncs.com/blog_picture/fullstack.png)
-<!-- more -->
+
 [full_stack_open.xmind](https://github.com/TangMisaka23001/TangMisaka23001.github.io/blob/source/xmind/fullstackopen.xmind)
 ## 前端
 

@@ -19,7 +19,7 @@ Output: ["Alaska", "Dad"]
 
 *   You may use one character in the keyboard more than once.
 *   You may assume the input string will only contain letters of alphabet.
-<!-- more -->
+
 [](#理解 "理解")理解
 --------------
 

@@ -22,7 +22,7 @@ InnoDB系统表空间包含了InnoDB数据文件(InnoDB相关的对象元数据)
 2. 如果之前的最后一个数据文件定义了关键字` autoextend`,根据基于实际增长的大小改变其定义为固定的大小.检查数据文件的大小,将其向下舍入为最接近的1024×1024字节的倍数(1MB),然后在` innodb_data_file_path`指定这个大小.
 3. 在` innodb_data_file_path`配置后添加一个新的数据文件,配置其自动扩展.只有` innodb_data_file_path`中的最后一个文件可以被指定为自动扩展.
 4. 启动MySQL服务器.
-<!-- more -->
+
 例如,表空间只有一个自动扩展的数据文件ibdata1:
 ```
 innodb_data_home_dir =

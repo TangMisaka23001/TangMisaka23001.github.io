@@ -17,7 +17,7 @@ tags: [SpringBoot, Java, Mock]
 4. [SpringBoot 中文翻译文档--测试](https://jack80342.gitbook.io/spring-boot/iv.-spring-boot-features/43.-testing)
 
 在文档中主要参考了MockMvc的使用,关于MockMvc之前也写过blog:[翻译:Spring MVC Test Framework--MockMvc使用](https://misakatang.cn/2018/10/18/%E7%BF%BB%E8%AF%91-Spring-MVC-Test-Framework-MockMvc%E4%BD%BF%E7%94%A8/).在当时主要是尝试了对单个项目的端口测试,在这次研究中主要考虑如何方便的对单个服务中依赖的服务进行打桩(stub)和Mock.
-<!-- more -->
+
 ## 续前言
 
 原本是打算把每个框架的使用方法都写写的,但是在几天的整合实践之后发现官方的文档都很友善所以下面就当作一个内容的小结,把一些需要注意的点总结一下,详细的用法还是看官方文档就可以了.

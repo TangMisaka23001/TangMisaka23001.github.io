@@ -16,7 +16,7 @@ date: 2020-09-12 12:04:50
 而且内存也开始不是很够用了就打算把服务都迁移到树莓派上(主要是ttrss),然后就折腾了将近一个星期都差不多迁移完成了.
 
 唯一的深坑就是某些docker镜像不支持arm架构没法继续使用了吧(比如Huginn).
-<!-- more -->
+
 # 安装Ubuntu Server
 官方文档:[How to install Ubuntu on your Raspberry Pi](https://ubuntu.com/tutorials/how-to-install-ubuntu-on-your-raspberry-pi#1-overview)
 ## 镜像源

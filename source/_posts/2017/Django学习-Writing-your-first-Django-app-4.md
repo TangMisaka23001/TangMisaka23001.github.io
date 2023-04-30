@@ -23,7 +23,7 @@ tags: [Python, Django]
 <input type="submit" value="Vote" />
 </form>
 ```
-<!-- more -->
+
 [](#解释 "解释")解释
 --------------
 

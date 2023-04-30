@@ -17,7 +17,7 @@ Spring MVC Test框架为使用流畅的API测试Spring MVC代码提供了最高�
 Spring MVC Test还使用`RestTemplate`来提供客户端的代码测试.客户端的测试模拟服务端的响应所以也不会使用正在运行的服务.
 
 > Spring Boot提供了一个选项来写一个完整的,端到端的包含运行中服务的集成测试.如果这是你的目标,查看[Spring Boot reference page](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications).获取更多关于容器外和端到端集成测试的区别的信息,查看[Differences Between Out-of-Container and End-to-End Integration Tests](#jump)
-<!-- more -->
+
 ## Server-Side Tests
 你可以使用JUnit或者TestNG为Spring MVC controller编写一个普通的单元测试.如果要这么做的话,实例化conreoller,使用mocked或者stubbed依赖注入,然后使用它们的方法就行了(例如:`MockHttpServletRequest`,`MockHttpServletResponse`,和其他有必要用到的).然而,当你这样来写单元测试的时候,很多东西是测试不到的,例如:RequestMapping,数据绑定,类型转换,数据的合法性验证等等.此外,其他的controller方法,例如`@InitBinder`,`@ModelAttribute`和`@ExceptionHandler`也会作为请求过程生命周期中的一部分被请求到.
 

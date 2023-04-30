@@ -19,7 +19,7 @@ tags: [Jenkins, docker, CI]
 2. 由于线上服务器为阿里ECS并且外网无法访问，所以使用了部署服务器(外网IP)来做跳转和部署
 3. 因为项目使用了SpringCloud的微服务框架并且使用了NACOS注册中心，所以在服务的优雅下线重启阶段使用了nacos的服务调度API并没有使用SpringCloud自带的端点，当然本质都是通过接口调用告知注册中心下线服务
 4. 由于线上服务器均没有使用root用户来发布应用所以在这里踩了小坑，暂时的解决方案可能并不完美
-<!-- more -->
+
 # Jenkins
 ## 安装
 官方教程的链接：[Installing Jenkins](https://jenkins.io/doc/book/installing/)

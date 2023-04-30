@@ -6,7 +6,7 @@ categories: [生活]
 tags: [周报]
 ---
 ![](https://misakatang.oss-cn-beijing.aliyuncs.com/snipaste/Snipaste_2020-04-25_14-50-09.png)
-<!-- more -->
+
 # XMind
 在看了[【软件分享 | 硬核】真●全栈工程师的桌面是什么样的？](https://www.bilibili.com/video/BV1F7411u71s)之后决定尝试使用一下xmind来做一些知识和思路的整理,在使用了一段时间之后发现确实是不错,就是画流程图有点累人.前几个blog也是用xmind来整理知识的架构了.
 # 学了点前端

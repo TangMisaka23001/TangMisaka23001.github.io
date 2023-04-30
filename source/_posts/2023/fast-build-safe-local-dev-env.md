@@ -172,3 +172,16 @@ networks:
 成功访问：
 
 ![](https://misakatang.oss-cn-beijing.aliyuncs.com/blog_picture/2023-04-30-UnZSW6.png)
+
+## 参考文章
+大致流程参考：
+
+[How to handle https with docker-compose and mkcert for local development](https://knplabs.com/en/blog/how-to-handle-https-with-docker-compose-and-mkcert-for-local-development/)
+
+意识到需要配置network提供互联性：
+
+[Application monitoring with Traefik, Prometheus, Grafana, and Docker Compose for beginners](https://medium.com/@ugenef/application-monitoring-with-traefik-prometheus-grafana-and-docker-compose-for-beginners-2fe25d1b60a8)
+
+把两个文件优化成只有一个动态文件：
+
+[Setting Up Traefik 2 with Local SSL Certificate](https://kevinquillen.com/setting-traefik-2-local-ssl-certificate)

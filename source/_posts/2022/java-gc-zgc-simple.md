@@ -12,7 +12,7 @@ tags: [Java, GC, 垃圾回收]
 
 ![GC停顿时间比较](https://misakatang.oss-cn-beijing.aliyuncs.com/blog_picture/2022-09-26-OrPcrg.png)
 
-<!-- more -->
+
 ## 关注点
 
 衡量垃圾收集器的三项最重要的指标是：内存占用（Footprint）、吞吐量（Throughput）和延迟（Latency），三者共同构成了一个“不可能三角”。

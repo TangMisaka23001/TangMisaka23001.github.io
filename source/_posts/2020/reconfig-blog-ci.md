@@ -8,7 +8,7 @@ tags: [Blog, 博客, Travis CI, CI, hexo]
 **leancloud_counter_security插件生成的leancoud.memo问题**
 
 之前在配置了leancloud_counter_security插件之后就没有在意了,但是最近注意到没有收到ci的构建邮件了就去重新看了一下ci配置,果然还是问题重重.
-<!-- more -->
+
 ## Travis CI 整合 leancloud_counter_security
 因为一开始做ci的整合的时候对ci脚本并没有很深的理解,所以也就是拿来就用,在熟悉了ci后的现在再来审视脚本就感觉有很多可以调整的地方.
 

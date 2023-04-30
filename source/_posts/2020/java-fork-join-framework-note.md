@@ -6,7 +6,7 @@ categories: [技术]
 tags: [笔记, Java, concurrent, Doug Lea]
 ---
 ![](https://misakatang.oss-cn-beijing.aliyuncs.com/blog_picture/fork-join%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0.png)
-<!-- more -->
+
 
 ## 前言
 这篇blog主要是在看了Doug Lea的fork/join实现的paper之后的一个总结.

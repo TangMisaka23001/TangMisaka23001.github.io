@@ -6,7 +6,7 @@ categories: [技术]
 tags: [笔记, redis, 分布式锁]
 ---
 ![](https://misakatang.oss-cn-beijing.aliyuncs.com/blog_picture/distributed-locks-with-redis.png)
-<!-- more -->
+
 [Redlock.xmind](https://github.com/TangMisaka23001/TangMisaka23001.github.io/blob/source/xmind/Redlock.xmind)
 # 参考文章
 [Distributed locks with Redis](https://redis.io/topics/distlock)

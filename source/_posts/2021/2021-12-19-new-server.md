@@ -7,7 +7,7 @@ tags: [Docker, docker-compose, Nginx, Portainer, VuePress]
 ---
 # 前言
 许久没有折腾博客了，就借着双11买了台国内服务器建站的时机来水一篇，恢复一下节奏。因为很久没用才发现之前用的Travis CI已经不知道因为什么原因触发不了了，就正好也折腾一下，换成了Github Action。
-<!-- more -->
+
 # Github Action
 鉴于之前根本没有接触过Github Action的写法，所以解决问题的核心就是找几个例子看一下，然后看看怎么改装现有的CI脚本。
 ## copy from

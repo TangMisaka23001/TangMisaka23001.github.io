@@ -13,7 +13,7 @@ tags: [周报, agile-learning, blog, windows]
 在许久之前看了[基于GitHub的敏捷学习方法之道与术](http://insights.thoughtworkers.org/agile-learning-method-base-on-github/)之后就深受影响然后搞了一个仓库[Agile-Learning](https://github.com/TangMisaka23001/Agile-Learning)也坚持搞了一段时间(MySQL文档翻译就是这样促成的),但是过年回来之后惰性发作也就许久没有再去动这个仓库也就闲置了许久,最近打算重新使用之后发现private的仓库不能无偿使用wiki,也就借着public的机会把这个仓库和github.io的仓库给合并了顺便整理了一下吧.
 
 因为写博客的分支是在backup上的,所以对博客访问也没有什么影响,也是方便自己管理,之前没有public敏捷学习的仓库也是因为打算实践一段时间找到自己的使用方式之后再public出来,现在也是想用wiki就用public的方式来督促一下自己吧算是.
-<!-- more -->
+
 # 用wiki整合知识
 承接上文现在也是打算吧一些开发和日常过程中自己Google过的不熟悉的东西整理到wiki里面去了(毕竟记性不好,还是写下来靠谱):
 [个人知识点整理用wiki](https://github.com/TangMisaka23001/TangMisaka23001.github.io/wiki)

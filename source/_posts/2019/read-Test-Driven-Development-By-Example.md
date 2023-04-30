@@ -21,7 +21,7 @@ tags: [笔记, TDD, 看书, Test]
 2. Green-make the test work quickly.
 3. Refactor-eliminate all the duplication created.
 
-<!-- more -->
+
 
 - 红:写测试
 - 绿:写代码通过测试

@@ -123,7 +123,7 @@ Some pointers may be invalid and cause the dump to abort.
 Query (0): Connection ID (thread ID): 2
 Status: NOT_KILLED
 ```
-<!-- more -->
+
 并且大量出现了这个错误日志,同时MySQL的目录下relay_log大量堆积.并且服务器一直处于无法正常启动的情况下,在参考了[mysql的killed mysql数据启动大量报错且无法启动故障排查](https://m.fuwuqizhijia.com/mysql/201704/33120.html)之后,使用下面的方法正常启动的MySQL的进程:
 ```sql
 /mysql/bin/mysqld_safe --relay-log nor --relay-log-index

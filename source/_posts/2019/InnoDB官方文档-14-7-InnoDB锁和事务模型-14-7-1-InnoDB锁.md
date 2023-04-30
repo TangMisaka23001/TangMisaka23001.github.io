@@ -14,7 +14,7 @@ tags: [MySQL, InnoDB]
 - 14.7.3 InnoDB中不同SQL语句设置的锁 讨论了InnoDB中为各种语句设置的特定锁类型.
 - 14.7.4 幻想行 描述InnoDB如何使用下一个键锁定来避免幻像行
 - 14.7.5 InnoDB中的死锁 提供了一个死锁示例,讨论了死锁检测和回滚,并提供了在InnoDB中最小化和处理死锁的技巧.
-<!-- more -->
+
 #### 14.7.1 InnoDB锁
 **共享和独占锁(Shared and Exclusive Locks)**
 
