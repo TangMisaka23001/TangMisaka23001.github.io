@@ -2,7 +2,7 @@
 title: 跟着qsc搞机(器学习)--线性回归以及最大似然解线性回归问题
 mathjax: true
 date: 2018-09-15 20:50:32
-categories: [笔记]
+categories: [技术]
 tags: [线性回归, 机器学习]
 ---
 [](#开始 "开始")开始

@@ -2,8 +2,8 @@
 title: 重新折腾了一下博客的CI脚本
 mathjax: false
 date: 2020-04-25 13:58:28
-categories: [问题解决]
-tags: [Travis CI, CI, hexo]
+categories: [技术]
+tags: [Blog, 博客, Travis CI, CI, hexo]
 ---
 **leancloud_counter_security插件生成的leancoud.memo问题**
 

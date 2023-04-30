@@ -2,7 +2,7 @@
 title: InnoDB官方文档--14.7 InnoDB锁和事务模型|14.7.1 InnoDB锁
 mathjax: false
 date: 2019-03-30 15:33:05
-categories: [文档翻译]
+categories: [技术]
 tags: [MySQL, InnoDB]
 ---
 ### 14.7 InnoDB锁和事务模型

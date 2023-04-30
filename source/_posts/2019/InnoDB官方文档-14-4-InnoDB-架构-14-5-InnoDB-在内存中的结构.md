@@ -2,7 +2,7 @@
 title: InnoDB官方文档--14.4 InnoDB 架构|14.5 InnoDB 在内存中的结构
 mathjax: false
 date: 2019-02-18 22:38:17
-categories: [文档翻译]
+categories: [技术]
 tags: [MySQL, InnoDB]
 ---
 ### 14.4 InnoDB 架构

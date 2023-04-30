@@ -2,7 +2,8 @@
 title: UCAS-高级计算机体系结构笔记
 mathjax: false
 date: 2022-04-20 20:58:12
-categories: [课程笔记]
+categories: [技术]
+tags: [体系结构, 课程]
 ---
 # 经典技术回顾
 cpu设计历史

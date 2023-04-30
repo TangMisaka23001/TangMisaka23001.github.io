@@ -2,7 +2,7 @@
 title: SpringBoot单元测试小结
 mathjax: false
 date: 2020-04-14 20:26:40
-categories: [技术教程]
+categories: [技术]
 tags: [SpringBoot, Java, Mock]
 ---
 ## 前言

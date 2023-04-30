@@ -2,8 +2,8 @@
 title: 我的周报(2)
 mathjax: false
 date: 2019-10-27 15:07:21
-categories: [周报]
-tags: [v2ray, JetBrains]
+categories: [生活]
+tags: [周报, v2ray, JetBrains]
 ---
 # 写在前面
 之前也是写了一篇[这周搞的一些新东西](https://misakatang.cn/2019/09/08/what-new-things-this-week/),其实当时就是看了V2站长开始写周报也有了点想法但是想想似乎每周也没有那么多可写的内容,就先随便写了一篇.但是最近也算是有点清闲又骚了很多新的东西就不免想要记录一下,正好趁着给博客重新进行了一波整理分类之后也是下了开始写周报的决心吧,但是频率可能也就是2周或者3周记录和总结一下.

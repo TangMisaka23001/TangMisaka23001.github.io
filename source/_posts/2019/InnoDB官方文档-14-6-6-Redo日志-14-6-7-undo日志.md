@@ -2,7 +2,7 @@
 title: InnoDB官方文档--14.6.6 Redo日志|14.6.7 undo日志
 mathjax: false
 date: 2019-03-30 15:24:30
-categories: [文档翻译]
+categories: [技术]
 tags: [MySQL, InnoDB]
 ---
 #### 14.6.6 Redo日志

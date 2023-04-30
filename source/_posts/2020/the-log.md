@@ -2,8 +2,8 @@
 title: "The Log: What every software engineer should know about real-time data's unifying abstraction"
 mathjax: false
 date: 2020-04-29 19:54:08
-categories: [笔记]
-tags: [分布式, 日志]
+categories: [技术]
+tags: [笔记, 分布式, 日志]
 ---
 ## 第一部分: 什么是日志
 

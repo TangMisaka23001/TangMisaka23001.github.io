@@ -1,8 +1,8 @@
 ---
 title: LeetCode刷题--461.Hamming Distance
 date: 2017-07-18 15:49:46
-categories: [算法]
-tags: [LeetCode]
+categories: [技术]
+tags: [算法, LeetCode]
 ---
 从这个博客开始打算坚持在LeetCode上刷一点算法题,之后可能也会有Python版本的现在还是用C++在写了,就先从简单题开始刷起了.
 

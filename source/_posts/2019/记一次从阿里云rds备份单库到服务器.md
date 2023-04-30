@@ -1,7 +1,7 @@
 ---
 title: 记一次从阿里云rds备份单库到服务器
-categories: [问题解决]
-tags: [Mysql,阿里云]
+categories: [技术]
+tags: [问题解决, Mysql, 阿里云]
 mathjax: false
 date: 2019-02-16 15:57:42
 ---

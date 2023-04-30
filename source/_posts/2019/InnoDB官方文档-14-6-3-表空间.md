@@ -2,7 +2,7 @@
 title: InnoDB官方文档--14.6.3 表空间(Tablespaces)
 mathjax: false
 date: 2019-03-25 22:04:07
-categories: [文档翻译]
+categories: [技术]
 tags: [MySQL, InnoDB]
 ---
 #### 14.6.3 表空间(Tablespaces)

@@ -2,8 +2,8 @@
 title: Redis分布式锁设计和实现
 mathjax: false
 date: 2020-04-19 17:25:09
-categories: [笔记]
-tags: [redis, 分布式锁]
+categories: [技术]
+tags: [笔记, redis, 分布式锁]
 ---
 ![](https://misakatang.oss-cn-beijing.aliyuncs.com/blog_picture/distributed-locks-with-redis.png)
 <!-- more -->

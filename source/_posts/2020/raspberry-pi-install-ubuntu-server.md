@@ -1,7 +1,7 @@
 ---
 title: 服务器迁移到树莓派
 categories:
-  - 运维
+  - 技术
 tags:
   - 树莓派
   - docker

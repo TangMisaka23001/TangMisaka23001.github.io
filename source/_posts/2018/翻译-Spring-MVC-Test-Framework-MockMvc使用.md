@@ -2,7 +2,7 @@
 title: '翻译:Spring MVC Test Framework--MockMvc使用'
 mathjax: false
 date: 2018-10-18 20:44:18
-categories: [文档翻译]
+categories: [技术]
 tags: [Java, MockMvc, JavaTest, Test]
 ---
 # 前言

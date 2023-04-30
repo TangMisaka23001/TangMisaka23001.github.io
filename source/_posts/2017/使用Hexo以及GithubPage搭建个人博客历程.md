@@ -1,7 +1,8 @@
 ---
 title: 使用Hexo以及GithubPage搭建个人博客历程
 date: 2017-07-04 13:06:51
-categories: [技术教程]
+categories: [技术]
+tags: [Hexo, Blog, 博客]
 ---
 [](#简介 "简介")简介
 ==============

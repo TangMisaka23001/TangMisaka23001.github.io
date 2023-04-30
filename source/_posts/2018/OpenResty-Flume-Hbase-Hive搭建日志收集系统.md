@@ -1,7 +1,7 @@
 ---
 title: OpenResty+Flume+Hbase+Hive搭建日志收集系统
 date: 2018-08-07 22:09:00
-categories: [技术教程]
+categories: [技术]
 tags: [Flume, Nginx, Hive, Hbase]
 ---
 最近因为需要,自己尝试了一波日志收集系统的搭建,这一部分只是做离线分析使用的HBase的数据,Kafka的实时数据消费还没有尝试部署,主要流程是从Nginx服务器接收请求的方式打印日志,由Flume收集之后进入HBase,Hive提供一个SQL的接口功能.

@@ -1,8 +1,8 @@
 ---
 title: LeetCode刷题--500. Keyboard Row
 date: 2017-07-31 19:53:42
-categories: [算法]
-tags: [LeetCode]
+categories: [技术]
+tags: [算法, LeetCode]
 ---
 [](#题目及理解 "题目及理解")题目及理解
 =======================

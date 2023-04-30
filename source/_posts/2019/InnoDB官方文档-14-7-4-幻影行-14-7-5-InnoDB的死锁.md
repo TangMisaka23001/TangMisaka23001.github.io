@@ -2,7 +2,7 @@
 title: "InnoDB官方文档--14.7.4 幻影行|14.7.5 InnoDB的死锁"
 mathjax: false
 date: 2019-09-02 14:45:22
-categories: [文档翻译]
+categories: [技术]
 tags: [MySQL, InnoDB]
 ---
 #### 14.7.4 幻影行

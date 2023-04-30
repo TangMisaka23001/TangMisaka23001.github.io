@@ -1,8 +1,6 @@
 ---
 title: Life is Strange
 categories:
-  - 随想集
-tags:
   - 游戏
 mathjax: false
 date: 2019-01-12 15:19:54

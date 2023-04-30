@@ -2,8 +2,8 @@
 title: 深入浅出现代Web编程(全栈公开课 2020) 笔记
 mathjax: false
 date: 2020-08-30 14:58:27
-categories: [笔记]
-tags: [Xmind, React, Javascript, Express]
+categories: [技术]
+tags: [课程, 笔记, Xmind, React, Javascript, Express]
 ---
 # 深入浅出现代Web编程:[https://fullstackopen.com/zh/](https://fullstackopen.com/zh/)
 

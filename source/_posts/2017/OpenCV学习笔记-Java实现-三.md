@@ -1,8 +1,8 @@
 ---
 title: OpenCV学习笔记-Java实现(三)
 date: 2017-07-08 20:59:27
-categories: [笔记]
-tags: [OpenCV, Java]
+categories: [技术]
+tags: [笔记, OpenCV, Java]
 ---
 [](#简述 "简述")简述
 ==============

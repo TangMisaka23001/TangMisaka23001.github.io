@@ -2,7 +2,7 @@
 title: "InnoDB官方文档--14.2\_InnoDB 和 ACID 模型"
 mathjax: false
 date: 2019-02-16 14:44:29
-categories: [文档翻译]
+categories: [技术]
 tags: [MySQL, InnoDB]
 ---
 ### 14.2 InnoDB 和 ACID 模型

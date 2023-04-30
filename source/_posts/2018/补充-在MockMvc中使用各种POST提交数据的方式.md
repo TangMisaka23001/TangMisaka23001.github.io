@@ -2,7 +2,7 @@
 title: '补充:在MockMvc中使用各种POST提交数据的方式'
 mathjax: false
 date: 2018-10-18 21:44:29
-categories: [未分类]
+categories: [技术]
 tags: [MockMvc, Java]
 ---
 # application/x-www-form-urlencoded

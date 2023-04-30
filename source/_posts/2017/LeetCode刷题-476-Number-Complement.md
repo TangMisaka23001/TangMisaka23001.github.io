@@ -1,8 +1,8 @@
 ---
 title: LeetCode刷题--476. Number Complement
 date: 2017-07-30 16:19:19
-categories: [算法]
-tags: [LeetCode]
+categories: [技术]
+tags: [算法, LeetCode]
 ---
 [](#题目及理解 "题目及理解")题目及理解
 =======================

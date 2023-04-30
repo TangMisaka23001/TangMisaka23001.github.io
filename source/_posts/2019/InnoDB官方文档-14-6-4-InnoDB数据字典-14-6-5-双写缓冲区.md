@@ -2,7 +2,7 @@
 title: InnoDB官方文档--14.6.4 InnoDB数据字典|14.6.5 双写缓冲区
 mathjax: false
 date: 2019-03-30 15:23:30
-categories: [文档翻译]
+categories: [技术]
 tags: [MySQL, InnoDB]
 ---
 #### 14.6.4 InnoDB数据字典(InnoDB Data Dictionary)

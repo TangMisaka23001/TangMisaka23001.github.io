@@ -2,7 +2,7 @@
 title: "InnoDB官方文档--14.7.2 InnoDB事务模型|14.7.3 InnoDB中的不同SQL语句设置的锁"
 mathjax: false
 date: 2019-09-02 12:01:22
-categories: [文档翻译]
+categories: [技术]
 tags: [MySQL, InnoDB]
 ---
 #### 14.7.2 InnoDB事务模型

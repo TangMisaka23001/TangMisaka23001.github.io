@@ -1,8 +1,8 @@
 ---
 title: LeetCode刷题--617. Merge Two Binary Trees
 date: 2017-07-19 18:55:16
-categories: [算法]
-tags: [LeetCode]
+categories: [技术]
+tags: [算法, LeetCode]
 ---
 [](#题目及理解 "题目及理解")题目及理解
 =======================

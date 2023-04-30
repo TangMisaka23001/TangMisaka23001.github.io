@@ -1,8 +1,8 @@
 ---
 title: LeetCode刷题--557. Reverse Words in a String III
 date: 2017-08-01 20:54:46
-categories: [算法]
-tags: [LeetCode]
+categories: [技术]
+tags: [算法, LeetCode]
 ---
 [](#题目及理解 "题目及理解")题目及理解
 =======================

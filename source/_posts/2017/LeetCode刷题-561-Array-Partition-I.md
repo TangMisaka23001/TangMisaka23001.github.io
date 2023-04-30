@@ -1,8 +1,8 @@
 ---
 title: LeetCode刷题--561. Array Partition I
 date: 2017-07-20 16:15:33
-categories: [算法]
-tags: [LeetCode]
+categories: [技术]
+tags: [算法, LeetCode]
 ---
 [](#题目及理解 "题目及理解")题目及理解
 =======================

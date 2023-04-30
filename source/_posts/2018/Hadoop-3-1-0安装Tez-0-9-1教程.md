@@ -1,7 +1,7 @@
 ---
 title: Hadoop-3.1.0安装Tez-0.9.1教程
 date: 2018-09-15 19:37:18
-categories: [技术教程]
+categories: [技术]
 tags: [Hadoop, Java, Tez]
 ---
 [](#需知 "需知")需知

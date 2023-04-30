@@ -2,8 +2,8 @@
 title: '阅读:Test-Driven Development By Example'
 mathjax: false
 date: 2019-09-03 17:00:13
-categories: [笔记]
-tags: [TDD, 看书, Test]
+categories: [技术]
+tags: [笔记, TDD, 看书, Test]
 ---
 # Perface
 **TDD rules:**

@@ -2,7 +2,7 @@
 title: InnoDB官方文档--14.6.2 索引(Indexes)
 mathjax: false
 date: 2019-03-10 18:29:07
-categories: [文档翻译]
+categories: [技术]
 tags: [MySQL, InnoDB]
 ---
 #### 14.6.2 索引(Indexes)

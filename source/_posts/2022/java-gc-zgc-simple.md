@@ -2,7 +2,7 @@
 title: Java GC简单整理
 mathjax: false
 date: 2022-11-01 13:58:57
-categories: [笔记]
+categories: [技术]
 tags: [Java, GC, 垃圾回收]
 ---
 # 00

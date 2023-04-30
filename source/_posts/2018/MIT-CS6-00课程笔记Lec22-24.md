@@ -1,8 +1,8 @@
 ---
 title: MIT-CS6-00笔记Lec22-24
 date: 2018-06-24 14:45:29
-categories: [笔记]
-tags: [公开课, CS6.00]
+categories: [技术]
+tags: [笔记, 公开课, CS6.00]
 ---
 [](#Lec22 "Lec22.")Lec22.
 =========================

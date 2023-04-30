@@ -2,7 +2,7 @@
 title: InnoDB官方文档--14.3 InnoDB的多版本
 mathjax: false
 date: 2019-02-16 14:45:55
-categories: [文档翻译]
+categories: [技术]
 tags: [MySQL, InnoDB]
 ---
 ### 14.3 InnoDB的多版本

@@ -2,7 +2,7 @@
 title: "InnoDB官方文档--14.1\_InnoDB简介"
 mathjax: false
 date: 2019-02-16 14:41:22
-categories: [文档翻译]
+categories: [技术]
 tags: [MySQL, InnoDB]
 ---
 ### 14.1 InnoDB简介

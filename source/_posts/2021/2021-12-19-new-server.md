@@ -2,8 +2,8 @@
 title: 使用Docker Compose快速折腾双11新买的服务器
 mathjax: false
 date: 2021-12-19 15:27:12
-categories: [技术教程]
-tags: [Docker, DockerCompose, Nginx, Portainer, VuePress]
+categories: [技术]
+tags: [Docker, docker-compose, Nginx, Portainer, VuePress]
 ---
 # 前言
 许久没有折腾博客了，就借着双11买了台国内服务器建站的时机来水一篇，恢复一下节奏。因为很久没用才发现之前用的Travis CI已经不知道因为什么原因触发不了了，就正好也折腾一下，换成了Github Action。

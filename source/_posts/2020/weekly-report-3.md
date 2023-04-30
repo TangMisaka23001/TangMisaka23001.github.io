@@ -2,8 +2,8 @@
 title: 我的周报(3)
 mathjax: false
 date: 2020-04-25 13:58:57
-categories: [周报]
-tags:
+categories: [生活]
+tags: [周报]
 ---
 ![](https://misakatang.oss-cn-beijing.aliyuncs.com/snipaste/Snipaste_2020-04-25_14-50-09.png)
 <!-- more -->
