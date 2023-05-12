@@ -746,9 +746,14 @@ baidu_analytics: # <app_id>
 growingio_analytics: # <project_id>
 
 # Google Analytics
-google_analytics:
-  tracking_id: UA-147618435-1
-  localhost_ignored: true
+# google_analytics:
+#   tracking_id: UA-147618435-1
+#   localhost_ignored: true
+# Plausible Analytics
+plausible:
+  enable: true
+  script_url: https://plausible.bilibifun.cn/js/script.js
+  site_domain: plausible.bilibifun.cn
 
 # CNZZ count
 cnzz_siteid:
