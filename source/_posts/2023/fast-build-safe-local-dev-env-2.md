@@ -22,14 +22,16 @@ services:
     image: "traefik:latest"
     command:
       - "--api.dashboard=true"
-      - --entrypoints.web.address=:80
-      - --entrypoints.websecure.address=:443
-      - --providers.docker
-      - --log.level=ERROR
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--providers.docker"
+      - "--log.level=ERROR"
       - "--certificatesresolvers.myresolver.acme.dnschallenge=true"
       - "--certificatesresolvers.myresolver.acme.dnschallenge.provider=alidns"
-      - --certificatesresolvers.myresolver.acme.dnschallenge.delayBeforeCheck=900
-      - --certificatesresolvers.myresolver.acme.dnschallenge.resolvers=223.5.5.5:53
+      # 检查之前延迟900s保证解析已经刷新
+      - "--certificatesresolvers.myresolver.acme.dnschallenge.delayBeforeCheck=900"
+      # 手动指定阿里DNS优化解析
+      - "--certificatesresolvers.myresolver.acme.dnschallenge.resolvers=223.5.5.5:53"
       - "--certificatesresolvers.myresolver.acme.email=xxx@xxx.com"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     ports:
