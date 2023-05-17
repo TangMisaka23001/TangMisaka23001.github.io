@@ -749,11 +749,12 @@ growingio_analytics: # <project_id>
 # google_analytics:
 #   tracking_id: UA-147618435-1
 #   localhost_ignored: true
+
 # Plausible Analytics
-# plausible:
-#   enable: true
-#   script_url: https://plausible.bilibifun.cn/js/script.js
-#   site_domain: misakatang.cn
+plausible:
+  enable: true
+  script_url: https://plausible.bilibifun.cn/js/script.js
+  site_domain: misakatang.cn
 
 # CNZZ count
 cnzz_siteid:
