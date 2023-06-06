@@ -79,8 +79,8 @@ theme: next
 deploy:
   - type: git
     repo: https://gh_token@github.com/TangMisaka23001/TangMisaka23001.github.io.git
-    branch: master
-    message: "github action auto build"
+    branch: gh-pages
+    message: "github action auto build and publish"
 
 search:
   enable: true
