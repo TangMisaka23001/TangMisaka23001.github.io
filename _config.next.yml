@@ -746,9 +746,8 @@ baidu_analytics: de7c77febeeac252eee468207ae11ce4
 growingio_analytics: # <project_id>
 
 # Google Analytics
-# google_analytics:
-#   tracking_id: UA-147618435-1
-#   localhost_ignored: true
+google_analytics:
+  tracking_id: G-4TSLH4NC9H
 
 # Plausible Analytics
 # plausible:
