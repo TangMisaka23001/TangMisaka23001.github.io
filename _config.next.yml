@@ -756,6 +756,8 @@ growingio_analytics: # <project_id>
 #   script_url: https://plausible.bilibifun.cn/js/script.js
 #   site_domain: misakatang.cn
 
+clarity_analytics: jtb4czrfeu
+
 # CNZZ count
 cnzz_siteid:
 
