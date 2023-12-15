@@ -23,7 +23,7 @@ tags: [maven, Spring]
 ## 第二次排障
 一天之后这个bug迎来了专家会诊，某Java领域大神准备对其进行一番操作，但是失败了。于是又将项目clone下来看了一看，因为病因是IDEA启动时可以正确加载而maven打包之后有问题，于是又将嫌疑人锁定到了maven上，但是根据本人浅薄的maven知识并没有发现配置有任何有问题的地方。
 
-于是又开始死马当活马医，准备使用SPI机制给spring强制注入bean试试。在spring.factories文件中配置`org.springframework.boot.autoconfigure.EnableAutoConfiguration`为controller之后发现IDEA正常启动。但是maven打包时springboot启动直接报错：找不到该class文件。
+于是又开始死马当活马医，准备使用SPI机制给spring强制注入bean试试。在spring.factories文件中配置 `org.springframework.boot.autoconfigure.EnableAutoConfiguration` 为controller之后发现IDEA正常启动。但是maven打包时springboot启动直接报错：找不到该class文件。
 
 嗯，有错误是好事，说明并不是spring装配的时候有问题而是项目启动时根本没有这个class的文件。这时候随便找了一个自己项目里的SDK jar包解压看了一下目录，又看了一下多模块中web模块的jar包：`BOOT-INF`。凶手已经找到了。
 
@@ -34,4 +34,4 @@ tags: [maven, Spring]
 
 一开始解压jar包的时候并没有关注到这个细节导致多次抢救无效。
 
-令人疑惑的是 https://github.com/alibaba/cloud-native-app-initializer/issues/65 官方仓库里竟然有这种issue，但是`<skip>true</skip>`在最外层完全是反作用导致打包失败，而内部web模块明明需要这个配置缺没有填写。属实神秘。
+令人疑惑的是 https://github.com/alibaba/cloud-native-app-initializer/issues/65 官方仓库里竟然有这种issue，但是`<skip>true</skip>`在最外层完全是反作用导致打包失败，而内部web模块明明需要这个配置却没有填写。属实神秘。
