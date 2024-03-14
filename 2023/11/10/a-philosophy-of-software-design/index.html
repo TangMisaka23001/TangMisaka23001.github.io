@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"misakatang.cn","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.17.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"style":null,"show_result":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前言作者的主要观念是关于系统解耦和信息隐藏，接口抽象就是隐藏不必要的细节防止对外暴露系统内的信息。作者提倡一个系统内的逻辑应该是“深”的而不是“宽”的（非常多的对外接口），这样会对外暴露更多的信息。 其余的内容大多是老生常谈的问题，例如如何写好注释。 这本书的另一个优点是行文简单，纯英文阅读很流畅，值得一读。  The most fundamental problem in computer sc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《A Philosophy of Software Design》笔记">
+<meta property="og:url" content="http://misakatang.cn/2023/11/10/a-philosophy-of-software-design/index.html">
+<meta property="og:site_name" content="MisakaTang&#39;s Blog">
+<meta property="og:description" content="前言作者的主要观念是关于系统解耦和信息隐藏，接口抽象就是隐藏不必要的细节防止对外暴露系统内的信息。作者提倡一个系统内的逻辑应该是“深”的而不是“宽”的（非常多的对外接口），这样会对外暴露更多的信息。 其余的内容大多是老生常谈的问题，例如如何写好注释。 这本书的另一个优点是行文简单，纯英文阅读很流畅，值得一读。  The most fundamental problem in computer sc">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-11-10T11:45:14.000Z">
+<meta property="article:modified_time" content="2024-03-14T08:33:24.914Z">
+<meta property="article:author" content="MisakaTang">
+<meta property="article:tag" content="笔记">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://misakatang.cn/2023/11/10/a-philosophy-of-software-design/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://misakatang.cn/2023/11/10/a-philosophy-of-software-design/","path":"2023/11/10/a-philosophy-of-software-design/","title":"《A Philosophy of Software Design》笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>《A Philosophy of Software Design》笔记 | MisakaTang's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4TSLH4NC9H"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-4TSLH4NC9H","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?de7c77febeeac252eee468207ae11ce4"></script>
+
+
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "jtb4czrfeu");
+</script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="MisakaTang's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">MisakaTang's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E6%80%A7%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="nav-text">复杂性的本质</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E6%80%A7%E5%AE%9A%E4%B9%89"><span class="nav-text">复杂性定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E6%80%A7%E7%9A%84%E7%97%87%E7%8A%B6"><span class="nav-text">复杂性的症状</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%A0%E6%88%90%E5%A4%8D%E6%9D%82%E6%80%A7%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="nav-text">造成复杂性的原因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E6%98%AF%E9%80%90%E6%B8%90%E9%80%92%E5%A2%9E%E7%9A%84"><span class="nav-text">复杂度是逐渐递增的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-text">结论</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%BD%E8%B7%91%E7%9A%84%E4%BB%A3%E7%A0%81%E6%98%AF%E4%B8%8D%E5%A4%9F%E7%9A%84%EF%BC%88%E6%88%98%E7%95%A5%E5%92%8C%E6%88%98%E6%9C%AF%E7%BC%96%E7%A8%8B%EF%BC%89"><span class="nav-text">能跑的代码是不够的（战略和战术编程）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%98%E6%9C%AF%E7%BC%96%E7%A8%8B"><span class="nav-text">战术编程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%98%E7%95%A5%E7%BC%96%E7%A8%8B"><span class="nav-text">战略编程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E4%BB%B7"><span class="nav-text">代价</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A5%BD%E7%9A%84%E6%A8%A1%E5%9D%97%E5%BA%94%E8%AF%A5%E6%98%AF%E2%80%9C%E6%B7%B1%E2%80%9D%E7%9A%84"><span class="nav-text">好的模块应该是“深”的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%BD%E8%B1%A1"><span class="nav-text">抽象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deep-modules"><span class="nav-text">Deep modules</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Classitis-%E7%B1%BB%E7%9A%84%E7%82%8E%E7%97%87"><span class="nav-text">Classitis(类的炎症)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-1"><span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F%EF%BC%88%E5%92%8C%E6%B3%84%E9%9C%B2%EF%BC%89"><span class="nav-text">信息隐藏（和泄露）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Temporal-decomposition-%E6%97%B6%E7%A9%BA%E5%88%86%E8%A7%A3"><span class="nav-text">Temporal decomposition(时空分解)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-2"><span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E9%80%9A%E7%94%A8%E7%9B%AE%E6%A0%87%E8%AE%BE%E8%AE%A1%E7%9A%84%E6%A8%A1%E5%9D%97%E5%BA%94%E8%AF%A5%E6%9B%B4%E2%80%9C%E6%B7%B1%E2%80%9D"><span class="nav-text">为通用目标设计的模块应该更“深”</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%95%E6%97%B6%E9%9C%80%E8%A6%81%E4%B8%80%E4%B8%AA%E6%9B%B4%E9%80%9A%E7%94%A8%E7%9A%84%E6%A8%A1%E5%9D%97%EF%BC%9F"><span class="nav-text">何时需要一个更通用的模块？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C%E7%9A%84%E5%BA%94%E7%94%A8%E5%88%86%E5%B1%82%E6%9C%89%E4%B8%8D%E5%90%8C%E7%9A%84%E6%8A%BD%E8%B1%A1%E5%86%85%E5%AE%B9"><span class="nav-text">不同的应用分层有不同的抽象内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Pass-through-methods%EF%BC%88%E9%80%8F%E4%BC%A0%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%89"><span class="nav-text">Pass-through methods（透传的方法）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E9%87%8D%E5%A4%8D%E7%9A%84%E6%8E%A5%E5%8F%A3%E6%98%AFok%E7%9A%84%EF%BC%9F"><span class="nav-text">什么时候重复的接口是ok的？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Decorators%EF%BC%88%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F%EF%BC%89"><span class="nav-text">Decorators（装饰器模式）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pass-through-variables"><span class="nav-text">Pass-through variables</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-3"><span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pull-Complexity-Downwards%EF%BC%88%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%B8%8B%E6%94%BE%EF%BC%89"><span class="nav-text">Pull Complexity Downwards（复杂度下放）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BE%E5%9C%A8%E4%B8%80%E8%B5%B7%E6%9B%B4%E5%A5%BD%E8%BF%98%E6%98%AF%E5%88%86%E5%BC%80%EF%BC%9F"><span class="nav-text">放在一起更好还是分开？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Define-Errors-Out-Of-Existence%EF%BC%88%E9%80%9A%E8%BF%87%E5%AE%9A%E4%B9%89%E6%9D%A5%E6%B6%88%E9%99%A4%E9%94%99%E8%AF%AF%EF%BC%89"><span class="nav-text">Define Errors Out Of Existence（通过定义来消除错误）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BC%82%E5%B8%B8%E4%BC%9A%E5%A2%9E%E5%8A%A0%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-text">为什么异常会增加复杂度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Just-crash"><span class="nav-text">Just crash</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Design-it-Twice%EF%BC%88%E8%AE%BE%E8%AE%A1%E4%B8%A4%E6%AC%A1%EF%BC%89"><span class="nav-text">Design it Twice（设计两次）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Why-Write-Comments-The-Four-Excuses"><span class="nav-text">Why Write Comments? The Four Excuses</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Good-code-is-self-documenting"><span class="nav-text">Good code is self-documenting.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#I-don%E2%80%99t-have-time-to-write-comments"><span class="nav-text">I don’t have time to write comments</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Comments-get-out-of-date-and-become-misleading"><span class="nav-text">Comments get out of date and become misleading</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#All-the-comments-I-have-seen-are-worthless"><span class="nav-text">All the comments I have seen are worthless</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E8%87%B4%E6%80%A7%EF%BC%88%E5%87%8F%E5%B0%91%E5%BF%83%E6%99%BA%E8%B4%9F%E6%8B%85%E5%92%8C%E5%A2%9E%E5%8A%A0%E5%9B%A2%E9%98%9F%E8%A7%84%E8%8C%83%EF%BC%89"><span class="nav-text">一致性（减少心智负担和增加团队规范）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%BA%94%E8%AF%A5%E6%98%AF%E6%98%BE%E8%80%8C%E6%98%93%E8%A7%81%E7%9A%84"><span class="nav-text">代码应该是显而易见的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-4"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Red-Flag%EF%BC%88%E5%9D%8F%E5%91%B3%E9%81%93%EF%BC%89"><span class="nav-text">Red Flag（坏味道）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Shallow-Module"><span class="nav-text">Shallow Module</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Information-Leakage"><span class="nav-text">Information Leakage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Temporal-Decomposition"><span class="nav-text">Temporal Decomposition</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Overexposure"><span class="nav-text">Overexposure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Repetition"><span class="nav-text">Repetition</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Special-General-Mixture"><span class="nav-text">Special-General Mixture</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Conjoined-Methods"><span class="nav-text">Conjoined Methods</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nonobvious-Code"><span class="nav-text">Nonobvious Code</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MisakaTang"
+      src="/images/misaka.jpg">
+  <p class="site-author-name" itemprop="name">MisakaTang</p>
+  <div class="site-description" itemprop="description">The limits of my language are the limits of my world</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/%E5%BD%92%E6%A1%A3/">
+          <span class="site-state-item-count">101</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TangMisaka23001" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TangMisaka23001" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mikasatang@gmail.com" title="E-Mail → mailto:mikasatang@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="http://blog.bbchen.top/" title="http:&#x2F;&#x2F;blog.bbchen.top" rel="noopener" target="_blank">BB chen的漂流记</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="http://blog.zhuzhenyuan.cn/" title="http:&#x2F;&#x2F;blog.zhuzhenyuan.cn" rel="noopener" target="_blank">Aurthur_的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://misakatang.cn/2023/11/10/a-philosophy-of-software-design/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/misaka.jpg">
+      <meta itemprop="name" content="MisakaTang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MisakaTang's Blog">
+      <meta itemprop="description" content="The limits of my language are the limits of my world">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="《A Philosophy of Software Design》笔记 | MisakaTang's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《A Philosophy of Software Design》笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-10 11:45:14" itemprop="dateCreated datePublished" datetime="2023-11-10T11:45:14+00:00">2023-11-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-14 08:33:24" itemprop="dateModified" datetime="2024-03-14T08:33:24+00:00">2024-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/%E5%88%86%E7%B1%BB/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>作者的主要观念是关于系统解耦和信息隐藏，接口抽象就是隐藏不必要的细节防止对外暴露系统内的信息。作者提倡一个系统内的逻辑应该是“深”的而不是“宽”的（非常多的对外接口），这样会对外暴露更多的信息。</p>
+<p>其余的内容大多是老生常谈的问题，例如如何写好注释。</p>
+<p>这本书的另一个优点是行文简单，纯英文阅读很流畅，值得一读。</p>
+<blockquote>
+<p>The most fundamental problem in computer science is problem decomposition: how to take a complex problem and divide it up into pieces that can be solved independently.</p>
+</blockquote>
+<blockquote>
+<p>Writing computer software is one of the purest creative activities in the history of the human race. Programmers aren’t bound by practical limitations such as the laws of physics; we can create exciting virtual worlds with behaviors that could never exist in the real world. </p>
+</blockquote>
+<blockquote>
+<p>There are two general approaches to fighting complexity, both of which will be discussed in this book.</p>
+</blockquote>
+<blockquote>
+<p>The first approach is to eliminate complexity by making code simpler and more obvious.</p>
+</blockquote>
+<blockquote>
+<p>The second approach to complexity is to encapsulate it, so that programmers can work on a system without being exposed to all of its complexity at once.</p>
+</blockquote>
+<h2 id="复杂性的本质"><a href="#复杂性的本质" class="headerlink" title="复杂性的本质"></a>复杂性的本质</h2><h3 id="复杂性定义"><a href="#复杂性定义" class="headerlink" title="复杂性定义"></a>复杂性定义</h3><blockquote>
+<p>Complexity is anything related to the structure of a software system that makes it hard to understand and modify the system.</p>
+</blockquote>
+<h3 id="复杂性的症状"><a href="#复杂性的症状" class="headerlink" title="复杂性的症状"></a>复杂性的症状</h3><ul>
+<li>Change amplification（变更放大）</li>
+<li>Cognitive load（认知负担）：开发者需要知道多少相关内容才能完成任务。代码长短并不能代表复杂度，更简单的实现方式可以降低认知负担（代码可能更长）</li>
+<li>Unknown unknowns（不知道还有什么是不知道的）：三个之中这个是最差的症状</li>
+</ul>
+<blockquote>
+<p>One of the most important goals of good design is for a system to be obvious.</p>
+</blockquote>
+<p>好的系统应该是显而易见的。</p>
+<h3 id="造成复杂性的原因"><a href="#造成复杂性的原因" class="headerlink" title="造成复杂性的原因"></a>造成复杂性的原因</h3><blockquote>
+<p>Complexity is caused by two things: dependencies and obscurity.</p>
+</blockquote>
+<h3 id="复杂度是逐渐递增的"><a href="#复杂度是逐渐递增的" class="headerlink" title="复杂度是逐渐递增的"></a>复杂度是逐渐递增的</h3><p>复杂性不是由一个灾难性的错误导致的，而是大量的小块组成。复杂性的渐进性使其难以控制。</p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>复杂性来自依赖和模糊的积累。随着复杂性的增加，会导致变化放大、认知负荷增加以及未知的未知因素。因此，实现每个新功能需要更多的代码修改。此外，开发人员花费更多时间获取足够的信息以确保安全修改，甚至在最糟糕的情况下，他们甚至无法找到所需的所有信息。总之，复杂性使得修改现有代码基础变得困难且风险高。</p>
+<h2 id="能跑的代码是不够的（战略和战术编程）"><a href="#能跑的代码是不够的（战略和战术编程）" class="headerlink" title="能跑的代码是不够的（战略和战术编程）"></a>能跑的代码是不够的（战略和战术编程）</h2><h3 id="战术编程"><a href="#战术编程" class="headerlink" title="战术编程"></a>战术编程</h3><p>在实现新功能或修复bug时只关注让代码跑起来就行。 这是造成系统复杂度的根源。</p>
+<h3 id="战略编程"><a href="#战略编程" class="headerlink" title="战略编程"></a>战略编程</h3><p>首先需要意识到能work的代码是不够的。为了快速完成当前的任务引入不必要的复杂性是不可接受的。</p>
+<h3 id="代价"><a href="#代价" class="headerlink" title="代价"></a>代价</h3><p>每次付出开发时间的10%-20%来进行战略编程是合理的。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>天下没有免费的午餐。小错误累计会引发大错误。幸运的是，好的设计最终会证明他自己是值得的。</p>
+<h2 id="好的模块应该是“深”的"><a href="#好的模块应该是“深”的" class="headerlink" title="好的模块应该是“深”的"></a>好的模块应该是“深”的</h2><h3 id="抽象"><a href="#抽象" class="headerlink" title="抽象"></a>抽象</h3><blockquote>
+<p>An abstraction is a simplified view of an entity, which omits unimportant details. </p>
+</blockquote>
+<h3 id="Deep-modules"><a href="#Deep-modules" class="headerlink" title="Deep modules"></a>Deep modules</h3><p>对使用者暴露面越小越好</p>
+<h3 id="Classitis-类的炎症"><a href="#Classitis-类的炎症" class="headerlink" title="Classitis(类的炎症)"></a>Classitis(类的炎症)</h3><p>类不是越小越好，无意义的拆分只会导致额外的复杂度。</p>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>通过将模块的接口与其实现分离，我们可以将实现的复杂性对系统的其余部分进行隐藏。模块的用户只需要理解接口提供的抽象。在设计类和其他模块时，最重要的问题是使它们深入，这样它们就具有简单的接口用于常见用例，同时仍然提供重要的功能。这最大程度地隐藏了复杂性的量。</p>
+<h2 id="信息隐藏（和泄露）"><a href="#信息隐藏（和泄露）" class="headerlink" title="信息隐藏（和泄露）"></a>信息隐藏（和泄露）</h2><blockquote>
+<p>The most important technique for achieving deep modules is information hiding.</p>
+</blockquote>
+<blockquote>
+<p>Information hiding reduces complexity in two ways. </p>
+</blockquote>
+<blockquote>
+<p>First, it simplifies the interface to a module. </p>
+</blockquote>
+<blockquote>
+<p>Second, information hiding makes it easier to evolve the system.</p>
+</blockquote>
+<h3 id="Temporal-decomposition-时空分解"><a href="#Temporal-decomposition-时空分解" class="headerlink" title="Temporal decomposition(时空分解)"></a>Temporal decomposition(时空分解)</h3><p>通过功能执行的时间顺序来涉及代码容易导致信息泄露。</p>
+<blockquote>
+<p>Order usually does matter, so it will be reflected somewhere in the application.</p>
+</blockquote>
+<blockquote>
+<p>When designing modules, focus on the knowledge that’s needed to perform each task, not the order in which tasks occur.</p>
+</blockquote>
+<h3 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h3><p>信息隐藏和深度模块密切相关。如果一个模块隐藏了大量信息，那往往会增加模块提供的功能数量，同时减少其接口。这使得模块更深。相反，如果一个模块没有隐藏太多信息，那么要么它功能不多，要么它的接口复杂；无论哪种情况，该模块都是浅的。在将系统分解为模块时，尽量不要受到运行时操作顺序的影响；这将使您进入时间分解的路径，导致信息泄露和浅层模块。相反，考虑一下执行应用程序任务所需的不同知识片段，并设计每个模块来封装其中的一个或几个知识片段。这将产生一个清晰简洁的设计，其中包含深度模块。</p>
+<h2 id="为通用目标设计的模块应该更“深”"><a href="#为通用目标设计的模块应该更“深”" class="headerlink" title="为通用目标设计的模块应该更“深”"></a>为通用目标设计的模块应该更“深”</h2><p>通用接口相对于特定接口具有许多优势。它们往往更简单，方法更少但更深入。它们还能在类之间提供更清晰的分离，而特定接口往往会在类之间泄露信息。使您的模块具有一定的通用性是减少整个系统复杂性的最佳途径之一。</p>
+<blockquote>
+<p>One of the most important elements of software design is determining who needs to know what, and when.</p>
+</blockquote>
+<h3 id="何时需要一个更通用的模块？"><a href="#何时需要一个更通用的模块？" class="headerlink" title="何时需要一个更通用的模块？"></a>何时需要一个更通用的模块？</h3><ul>
+<li>What is the simplest interface that will cover all my current needs?</li>
+<li>In how many situations will this method be used?</li>
+<li>Is this API easy to use for my current needs?</li>
+</ul>
+<h2 id="不同的应用分层有不同的抽象内容"><a href="#不同的应用分层有不同的抽象内容" class="headerlink" title="不同的应用分层有不同的抽象内容"></a>不同的应用分层有不同的抽象内容</h2><h3 id="Pass-through-methods（透传的方法）"><a href="#Pass-through-methods（透传的方法）" class="headerlink" title="Pass-through methods（透传的方法）"></a>Pass-through methods（透传的方法）</h3><p>透传的方法会让模块变“浅”（将下层的方法提供出来，扩大了接口暴露面）。也会让类之间的职责拆分变得模糊。</p>
+<h3 id="什么时候重复的接口是ok的？"><a href="#什么时候重复的接口是ok的？" class="headerlink" title="什么时候重复的接口是ok的？"></a>什么时候重复的接口是ok的？</h3><p>dispatcher（调度器）模式的时候是ok的。</p>
+<h3 id="Decorators（装饰器模式）"><a href="#Decorators（装饰器模式）" class="headerlink" title="Decorators（装饰器模式）"></a>Decorators（装饰器模式）</h3><blockquote>
+<p>Decorator classes often contain many pass-through methods. </p>
+</blockquote>
+<blockquote>
+<p>Sometimes decorators make sense, but there is usually a better alternative.</p>
+</blockquote>
+<h3 id="Pass-through-variables"><a href="#Pass-through-variables" class="headerlink" title="Pass-through variables"></a>Pass-through variables</h3><p>使用context（上下文）来代替透传变量。</p>
+<h3 id="总结-3"><a href="#总结-3" class="headerlink" title="总结"></a>总结</h3><p>每个添加到系统中的设计基础设施，比如接口、参数、函数、类或定义，都会增加复杂性，因为开发人员必须了解这个元素。为了使一个元素对抗复杂性产生净增益，它必须消除一些在设计元素缺失时会存在的复杂性。否则，最好不使用该特定元素来实现系统。例如，一个类可以通过封装功能来减少复杂性，这样类的使用者就不需要知道这些细节。</p>
+<p>“不同层次，不同抽象”的规则只是这个想法的一种应用：如果不同层次具有相同的抽象，比如传递方法或装饰者，那么它们很可能没有提供足够的好处来补偿它们所代表的额外基础设施。同样，传递参数要求每个方法都意识到它们的存在（增加了复杂性），而并没有提供额外的功能。</p>
+<h2 id="Pull-Complexity-Downwards（复杂度下放）"><a href="#Pull-Complexity-Downwards（复杂度下放）" class="headerlink" title="Pull Complexity Downwards（复杂度下放）"></a>Pull Complexity Downwards（复杂度下放）</h2><p>在开发模块时，要寻找机会多承担一些额外的困难，以减少用户的困难。</p>
+<blockquote>
+<p>it is more important for a module to have a simple interface than a simple implementation.</p>
+</blockquote>
+<h2 id="放在一起更好还是分开？"><a href="#放在一起更好还是分开？" class="headerlink" title="放在一起更好还是分开？"></a>放在一起更好还是分开？</h2><ul>
+<li>Bring together if information is shared</li>
+<li>Bring together if it will simplify the interface</li>
+<li>Bring together to eliminate duplication</li>
+<li>Separate general-purpose and special-purpose code</li>
+</ul>
+<blockquote>
+<p>Each method should do one thing and do it completely.</p>
+</blockquote>
+<h2 id="Define-Errors-Out-Of-Existence（通过定义来消除错误）"><a href="#Define-Errors-Out-Of-Existence（通过定义来消除错误）" class="headerlink" title="Define Errors Out Of Existence（通过定义来消除错误）"></a>Define Errors Out Of Existence（通过定义来消除错误）</h2><h3 id="为什么异常会增加复杂度"><a href="#为什么异常会增加复杂度" class="headerlink" title="为什么异常会增加复杂度"></a>为什么异常会增加复杂度</h3><p>错误处理会链式传递额外的信息。</p>
+<p>消除异常处理复杂性的最佳方法是定义您的API，使其不产生需要处理的异常：通过定义消除错误存在的可能性。</p>
+<p>ps: Linux设计哲学：没事的时候别乱报错。</p>
+<blockquote>
+<p>classes with lots of exceptions have complex interfaces, and they are shallower than classes with fewer exceptions.</p>
+</blockquote>
+<blockquote>
+<p>reduce the number of places where exceptions have to be handled. </p>
+</blockquote>
+<h3 id="Just-crash"><a href="#Just-crash" class="headerlink" title="Just crash"></a>Just crash</h3><p>fail fast机制。</p>
+<h2 id="Design-it-Twice（设计两次）"><a href="#Design-it-Twice（设计两次）" class="headerlink" title="Design it Twice（设计两次）"></a>Design it Twice（设计两次）</h2><blockquote>
+<p>The design-it-twice approach not only improves your designs, but it also improves your design skills. The process of devising and comparing multiple approaches will teach you about the factors that make designs better or worse. Over time, this will make it easier for you to rule out bad designs and hone in on really great ones.</p>
+</blockquote>
+<h2 id="Why-Write-Comments-The-Four-Excuses"><a href="#Why-Write-Comments-The-Four-Excuses" class="headerlink" title="Why Write Comments? The Four Excuses"></a>Why Write Comments? The Four Excuses</h2><p>一次击破不写注释的四个借口：</p>
+<h3 id="Good-code-is-self-documenting"><a href="#Good-code-is-self-documenting" class="headerlink" title="Good code is self-documenting."></a>Good code is self-documenting.</h3><p>接口文档是必须的，描述接口的功能和提供一些示例</p>
+<blockquote>
+<p>If users must read the code of a method in order to use it, then there is no abstraction: all of the complexity of the method is exposed.</p>
+</blockquote>
+<h3 id="I-don’t-have-time-to-write-comments"><a href="#I-don’t-have-time-to-write-comments" class="headerlink" title="I don’t have time to write comments"></a>I don’t have time to write comments</h3><p>注释先行，理清思路。</p>
+<h3 id="Comments-get-out-of-date-and-become-misleading"><a href="#Comments-get-out-of-date-and-become-misleading" class="headerlink" title="Comments get out of date and become misleading"></a>Comments get out of date and become misleading</h3><p>Code reviews的重要性。 AI生成文档也是一条路。</p>
+<h3 id="All-the-comments-I-have-seen-are-worthless"><a href="#All-the-comments-I-have-seen-are-worthless" class="headerlink" title="All the comments I have seen are worthless"></a>All the comments I have seen are worthless</h3><p>keep yourself simple and stupid.</p>
+<p>后面几章都是对注释的啰嗦就不细写了。</p>
+<ul>
+<li>Comments Should Describe Things that Aren’t Obvious from the Code</li>
+<li>Choosing Names</li>
+<li>Write The Comments First</li>
+</ul>
+<h2 id="一致性（减少心智负担和增加团队规范）"><a href="#一致性（减少心智负担和增加团队规范）" class="headerlink" title="一致性（减少心智负担和增加团队规范）"></a>一致性（减少心智负担和增加团队规范）</h2><p>一致性是投资思维的另一个例子。确保一致性需要额外的一些工作：需要努力确定惯例，创建自动检查器，寻找类似情况以在新代码中模仿，并在代码审查中进行团队教育。这项投资的回报是，您的代码将更加明显。开发人员将能够更快速、更准确地理解代码的行为，这将使他们能够更快地工作，减少错误。</p>
+<h2 id="代码应该是显而易见的"><a href="#代码应该是显而易见的" class="headerlink" title="代码应该是显而易见的"></a>代码应该是显而易见的</h2><p>从信息角度来考虑明显性的另一种方式是，如果代码不明显，通常意味着读者缺乏关于代码的重要信息：在 RaftClient 示例中，读者可能不知道 RaftClient 构造函数创建了新的线程；在 Pair 示例中，读者可能不知道 result.getKey() 返回当前期数的数字。</p>
+<p>要使代码明显，您必须确保读者始终拥有理解代码所需的信息。您可以通过三种方式实现这一点。最好的方式是减少所需信息的量，使用抽象和消除特殊情况等设计技术。其次，您可以利用读者在其他情境中已经获得的信息（例如，遵循惯例和符合期望），这样读者就不必为了理解您的代码而学习新的信息。第三，您可以在代码中向他们呈现重要信息，使用良好的命名和战略性注释等技术。</p>
+<h2 id="总结-4"><a href="#总结-4" class="headerlink" title="总结"></a>总结</h2><p>本书讨论的是一个问题：复杂性。处理复杂性是软件设计中最重要的挑战。它是导致系统难以构建和维护的原因，而且通常也会使系统变得缓慢。在本书中，我试图描述导致复杂性的根本原因，如依赖性和晦涩性。我讨论了可以帮助您识别不必要复杂性的红旗，例如信息泄露、不必要的错误条件或过于通用的名称。我提出了一些通用的思路，可以用来创建更简单的软件系统，比如努力使类深入且通用，将错误定义为不存在，并将接口文档与实现文档分开。最后，我讨论了产生简单设计所需的投资思维。</p>
+<p>所有这些建议的缺点在于它们会在项目的早期阶段增加额外的工作量。此外，如果您不习惯思考设计问题，那么在学习良好的设计技术时您会变得更加缓慢。如果对您来说唯一重要的是尽快让您当前的代码运行起来，那么思考设计将会显得像是妨碍您真正目标的苦差事。</p>
+<p>另一方面，如果良好的设计对您来说是一个重要目标，那么本书中的理念应该会让编程变得更有趣。设计是一个迷人的谜题：如何用最简单的结构解决特定的问题？探索不同的方法是很有趣的，而且发现既简单又强大的解决方案是一种很棒的感觉。一个清晰、简单和明显的设计是一件美妙的事情。</p>
+<p>此外，您在良好设计上所做的投资将很快得到回报。在项目开始阶段精心定义的模块将在以后反复重用时节省您的时间。您六个月前编写的清晰文档将在您返回代码以添加新功能时为您节省时间。您花在磨练设计技能上的时间也将得到回报：随着您的技能和经验的增长，您会发现自己能够越来越快地产生良好的设计。一旦掌握了技巧，良好的设计实际上并不比草率设计花费更多时间。</p>
+<p>成为一个优秀的设计师的回报是，您可以将更多的时间花在有趣的设计阶段。糟糕的设计师大部分时间都在追踪复杂而脆弱的代码中的错误。如果您提高了自己的设计技能，不仅能更快地生产出更高质量的软件，而且软件开发过程也会更加愉快。</p>
+<h2 id="Red-Flag（坏味道）"><a href="#Red-Flag（坏味道）" class="headerlink" title="Red Flag（坏味道）"></a>Red Flag（坏味道）</h2><h3 id="Shallow-Module"><a href="#Shallow-Module" class="headerlink" title="Shallow Module"></a>Shallow Module</h3><blockquote>
+<p>A shallow module is one whose interface is complicated relative to the functionality it provides. Shallow modules don’t help much in the battle against complexity, because the benefit they provide (not having to learn about how they work internally) is negated by the cost of learning and using their interfaces. Small modules tend to be shallow.</p>
+</blockquote>
+<h3 id="Information-Leakage"><a href="#Information-Leakage" class="headerlink" title="Information Leakage"></a>Information Leakage</h3><blockquote>
+<p>Information leakage occurs when the same knowledge is used in multiple places, such as two different classes that both understand the format of a particular type of file.</p>
+</blockquote>
+<h3 id="Temporal-Decomposition"><a href="#Temporal-Decomposition" class="headerlink" title="Temporal Decomposition"></a>Temporal Decomposition</h3><blockquote>
+<p>In temporal decomposition, execution order is reflected in the code structure: operations that happen at different times are in different methods or classes. If the same knowledge is used at different points in execution, it gets encoded in multiple places, resulting in information leakage.</p>
+</blockquote>
+<h3 id="Overexposure"><a href="#Overexposure" class="headerlink" title="Overexposure"></a>Overexposure</h3><blockquote>
+<p>If the API for a commonly used feature forces users to learn about other features that are rarely used, this increases the cognitive load on users who don’t need the rarely used features.</p>
+</blockquote>
+<h3 id="Repetition"><a href="#Repetition" class="headerlink" title="Repetition"></a>Repetition</h3><blockquote>
+<p>If the same piece of code (or code that is almost the same) appears over and over again, that’s a red flag that you haven’t found the right abstractions.</p>
+</blockquote>
+<h3 id="Special-General-Mixture"><a href="#Special-General-Mixture" class="headerlink" title="Special-General Mixture"></a>Special-General Mixture</h3><blockquote>
+<p>This red flag occurs when a general-purpose mechanism also contains code specialized for a particular use of that mechanism. This makes the mechanism more complicated and creates information leakage between the mechanism and the particular use case: future modifications to the use case are likely to require changes to the underlying mechanism as well.</p>
+</blockquote>
+<h3 id="Conjoined-Methods"><a href="#Conjoined-Methods" class="headerlink" title="Conjoined Methods"></a>Conjoined Methods</h3><blockquote>
+<p>It should be possible to understand each method independently. If you can’t understand the implementation of one method without also understanding the implementation of another, that’s a red flag. This red flag can occur in other contexts as well: if two pieces of code are physically separated, but each can only be understood by looking at the other, that is a red flag.</p>
+</blockquote>
+<h3 id="Nonobvious-Code"><a href="#Nonobvious-Code" class="headerlink" title="Nonobvious Code"></a>Nonobvious Code</h3><blockquote>
+<p>If the meaning and behavior of code cannot be understood with a quick reading, it is a red flag. Often this means that there is important information that is not immediately clear to someone reading the code.</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/%E6%A0%87%E7%AD%BE/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/07/18/refactor-java-code-with-gpt4/" rel="prev" title="破事水：用GPT4重构一段Java代码">
+                  <i class="fa fa-chevron-left"></i> 破事水：用GPT4重构一段Java代码
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/11/15/programming-language-pragmatics-01/" rel="next" title="《Programming Language Pragmatics》摘录翻译-其一">
+                  《Programming Language Pragmatics》摘录翻译-其一 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">MisakaTang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/TangMisaka23001" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":false,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

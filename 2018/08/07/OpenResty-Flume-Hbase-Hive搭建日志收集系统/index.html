@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"misakatang.cn","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.17.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"style":null,"show_result":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="最近因为需要,自己尝试了一波日志收集系统的搭建,这一部分只是做离线分析使用的HBase的数据,Kafka的实时数据消费还没有尝试部署,主要流程是从Nginx服务器接收请求的方式打印日志,由Flume收集之后进入HBase,Hive提供一个SQL的接口功能. 数据格式方面url请求接收GET请求,数据为data&#x3D;xxxxxx(前端JSON做的URL编码),字段视业务而定. 日志收集框架搭建">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenResty+Flume+Hbase+Hive搭建日志收集系统">
+<meta property="og:url" content="http://misakatang.cn/2018/08/07/OpenResty-Flume-Hbase-Hive%E6%90%AD%E5%BB%BA%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:site_name" content="MisakaTang&#39;s Blog">
+<meta property="og:description" content="最近因为需要,自己尝试了一波日志收集系统的搭建,这一部分只是做离线分析使用的HBase的数据,Kafka的实时数据消费还没有尝试部署,主要流程是从Nginx服务器接收请求的方式打印日志,由Flume收集之后进入HBase,Hive提供一个SQL的接口功能. 数据格式方面url请求接收GET请求,数据为data&#x3D;xxxxxx(前端JSON做的URL编码),字段视业务而定. 日志收集框架搭建">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-08-07T22:09:00.000Z">
+<meta property="article:modified_time" content="2024-03-14T08:33:24.910Z">
+<meta property="article:author" content="MisakaTang">
+<meta property="article:tag" content="Flume">
+<meta property="article:tag" content="Nginx">
+<meta property="article:tag" content="Hive">
+<meta property="article:tag" content="Hbase">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://misakatang.cn/2018/08/07/OpenResty-Flume-Hbase-Hive%E6%90%AD%E5%BB%BA%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86%E7%B3%BB%E7%BB%9F/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://misakatang.cn/2018/08/07/OpenResty-Flume-Hbase-Hive%E6%90%AD%E5%BB%BA%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86%E7%B3%BB%E7%BB%9F/","path":"2018/08/07/OpenResty-Flume-Hbase-Hive搭建日志收集系统/","title":"OpenResty+Flume+Hbase+Hive搭建日志收集系统"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OpenResty+Flume+Hbase+Hive搭建日志收集系统 | MisakaTang's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4TSLH4NC9H"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-4TSLH4NC9H","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?de7c77febeeac252eee468207ae11ce4"></script>
+
+
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "jtb4czrfeu");
+</script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="MisakaTang's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">MisakaTang's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%E6%B5%81%E7%A8%8B"><span class="nav-text">日志收集框架搭建流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#nginx-Lua%E6%94%B6%E9%9B%86%E4%B8%8A%E4%BC%A0%E6%97%A5%E5%BF%97%E5%B9%B6%E7%94%9F%E6%88%90%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6"><span class="nav-text">nginx+Lua收集上传日志并生成日志文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lua%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85"><span class="nav-text">Lua环境安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OpenResty%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-text">OpenResty环境搭建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEOpenResty%E6%8E%A5%E5%8F%97%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF"><span class="nav-text">配置OpenResty接受日志信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flume%E8%BF%9B%E8%A1%8C%E6%97%A5%E5%BF%97%E9%87%87%E9%9B%86"><span class="nav-text">Flume进行日志采集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Flume"><span class="nav-text">安装Flume</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hbase%E6%8C%81%E4%B9%85%E5%8C%96%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF-Hive%E6%8F%90%E4%BE%9B%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9F%A5%E8%AF%A2%E5%8A%9F%E8%83%BD"><span class="nav-text">Hbase持久化日志信息,Hive提供数据库查询功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85HBase-%E5%BD%93%E5%89%8D%E9%83%BD%E4%B8%BA%E5%8D%95%E6%9C%BA%E7%8E%AF%E5%A2%83"><span class="nav-text">安装HBase(当前都为单机环境)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Hadoop"><span class="nav-text">安装Hadoop</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8Hadoop"><span class="nav-text">启动Hadoop</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85HBase"><span class="nav-text">安装HBase</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8HBase"><span class="nav-text">启动HBase</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HBase%E5%BB%BA%E8%A1%A8"><span class="nav-text">HBase建表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Hive"><span class="nav-text">安装Hive</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8Hive%E5%92%8Chivesrever2"><span class="nav-text">启动Hive和hivesrever2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hive%E5%BB%BA%E8%A1%A8%E5%85%B3%E8%81%94HBase"><span class="nav-text">Hive建表关联HBase</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%8C%E6%88%90"><span class="nav-text">完成</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-%E8%B8%A9%E5%9D%91"><span class="nav-text">总结(踩坑)</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MisakaTang"
+      src="/images/misaka.jpg">
+  <p class="site-author-name" itemprop="name">MisakaTang</p>
+  <div class="site-description" itemprop="description">The limits of my language are the limits of my world</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/%E5%BD%92%E6%A1%A3/">
+          <span class="site-state-item-count">101</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TangMisaka23001" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TangMisaka23001" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mikasatang@gmail.com" title="E-Mail → mailto:mikasatang@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="http://blog.bbchen.top/" title="http:&#x2F;&#x2F;blog.bbchen.top" rel="noopener" target="_blank">BB chen的漂流记</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="http://blog.zhuzhenyuan.cn/" title="http:&#x2F;&#x2F;blog.zhuzhenyuan.cn" rel="noopener" target="_blank">Aurthur_的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://misakatang.cn/2018/08/07/OpenResty-Flume-Hbase-Hive%E6%90%AD%E5%BB%BA%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86%E7%B3%BB%E7%BB%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/misaka.jpg">
+      <meta itemprop="name" content="MisakaTang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MisakaTang's Blog">
+      <meta itemprop="description" content="The limits of my language are the limits of my world">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="OpenResty+Flume+Hbase+Hive搭建日志收集系统 | MisakaTang's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OpenResty+Flume+Hbase+Hive搭建日志收集系统
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-08-07 22:09:00" itemprop="dateCreated datePublished" datetime="2018-08-07T22:09:00+00:00">2018-08-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-14 08:33:24" itemprop="dateModified" datetime="2024-03-14T08:33:24+00:00">2024-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/%E5%88%86%E7%B1%BB/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>最近因为需要,自己尝试了一波日志收集系统的搭建,这一部分只是做离线分析使用的HBase的数据,Kafka的实时数据消费还没有尝试部署,主要流程是从Nginx服务器接收请求的方式打印日志,由Flume收集之后进入HBase,Hive提供一个SQL的接口功能.</p>
+<p>数据格式方面url请求接收GET请求,数据为data&#x3D;xxxxxx(前端JSON做的URL编码),字段视业务而定.</p>
+<h1 id="日志收集框架搭建流程"><a href="#日志收集框架搭建流程" class="headerlink" title="日志收集框架搭建流程"></a><a href="#%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%E6%B5%81%E7%A8%8B" title="日志收集框架搭建流程"></a>日志收集框架搭建流程</h1><h2 id="nginx-Lua收集上传日志并生成日志文件"><a href="#nginx-Lua收集上传日志并生成日志文件" class="headerlink" title="nginx+Lua收集上传日志并生成日志文件"></a><a href="#nginx-Lua%E6%94%B6%E9%9B%86%E4%B8%8A%E4%BC%A0%E6%97%A5%E5%BF%97%E5%B9%B6%E7%94%9F%E6%88%90%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6" title="nginx+Lua收集上传日志并生成日志文件"></a>nginx+Lua收集上传日志并生成日志文件</h2><h3 id="Lua环境安装"><a href="#Lua环境安装" class="headerlink" title="Lua环境安装"></a><a href="#Lua%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85" title="Lua环境安装"></a>Lua环境安装</h3><ol>
+<li><a target="_blank" rel="noopener" href="http://luajit.org/download.html">Lua官网</a>下载Lua安装包,当前版本为LuaJIT-2.0.5.</li>
+<li>解压安装包,cd进入目录</li>
+<li>make</li>
+<li>sudo make install</li>
+<li>验证luajit安装:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">luajit -vLuaJIT 2.0.5 -- Copyright (C) 2005-2017 Mike Pall. http://luajit.org/</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="OpenResty环境搭建"><a href="#OpenResty环境搭建" class="headerlink" title="OpenResty环境搭建"></a><a href="#OpenResty%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA" title="OpenResty环境搭建"></a>OpenResty环境搭建</h3><p>nginx采用OpenResty框架,可以在nginx嵌入使用Lua脚本</p>
+<ol>
+<li><p>在<a target="_blank" rel="noopener" href="http://openresty.org/">官网</a>下载安装OpenResty,当前版本为openresty-1.13.6.1</p>
+</li>
+<li><p>安装依赖包(Ubuntu环境):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get install libreadline-dev libncurses5-dev libpcre3-dev \    </span><br><span class="line">libssl-dev perl make build-essential</span><br></pre></td></tr></table></figure></li>
+<li><p>解压安装包进入目录</p>
+</li>
+<li><p>进行编译配置:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 如下命令，OpenResty 将配置安装在 /opt/openresty 目录下（注意使用 root 用户）,并激活luajit、http_iconv_module 并禁止 http_redis2_module 组件</span><br><span class="line">./configure --prefix=/opt/openresty\             </span><br><span class="line">--with-luajit\             </span><br><span class="line">--without-http_redis2_module \  </span><br><span class="line">#Guide给出的配置,具体配置按照需求来定             </span><br><span class="line">--with-http_iconv_module</span><br></pre></td></tr></table></figure></li>
+<li><p>这一步出错基本都是依赖库的问题,查看控制台的报错信息并安装对应的依赖包.一般依赖库为:</p>
+<ol>
+<li>PCRE库:<code>sudo apt-get install libpcre3 libpcre3-dev</code></li>
+<li>zlib库:<code>sudo apt-get install zlib1g-dev</code></li>
+<li>openssl库(选配):<code>sudo apt-get install openssl libssl-dev</code></li>
+</ol>
+</li>
+<li><p>正确执行configure之后会提示依赖pcre,zlib,openssl成功并且无报错信息</p>
+</li>
+<li><p>执行<code>make&amp;sudo make install</code></p>
+</li>
+<li><p>将nginx添加到PATH变量,在&#x2F;etc&#x2F;profile文件末添加<code>export PATH=$PATH:/opt/openresty/nginx/sbin</code>(视上面的安装路径而定),然后source &#x2F;etc&#x2F;profile更新环境变量,在终端里就可以使用nginx了.(可以使用<code>ps -e |grep &quot;nginx&quot;</code>看到进程,kill可能会用到)</p>
+</li>
+</ol>
+<h3 id="配置OpenResty接受日志信息"><a href="#配置OpenResty接受日志信息" class="headerlink" title="配置OpenResty接受日志信息"></a><a href="#%E9%85%8D%E7%BD%AEOpenResty%E6%8E%A5%E5%8F%97%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF" title="配置OpenResty接受日志信息"></a>配置OpenResty接受日志信息</h3><ol>
+<li>首先要创建一个OpenResty项目文件夹,nginx启动的时候启动的就是该项目.<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 这里文件夹按照Guide使用了test,实际按项目而定</span><br><span class="line">mkdir ~/openresty-test ~/openresty-test/logs/ ~/openresty-test/conf/</span><br></pre></td></tr></table></figure></li>
+<li>在~&#x2F;openresty-test&#x2F;conf&#x2F;下创建一个nginx.conf文件,日志采集和写入日志文件的操作都在这里面完成,现在直接将Lua代码写入了配置文件中,为了更好的维护和可读性可以提取Lua脚本出来单独维护.配置文件中主要Lua代码:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"># 前面还有配置信息,这里只是http配置</span><br><span class="line">http &#123;    </span><br><span class="line">    server &#123;    </span><br><span class="line">        #监听端口，若你的6699端口已经被占用，则需要修改    </span><br><span class="line">        listen 6699;    </span><br><span class="line">        # 采集url为/get    </span><br><span class="line">        location /get&#123;        </span><br><span class="line">            content_by_lua_block&#123;            </span><br><span class="line">                local msg = &quot;&quot;            </span><br><span class="line">                local arg = ngx.req.get_uri_args()			            </span><br><span class="line">                for k,v in pairs(arg) do                </span><br><span class="line">                    local cjson = require &quot;cjson&quot;                </span><br><span class="line">                    -- 解析好的url参数序列化成JSON并拼接需要打成日志信息的格式                </span><br><span class="line">                    -- 使用\0x01做分隔符(本来用\0x02做每串分割后来直接\n了))                </span><br><span class="line">                    local json = cjson.decode(v) -- 用cjson直接decode                </span><br><span class="line">                    msg = json.pid..string.char(&#x27;0x01&#x27;)..json.oid..string.char(&#x27;0x01&#x27;)                    </span><br><span class="line">                        ..json.eid..string.char(&#x27;0x01&#x27;)..json.epid..&quot;\0x01&quot;                    </span><br><span class="line">                        ..json.rand..string.char(&#x27;0x01&#x27;)..json.tid..string.char(&#x27;0x01&#x27;)                </span><br><span class="line">                    -- 测试用打印信息                </span><br><span class="line">                    ngx.say(&quot;pid:&quot;..json.pid..&quot;  oid:&quot;..json.oid..&quot;  eid:&quot;..json.eid..                    </span><br><span class="line">                        &quot;  epid:&quot;..json.epid..&quot;  rand:&quot;..json.rand..&quot;  tid:&quot;..json.tid)                </span><br><span class="line">                    if (json.r5 ~= nil) then                    </span><br><span class="line">                        for key, value in pairs(json.r5) do                        </span><br><span class="line">                            msg = msg..key..&quot;:&quot;..value..&quot;,&quot;                        </span><br><span class="line">                            -- 测试用打印信息                        </span><br><span class="line">                            ngx.say(&quot;key:&quot;..key..&quot;  value:&quot;..value)                    </span><br><span class="line">                        end                                    </span><br><span class="line">                    end                </span><br><span class="line">                    msg = msg..&quot;\0x02\n&quot;            </span><br><span class="line">                end            </span><br><span class="line">                -- 替换掉r5串里最后一个, 否则在HBase表中会多一个null的字段(也可以在Flume中的正则处理)            </span><br><span class="line">                msg = string.gsub(msg, &quot;,\0x02&quot;, &#x27;&#x27;)            </span><br><span class="line">                -- 测试用打印信息            </span><br><span class="line">                ngx.say(msg)            </span><br><span class="line">                -- 写入文件操作            </span><br><span class="line">                local file = io.open(&quot;/home/tang/openresty-test/lualog.txt&quot;,&quot;a+&quot;)            </span><br><span class="line">                file:write(msg)            </span><br><span class="line">                file:flush()            </span><br><span class="line">                file:close()        </span><br><span class="line">            &#125;    </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>启动Nginx,命令为:<code>nginx -p ~/openresty-test</code>,向端口发送请求就会在项目文件夹下生成一个_lualog.txt_文件并已经记录了请求的信息.</li>
+</ol>
+<h2 id="Flume进行日志采集"><a href="#Flume进行日志采集" class="headerlink" title="Flume进行日志采集"></a><a href="#Flume%E8%BF%9B%E8%A1%8C%E6%97%A5%E5%BF%97%E9%87%87%E9%9B%86" title="Flume进行日志采集"></a>Flume进行日志采集</h2><h3 id="安装Flume"><a href="#安装Flume" class="headerlink" title="安装Flume"></a><a href="#%E5%AE%89%E8%A3%85Flume" title="安装Flume"></a>安装Flume</h3><ol>
+<li><p>Java安装,略过.安装版本为1.8.</p>
+</li>
+<li><p>在<a target="_blank" rel="noopener" href="https://flume.apache.org/download.html">官网</a>下载Flume,当前版本为apache-flume-1.8.0.</p>
+</li>
+<li><p>解压安装包</p>
+</li>
+<li><p>配置flume-ng环境变量,在&#x2F;etc&#x2F;profile中添加</p>
+<figure class="highlight profile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/local/jdk  # 自己的JDK目录,版本为<span class="number">1.8</span></span><br><span class="line">export FLUME_HOME=/opt/apache-flume<span class="number">-1.8</span><span class="number">.0</span>-bin</span><br><span class="line">export FLUME_CLASSPATH=$FLUME_HOME/lib/*</span><br></pre></td></tr></table></figure></li>
+<li><p>配置flume-env.sh,暂时没有配置该sh文件,网上教程似乎也只是配置java路径</p>
+</li>
+<li><p>启动flume测试:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># flume-ng version</span><br><span class="line">Flume 1.8.0</span><br><span class="line">Source code repository: https://git-wip-us.apache.org/repos/asf/flume.git</span><br><span class="line">Revision: 99f591994468633fc6f8701c5fc53e0214b6da4f</span><br><span class="line">Compiled by denes on Fri Sep 15 14:58:00 CEST 2017</span><br><span class="line">From source with checksum fbb44c8c8fb63a49be0a59e27316833d</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>重要</strong>在conf文件夹中配置Flume启动参数,source,sink,channels在这里配置,现在使用的hbase-flume.conf文件信息:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 从文件读取实时消息，不做处理直接存储到Hbase</span></span><br><span class="line"><span class="string">agent.sources</span> <span class="string">=</span> <span class="string">logfile-source</span></span><br><span class="line"><span class="string">agent.channels</span> <span class="string">=</span> <span class="string">file-channel</span></span><br><span class="line"><span class="string">agent.sinks</span> <span class="string">=</span> <span class="string">hbase-sink</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># logfile-source配置</span></span><br><span class="line"><span class="string">agent.sources.logfile-source.type</span> <span class="string">=</span> <span class="string">exec</span></span><br><span class="line"><span class="comment"># source源为Lua脚本中生成的日志文件lualog.txt</span></span><br><span class="line"><span class="string">agent.sources.logfile-source.command</span> <span class="string">=</span> <span class="string">tail</span> <span class="string">-f</span> <span class="string">/home/tang/openresty-test/lualog.txt</span></span><br><span class="line"><span class="string">agent.sources.logfile-source.checkperiodic</span> <span class="string">=</span> <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># defined channel,可以配置文件形式和内存形式,内存形式效率高但是出错会导致数据丢失,文件形式效率慢但是数据不会丢失</span></span><br><span class="line"><span class="string">agent.channels.file-channel.type</span> <span class="string">=</span> <span class="string">memory</span></span><br><span class="line"><span class="comment">#设置channel的容量</span></span><br><span class="line"><span class="string">agent.channels.file-channel.capacity</span> <span class="string">=</span> <span class="number">1000</span></span><br><span class="line"><span class="comment">#设置sink每次从channel中拉取的event的数量</span></span><br><span class="line"><span class="string">agent.channels.file-channel.transactionCapacity</span> <span class="string">=</span> <span class="number">100</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sink 配置为 Hbase</span></span><br><span class="line"><span class="string">agent.sinks.hbase-sink.type</span> <span class="string">=</span> <span class="string">logger</span></span><br><span class="line"><span class="string">agent.sinks.hbase-sink.type</span> <span class="string">=</span> <span class="string">hbase</span></span><br><span class="line"><span class="comment"># Habse表名和列族名</span></span><br><span class="line"><span class="string">agent.sinks.hbase-sink.table</span> <span class="string">=</span> <span class="string">table_log</span></span><br><span class="line"><span class="string">agent.sinks.hbase-sink.columnFamily</span>  <span class="string">=</span> <span class="string">cf_info</span></span><br><span class="line"><span class="string">agent.sinks.hbase-sink.serializer</span> <span class="string">=</span> <span class="string">org.apache.flume.sink.hbase.RegexHbaseEventSerializer</span></span><br><span class="line"><span class="comment"># 对nginx日志做分割，然后按列存储HBase,日志格式为...\0x01...\0x01...   \0x01从日志文件复制一个过来 vscode好像不显示\0x02</span></span><br><span class="line"><span class="string">agent.sinks.hbase-sink.serializer.regex</span> <span class="string">=</span> <span class="string">(.*?)\0x01(.*?)\0x01(.*?)\0x01(.*?)\0x01(.*?)\0x01(.*?)\0x01(.*?)</span></span><br><span class="line"><span class="comment"># 列族中每一个列的名称,注意:row key为自动生成</span></span><br><span class="line"><span class="string">agent.sinks.hbase-sink.serializer.colNames</span> <span class="string">=</span> <span class="string">pid,oid,eid,epid,rand,tid,r5</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># # 组合source、sink和channel</span></span><br><span class="line"><span class="string">agent.sources.logfile-source.channels</span> <span class="string">=</span> <span class="string">file-channel</span></span><br><span class="line"><span class="string">agent.sinks.hbase-sink.channel</span> <span class="string">=</span> <span class="string">file-channel</span></span><br></pre></td></tr></table></figure></li>
+<li><p>启动flume,cd到flume目录下:(还没有配置HBase时会报错,需要先在HBase中建表才行)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># flume-ng agent --name agent --conf ./conf/ --conf-file ./conf/hbase-flume.conf -Dflume.root.logger=DEBUG,console</span><br><span class="line"></span><br><span class="line">--name为配置文件中agent名 --conf为flume/conf文件夹 --conf-file为前面写的配置文件,现在以DEBUG模式向控制台打印调试信息</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="Hbase持久化日志信息-Hive提供数据库查询功能"><a href="#Hbase持久化日志信息-Hive提供数据库查询功能" class="headerlink" title="Hbase持久化日志信息,Hive提供数据库查询功能"></a><a href="#Hbase%E6%8C%81%E4%B9%85%E5%8C%96%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF-Hive%E6%8F%90%E4%BE%9B%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9F%A5%E8%AF%A2%E5%8A%9F%E8%83%BD" title="Hbase持久化日志信息,Hive提供数据库查询功能"></a>Hbase持久化日志信息,Hive提供数据库查询功能</h2><h3 id="安装HBase-当前都为单机环境"><a href="#安装HBase-当前都为单机环境" class="headerlink" title="安装HBase(当前都为单机环境)"></a><a href="#%E5%AE%89%E8%A3%85HBase-%E5%BD%93%E5%89%8D%E9%83%BD%E4%B8%BA%E5%8D%95%E6%9C%BA%E7%8E%AF%E5%A2%83" title="安装HBase(当前都为单机环境)"></a>安装HBase(当前都为单机环境)</h3><h4 id="安装Hadoop"><a href="#安装Hadoop" class="headerlink" title="安装Hadoop"></a><a href="#%E5%AE%89%E8%A3%85Hadoop" title="安装Hadoop"></a>安装Hadoop</h4><p>安装HBase需要安装Hadoop,使用的是<a target="_blank" rel="noopener" href="http://www.panchengming.com/page/3/">大数据学习系列</a>的Hadoop和Hbase的搭建流程,博客中的流程可以走通,需要注意的是若在&#x2F;root目录下创建Hadoop的一系列文件夹需要在root权限下执行全部操作,否则会导致没有权限报各种错误.或是将&#x2F;root&#x2F;hadoop文件夹分给当前用户组(现在采用这种方式).</p>
+<p>现在采用的Hadoop版本为:hadoop-2.9.1,HBase版本为:hbase-1.2.6.1.</p>
+<p><strong>注意</strong>:Hadoop和HBase和Hive版本一定要匹配,不兼容会导致很多错误.</p>
+<p>主要环境变量配置如下:(Hadoop安装路径在 ~ 下)<br>core-site.xml  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span>        </span><br><span class="line">    <span class="comment">&lt;!-- 现在只是在单机情况下配置了Hadoop和HBase 集群配置文件需要修改 --&gt;</span>        </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span>             </span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.tmp.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span>             </span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>file:/root/hadoop/tmp<span class="tag">&lt;/<span class="name">value</span>&gt;</span>             </span><br><span class="line">        <span class="tag">&lt;<span class="name">description</span>&gt;</span>Abase for other temporary directories.<span class="tag">&lt;/<span class="name">description</span>&gt;</span>        </span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span>        </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span>             </span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.defaultFS<span class="tag">&lt;/<span class="name">name</span>&gt;</span>             </span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://localhost:9000<span class="tag">&lt;/<span class="name">value</span>&gt;</span>        </span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 这是为了hive服务启动之后可以远程连接hive数据库的配置,</span></span><br><span class="line"><span class="comment">    hadoop.proxyuser.&#123;user.name&#125;.hosts user.name为登陆服务器的用户名,现在没有任何安全配置 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span>   </span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.proxyuser.tang.hosts<span class="tag">&lt;/<span class="name">name</span>&gt;</span>   </span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>*<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span>   </span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.proxyuser.tang.groups<span class="tag">&lt;/<span class="name">name</span>&gt;</span>   </span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>*<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>hdfs-site.xml配置文件  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span>    </span><br><span class="line">    <span class="comment">&lt;!-- 在root文件夹下配置了Hadoop且不是root用户的话,一定要注意权限问题!! --&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span>           </span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.name.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span>           </span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>/root/hadoop/dfs/name<span class="tag">&lt;/<span class="name">value</span>&gt;</span>           </span><br><span class="line">        <span class="tag">&lt;<span class="name">description</span>&gt;</span>Path on the local filesystem where theNameNode stores the namespace and transactions logs persistently.<span class="tag">&lt;/<span class="name">description</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span>           </span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.data.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span>           </span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>/root/hadoop/dfs/data<span class="tag">&lt;/<span class="name">value</span>&gt;</span>           </span><br><span class="line">        <span class="tag">&lt;<span class="name">description</span>&gt;</span>Comma separated list of paths on the localfilesystem of a DataNode where it should store its blocks.<span class="tag">&lt;/<span class="name">description</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span>           </span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.replication<span class="tag">&lt;/<span class="name">name</span>&gt;</span>           </span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>2<span class="tag">&lt;/<span class="name">value</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span>           </span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.permissions<span class="tag">&lt;/<span class="name">name</span>&gt;</span>          </span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span>          </span><br><span class="line">        <span class="tag">&lt;<span class="name">description</span>&gt;</span>need not permissions<span class="tag">&lt;/<span class="name">description</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>&#x2F;etc&#x2F;profile中配置  </p>
+<figure class="highlight profile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">export HADOOP_HOME=/home/tang/hadoop</span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/bin</span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/sbin</span><br><span class="line">export HADOOP_MAPRED_HOME=$HADOOP_HOME</span><br><span class="line">export HADOOP_COMMON_HOME=$HADOOP_HOME</span><br></pre></td></tr></table></figure>
+<h4 id="启动Hadoop"><a href="#启动Hadoop" class="headerlink" title="启动Hadoop"></a><a href="#%E5%90%AF%E5%8A%A8Hadoop" title="启动Hadoop"></a>启动Hadoop</h4><p>运行<code>~/hadoop/sbin</code>下的<code>start-all.sh</code>.启动之后使用<code>jps</code>可以看到下面的进程(保证NameNode和DataNode启动完成,没有进程的话需要查看log文件夹下的报错信息并解决错误):  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># jsp</span><br><span class="line">2243 NodeManager</span><br><span class="line">1974 SecondaryNameNode</span><br><span class="line">2278 Jps1642 NameNode</span><br><span class="line">2123 ResourceManager</span><br><span class="line">1790 DataNode</span><br></pre></td></tr></table></figure>
+<h4 id="安装HBase"><a href="#安装HBase" class="headerlink" title="安装HBase"></a><a href="#%E5%AE%89%E8%A3%85HBase" title="安装HBase"></a>安装HBase</h4><p>依旧使用<a target="_blank" rel="noopener" href="http://www.panchengming.com/2017/12/09/pancm57/">大数据学习系列之二 ——- HBase环境搭建(单机)</a>文章中的搭建过程.</p>
+<p>hbase-site.xml配置信息:  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span>    </span><br><span class="line">    <span class="comment">&lt;!-- 存储目录 --&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span>          </span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.rootdir<span class="tag">&lt;/<span class="name">name</span>&gt;</span>          </span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://localhost:9000/hbase<span class="tag">&lt;/<span class="name">value</span>&gt;</span>          </span><br><span class="line">        <span class="tag">&lt;<span class="name">description</span>&gt;</span>The directory shared byregion servers.<span class="tag">&lt;/<span class="name">description</span>&gt;</span>      </span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span>      </span><br><span class="line">    <span class="comment">&lt;!-- hbase的端口 --&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span>          </span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.zookeeper.property.clientPort<span class="tag">&lt;/<span class="name">name</span>&gt;</span>          </span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>2181<span class="tag">&lt;/<span class="name">value</span>&gt;</span>          </span><br><span class="line">        <span class="tag">&lt;<span class="name">description</span>&gt;</span>Property from ZooKeeper&#x27;sconfig zoo.cfg. The port at which the clients will connect.      <span class="tag">&lt;/<span class="name">description</span>&gt;</span>      </span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span>          </span><br><span class="line">    <span class="comment">&lt;!--  超时时间 --&gt;</span>        </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span>          </span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>zookeeper.session.timeout<span class="tag">&lt;/<span class="name">name</span>&gt;</span>          </span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>120000<span class="tag">&lt;/<span class="name">value</span>&gt;</span>      </span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span>      </span><br><span class="line">    <span class="comment">&lt;!--  zookeeper 集群配置。如果是集群，则添加其它的主机地址 --&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span>          </span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.zookeeper.quorum<span class="tag">&lt;/<span class="name">name</span>&gt;</span>          </span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>localhost<span class="tag">&lt;/<span class="name">value</span>&gt;</span>      </span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span>      </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span>          </span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.tmp.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span>          </span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>/root/hbase/tmp<span class="tag">&lt;/<span class="name">value</span>&gt;</span>      </span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span>      </span><br><span class="line">    <span class="comment">&lt;!-- false是单机模式，true是分布式模式  --&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span>          </span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.cluster.distributed<span class="tag">&lt;/<span class="name">name</span>&gt;</span>          </span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span>      </span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="启动HBase"><a href="#启动HBase" class="headerlink" title="启动HBase"></a><a href="#%E5%90%AF%E5%8A%A8HBase" title="启动HBase"></a>启动HBase</h4><p>运行hbase&#x2F;bin下的start-hbase.sh,正确运行之后使用<code>jps</code>命令可以看到HMaster,且需要保证DataNode和NameNode没有死掉:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">2243 NodeManager</span><br><span class="line">4613 Jps</span><br><span class="line">1974 SecondaryNameNode</span><br><span class="line">2697 HMaster  # 主要是HMaster</span><br><span class="line">1642 NameNode</span><br><span class="line">2123 ResourceManager</span><br><span class="line">3515 Application</span><br><span class="line">1790 DataNode</span><br><span class="line">3071 RunJar</span><br></pre></td></tr></table></figure>
+<h4 id="HBase建表"><a href="#HBase建表" class="headerlink" title="HBase建表"></a><a href="#HBase%E5%BB%BA%E8%A1%A8" title="HBase建表"></a>HBase建表</h4><p>在hbase&#x2F;bin目录下运行:<code>./hbase shell</code>进入shell终端  </p>
+<p><code>create &#39;table_log&#39;,&#39;cf_info&#39;</code></p>
+<p>就可以建表,指定表名和列族名.这时候运行flume-ng就可以将日志信息打入HBase了.<br>使用<code>scan &#39;table_log&#39;</code>可以扫描HBase表看到数据.</p>
+<h3 id="安装Hive"><a href="#安装Hive" class="headerlink" title="安装Hive"></a><a href="#%E5%AE%89%E8%A3%85Hive" title="安装Hive"></a>安装Hive</h3><p>参考<a target="_blank" rel="noopener" href="http://www.panchengming.com/2017/12/16/pancm61/">大数据学习系列之四 ——- Hadoop+Hive环境搭建图文详解(单机)</a></p>
+<p>安装Mysql后主要是权限的坑,授予远程连接权限之后要是不能访问,需要修改<code>/etc/mysql/mysql.conf.d/mysqld.cnf</code>将bind-address修改为<code>0.0.0.0</code></p>
+<p>Hive版本为:apache-hive-2.1.0.</p>
+<p>hive-site.xml主要配置信息:  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 注意注意:: 一定要把配置信息写在最下面!!!或者自己删掉xml下面重复的配置信息字段,否则覆盖之后配置信息不生效!!! 巨坑 --&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span>          </span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.metastore.warehouse.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span>          </span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>/root/hive/warehouse<span class="tag">&lt;/<span class="name">value</span>&gt;</span>      <span class="tag">&lt;/<span class="name">property</span>&gt;</span>      </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span>        </span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.exec.scratchdir<span class="tag">&lt;/<span class="name">name</span>&gt;</span>        </span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>/root/hive<span class="tag">&lt;/<span class="name">value</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span>          </span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.metastore.uris<span class="tag">&lt;/<span class="name">name</span>&gt;</span>          </span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span>      </span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span>      </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span>        </span><br><span class="line">        <span class="comment">&lt;!-- mysql的链接路径和驱动信息 --&gt;</span>        </span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionURL<span class="tag">&lt;/<span class="name">name</span>&gt;</span>        </span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>jdbc:mysql://127.0.0.1:3306/hive?createDatabaseIfNotExist=true<span class="tag">&lt;/<span class="name">value</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span>        </span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionDriverName<span class="tag">&lt;/<span class="name">name</span>&gt;</span>        </span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>com.mysql.jdbc.Driver<span class="tag">&lt;/<span class="name">value</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span>        </span><br><span class="line">        <span class="comment">&lt;!-- mysql的用户名密码 --&gt;</span>        </span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionUserName<span class="tag">&lt;/<span class="name">name</span>&gt;</span>        </span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>hive<span class="tag">&lt;/<span class="name">value</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span>        </span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionPassword<span class="tag">&lt;/<span class="name">name</span>&gt;</span>        </span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>hive<span class="tag">&lt;/<span class="name">value</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span>        </span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.metastore.schema.verification<span class="tag">&lt;/<span class="name">name</span>&gt;</span>        </span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span>        </span><br><span class="line">        <span class="tag">&lt;<span class="name">description</span>&gt;</span>        <span class="tag">&lt;/<span class="name">description</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="启动Hive和hivesrever2"><a href="#启动Hive和hivesrever2" class="headerlink" title="启动Hive和hivesrever2"></a><a href="#%E5%90%AF%E5%8A%A8Hive%E5%92%8Chivesrever2" title="启动Hive和hivesrever2"></a>启动Hive和hivesrever2</h4><p>运行<code>hive/bin</code>目录下的hiveserver2服务之后就可以远程连接hive数据库.网页端口为:<code>10002</code></p>
+<p>现在使用的远程连接工具为:SQuirrel SQL,安装教程<a target="_blank" rel="noopener" href="https://blog.csdn.net/vfgbv/article/details/51014256">Squirrel SQL Client连接hive安装部署</a>,现在默认连接没有安全控制,可以直接访问Hive数据库.</p>
+<p>主要是需要1.8的Java版本,10版本在程序启动是会有版本不匹配的坑,而新版的软件十分不稳定,安装1.8版本Java就没有问题.</p>
+<h4 id="Hive建表关联HBase"><a href="#Hive建表关联HBase" class="headerlink" title="Hive建表关联HBase"></a><a href="#Hive%E5%BB%BA%E8%A1%A8%E5%85%B3%E8%81%94HBase" title="Hive建表关联HBase"></a>Hive建表关联HBase</h4><p>Hive优势在于Map等复杂的数据结构,在Hive配置成功之后可以直接建表关联HBase,SQL语句如下:  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">## r5为Map复杂数据类型,主键为Flume插入日志信息时自动生成</span><br><span class="line">## SERDEPROPERTIES (&quot;hbase.columns.mapping&quot; <span class="operator">=</span> &quot;:key,cf_info:pid,cf_info:oid,cf_info:eid,cf_info:epid,cf_info:rand,cf_info:tid,cf_info:r5&quot;)中需要保证Hive中的字段和HBase表中对应,现在HBase中只有一个列族cf_info.</span><br><span class="line">## TBLPROPERTIES (&quot;hbase.table.name&quot; <span class="operator">=</span> &quot;table_log&quot;); 配置HBase中对应的表名.</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> loginfo( </span><br><span class="line">    key string, </span><br><span class="line">    pid string, </span><br><span class="line">    oid string, </span><br><span class="line">    eid string, </span><br><span class="line">    epid string, </span><br><span class="line">    rand string, </span><br><span class="line">    tid string, </span><br><span class="line">    r5 map<span class="operator">&lt;</span>string,string<span class="operator">&gt;</span> ) </span><br><span class="line">    <span class="type">row</span> format delimited fields terminated <span class="keyword">by</span> &quot;\t&quot; </span><br><span class="line">    collection items terminated <span class="keyword">by</span> &quot;,&quot; </span><br><span class="line">    map keys terminated <span class="keyword">by</span> &quot;:&quot; </span><br><span class="line">    STORED <span class="keyword">BY</span> <span class="string">&#x27;org.apache.hadoop.hive.hbase.HBaseStorageHandler&#x27;</span> </span><br><span class="line">    <span class="keyword">WITH</span> SERDEPROPERTIES (&quot;hbase.columns.mapping&quot; <span class="operator">=</span> &quot;:key,cf_info:pid,cf_info:oid,cf_info:eid,cf_info:epid,cf_info:rand,cf_info:tid,cf_info:r5&quot;)</span><br><span class="line">    TBLPROPERTIES (&quot;hbase.table.name&quot; <span class="operator">=</span> &quot;table_log&quot;);</span><br></pre></td></tr></table></figure>
+<h4 id="完成"><a href="#完成" class="headerlink" title="完成"></a><a href="#%E5%AE%8C%E6%88%90" title="完成"></a>完成</h4><p>之后请求Nginx端口发送信息就可以在Hive中直接select到了.</p>
+<h1 id="总结-踩坑"><a href="#总结-踩坑" class="headerlink" title="总结(踩坑)"></a><a href="#%E6%80%BB%E7%BB%93-%E8%B8%A9%E5%9D%91" title="总结(踩坑)"></a>总结(踩坑)</h1><p>坑主要是出在各个框架之间的版本选择上,在安装之前<strong>一定一定一定</strong>要选好你的Hadoop+HBase+Hive版本保证互相兼容,剩下的就十分的简单了.还有在xml配置上<strong>要写在默认配置下面</strong>来覆盖原有的默认配置,Hive写了一堆默认配置而且是非注释状态,在连接Mysql的时候卡了好久.</p>
+<p>不得不说Flume还是一个我十分喜欢的东西,非常的强大而且拓展性十分强悍,也看到了美团在其之上的改进的文章获益匪浅:<a target="_blank" rel="noopener" href="https://tech.meituan.com/mt_log_system_arch.html">基于Flume的美团日志收集系统(一)架构和设计</a>和<a target="_blank" rel="noopener" href="https://tech.meituan.com/mt_log_system_optimization.html">基于Flume的美团日志收集系统(二)改进和优化</a>.这次只是搭建和初步的尝试,后续的细节和改进会继续跟进.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/%E6%A0%87%E7%AD%BE/Flume/" rel="tag"># Flume</a>
+              <a href="/%E6%A0%87%E7%AD%BE/Nginx/" rel="tag"># Nginx</a>
+              <a href="/%E6%A0%87%E7%AD%BE/Hive/" rel="tag"># Hive</a>
+              <a href="/%E6%A0%87%E7%AD%BE/Hbase/" rel="tag"># Hbase</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/07/08/%E9%98%85%E8%AF%BB-Lisp-Good-News-Bad-News-How-to-Win-Big/" rel="prev" title="阅读:Lisp: Good News, Bad News, How to Win Big">
+                  <i class="fa fa-chevron-left"></i> 阅读:Lisp: Good News, Bad News, How to Win Big
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/08/12/%E5%88%B7%E5%AE%8C%E8%A5%BF%E9%83%A8%E4%B8%96%E7%95%8C%E7%AC%AC%E4%BA%8C%E5%AD%A3%E4%B9%8B%E5%90%8E/" rel="next" title="刷完西部世界第二季之后">
+                  刷完西部世界第二季之后 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">MisakaTang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/TangMisaka23001" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":false,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

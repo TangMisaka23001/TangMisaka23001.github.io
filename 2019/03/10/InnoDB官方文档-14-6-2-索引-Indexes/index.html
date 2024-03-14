@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"misakatang.cn","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.17.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"style":null,"show_result":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="14.6.2 索引(Indexes)14.6.2.1 聚簇和二级索引(Clustered and Secondary Indexes)每个InnoDB表都有一个称作聚簇索引的特殊索引,存储了行的数据.通常情况下,聚簇索引是主键的代名词.为了从查询,插入和其他数据库操作中获得最好的性能,你必须了解InnoDB如何使用聚簇索引来优化每个表最常见的查找和DML操作.  当你在表上定义了主键,InnoDB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="InnoDB官方文档--14.6.2 索引(Indexes)">
+<meta property="og:url" content="http://misakatang.cn/2019/03/10/InnoDB%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3-14-6-2-%E7%B4%A2%E5%BC%95-Indexes/index.html">
+<meta property="og:site_name" content="MisakaTang&#39;s Blog">
+<meta property="og:description" content="14.6.2 索引(Indexes)14.6.2.1 聚簇和二级索引(Clustered and Secondary Indexes)每个InnoDB表都有一个称作聚簇索引的特殊索引,存储了行的数据.通常情况下,聚簇索引是主键的代名词.为了从查询,插入和其他数据库操作中获得最好的性能,你必须了解InnoDB如何使用聚簇索引来优化每个表最常见的查找和DML操作.  当你在表上定义了主键,InnoDB">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-03-10T18:29:07.000Z">
+<meta property="article:modified_time" content="2024-03-14T08:33:24.914Z">
+<meta property="article:author" content="MisakaTang">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="InnoDB">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://misakatang.cn/2019/03/10/InnoDB%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3-14-6-2-%E7%B4%A2%E5%BC%95-Indexes/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://misakatang.cn/2019/03/10/InnoDB%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3-14-6-2-%E7%B4%A2%E5%BC%95-Indexes/","path":"2019/03/10/InnoDB官方文档-14-6-2-索引-Indexes/","title":"InnoDB官方文档--14.6.2 索引(Indexes)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>InnoDB官方文档--14.6.2 索引(Indexes) | MisakaTang's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4TSLH4NC9H"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-4TSLH4NC9H","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?de7c77febeeac252eee468207ae11ce4"></script>
+
+
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "jtb4czrfeu");
+</script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="MisakaTang's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">MisakaTang's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#14-6-2-%E7%B4%A2%E5%BC%95-Indexes"><span class="nav-text">14.6.2 索引(Indexes)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#14-6-2-1-%E8%81%9A%E7%B0%87%E5%92%8C%E4%BA%8C%E7%BA%A7%E7%B4%A2%E5%BC%95-Clustered-and-Secondary-Indexes"><span class="nav-text">14.6.2.1 聚簇和二级索引(Clustered and Secondary Indexes)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#14-6-2-2-InnoDB%E7%B4%A2%E5%BC%95%E7%9A%84%E7%89%A9%E7%90%86%E6%9E%B6%E6%9E%84-The-Physical-Structure-of-an-InnoDB-Index"><span class="nav-text">14.6.2.2 InnoDB索引的物理架构(The Physical Structure of an InnoDB Index)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#14-6-2-3-%E6%9E%84%E5%BB%BA%E6%8E%92%E5%BA%8F%E7%B4%A2%E5%BC%95-Sorted-Index-Builds"><span class="nav-text">14.6.2.3 (构建排序索引)Sorted Index Builds</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#14-6-2-4-InnoDB%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95-InnoDB-FULLTEXT-Indexes"><span class="nav-text">14.6.2.4 (InnoDB全文索引)InnoDB FULLTEXT Indexes</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MisakaTang"
+      src="/images/misaka.jpg">
+  <p class="site-author-name" itemprop="name">MisakaTang</p>
+  <div class="site-description" itemprop="description">The limits of my language are the limits of my world</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/%E5%BD%92%E6%A1%A3/">
+          <span class="site-state-item-count">101</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TangMisaka23001" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TangMisaka23001" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mikasatang@gmail.com" title="E-Mail → mailto:mikasatang@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="http://blog.bbchen.top/" title="http:&#x2F;&#x2F;blog.bbchen.top" rel="noopener" target="_blank">BB chen的漂流记</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="http://blog.zhuzhenyuan.cn/" title="http:&#x2F;&#x2F;blog.zhuzhenyuan.cn" rel="noopener" target="_blank">Aurthur_的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://misakatang.cn/2019/03/10/InnoDB%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3-14-6-2-%E7%B4%A2%E5%BC%95-Indexes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/misaka.jpg">
+      <meta itemprop="name" content="MisakaTang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MisakaTang's Blog">
+      <meta itemprop="description" content="The limits of my language are the limits of my world">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="InnoDB官方文档--14.6.2 索引(Indexes) | MisakaTang's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          InnoDB官方文档--14.6.2 索引(Indexes)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-03-10 18:29:07" itemprop="dateCreated datePublished" datetime="2019-03-10T18:29:07+00:00">2019-03-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-14 08:33:24" itemprop="dateModified" datetime="2024-03-14T08:33:24+00:00">2024-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/%E5%88%86%E7%B1%BB/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h4 id="14-6-2-索引-Indexes"><a href="#14-6-2-索引-Indexes" class="headerlink" title="14.6.2 索引(Indexes)"></a>14.6.2 索引(Indexes)</h4><h5 id="14-6-2-1-聚簇和二级索引-Clustered-and-Secondary-Indexes"><a href="#14-6-2-1-聚簇和二级索引-Clustered-and-Secondary-Indexes" class="headerlink" title="14.6.2.1 聚簇和二级索引(Clustered and Secondary Indexes)"></a>14.6.2.1 聚簇和二级索引(Clustered and Secondary Indexes)</h5><p>每个InnoDB表都有一个称作聚簇索引的特殊索引,存储了行的数据.通常情况下,聚簇索引是主键的代名词.为了从查询,插入和其他数据库操作中获得最好的性能,你必须了解InnoDB如何使用聚簇索引来优化每个表最常见的查找和DML操作.</p>
+<ul>
+<li>当你在表上定义了主键,InnoDB用其作为聚簇索引.给你创建的每个表定义一个主键.如果没有逻辑上唯一和非空的列或列的集合,添加一个新的自增列(作为主键),它的值会自动填充.</li>
+<li>如果你没有为表定义主键,MySQL会找到第一个唯一索引,其中所有的列键都是非空的并且InnoDB会将其作为聚簇索引.</li>
+<li>如果表没有主键或合适的唯一索引,InnoDB会在包含行ID值的合成列内部生成一个名为<code>GEN_CLUST_INDEX</code>的隐藏的聚簇索引.行数据按照InnoDB给这类表分配的ID来排序.行ID是一个6位的字段,随着新行的插入单调递增.因此,行通过ID的排序顺序和物理插入顺序一致.</li>
+</ul>
+<p><strong>聚簇索引如何加速查询(How the Clustered Index Speeds Up Queries)</strong></p>
+<p>通过聚簇索引访问行很快,因为索引搜索直接指向包含所有行数据的页(page).如果表很大,聚簇索引架构与从不同页面索引记录来存储数据的组织方式相比可以节省磁盘的I&#x2F;O操作.</p>
+<p><strong>二级索引如何关联聚簇索引(How Secondary Indexes Relate to the Clustered Index)</strong></p>
+<p>除了聚簇索引之外的索引都被成为二级索引.在InnoDB中,每个二级索引包含行的主键列和二级索引指定的其他列.InnoDB使用此主键来搜索聚簇索引中的行.</p>
+<p>如果主键很长,二级索引会使用更多的空间,所以一个短的主键是有好处的.</p>
+<h5 id="14-6-2-2-InnoDB索引的物理架构-The-Physical-Structure-of-an-InnoDB-Index"><a href="#14-6-2-2-InnoDB索引的物理架构-The-Physical-Structure-of-an-InnoDB-Index" class="headerlink" title="14.6.2.2 InnoDB索引的物理架构(The Physical Structure of an InnoDB Index)"></a>14.6.2.2 InnoDB索引的物理架构(The Physical Structure of an InnoDB Index)</h5><p>除了索引空间之外,InnoDB索引使用B树数据结构.空间索引使用R树,是一种用于索引多维数据的特殊数据结构.索引记录存储在B树或R树数据结构的叶节点页面中.默认的索引页大小是16KB.</p>
+<p>当在InnoDB聚簇索引中插入一个新记录时,InnoDB会尝试保留页面的1&#x2F;16用来将来更新和插入索引记录.如果索引记录按序插入(升序或降序),生成的索引页面大约是15&#x2F;16.如果记录按随机顺序插入,占页面1&#x2F;2到15&#x2F;16大小.</p>
+<p>InnoDB在创建或重建B树索引时执行批量加载.这种索引创建方法称为排序索引构建(sorted index build).<code> innodb_fill_factor</code>配置选项定义在排序索引构建期间填充每个B树页面的百分比,剩余的空间用于未来的增长需要.空间索引不支持排序索引构建.<code> innodb_fill_factor</code>设置为100会为未来增长的数据保留1&#x2F;16的页面大小.</p>
+<p>如果InnoDB索引页的填充因子低于MERGE_THRESHOLD(默认情况下为50%),InnoDB会尝试收缩索引树来释放页面.MERGE_THRESHOLD设置适用于B树索引和R树索引.</p>
+<p>你可以通过在初始化MySQL实例之前设置<code>innodb_page_size</code>配置选项来定义MySQL实例中所有InnoDB表空间的页面大小.定义实例的页面大小后,如果不重新初始化实例,则无法更改它.支持的大小有64KB,32KB,16KB(默认),8KB和4KB.</p>
+<p>MySQL5.7添加了对32KB和64KB的支持.</p>
+<p>使用指定InnoDB页面大小的MySQL实例无法使用来自使用不同页面大小的实例的数据文件或日志文件.</p>
+<h5 id="14-6-2-3-构建排序索引-Sorted-Index-Builds"><a href="#14-6-2-3-构建排序索引-Sorted-Index-Builds" class="headerlink" title="14.6.2.3 (构建排序索引)Sorted Index Builds"></a>14.6.2.3 (构建排序索引)Sorted Index Builds</h5><p>在创建或重构索引的时候,InnoDB使用批量加载来代替一次插入一个记录的方式.这种创建索引的方式被称为排序索引构建.不支持构建索引空间.</p>
+<p>索引构建有3个阶段.第一阶段,扫描聚簇索引并且生成索引条目然后添加到排序缓冲区.当排序缓冲区满的时候条目会被排序然后写到一个临时的中间文件中.此过程也被称为运行(run).第二阶段,一个或多个运行写入到临时中间文件的时候会对文件中的全部条目执行归并排序.第三阶段,排序过的条目被插入到B树中.</p>
+<p>在引入排序索引构建之前,使用插入API来将条目一条条插入到B树索引中.这个方法设计打开B树游标用来查找插入位置,然后使用乐观插入将条目插入到B树页面中.如果由于页面已满导致插入失败,将会执行一个悲观插入,这会涉及打开B树游标并根据需要拆分和合并B树节点以找到该条目的空间.这种构建索引的”自上而下”方法的缺点是搜索插入位置的成本以及B树节点的常量拆分和合并.</p>
+<p>排序索引构建使用自下而上方式来构建索引.使用这种方法,对最右侧叶节点的页面引用保留在B树的每一级上.分配必要B树深度的最右侧叶页,并根据其排序顺序插入条目.一旦叶节点的页面满了,节点指针将附加到父页面,并为下一个插入分配一个兄弟叶页面.此过程将继续到插入所有条目,可能导致插入到根节点级别.分配兄弟节点页面时,将释放对先前固定的叶子节点页面的引用,并且新分配的叶子节点页面将成为最右侧的叶子节点页面和新的默认插入位置.</p>
+<p><strong>为未来的索引增长保留B树页面空间</strong></p>
+<p>使用<code> innodb_fill_factor</code>配置B树保留页面空间的百分比来给未来增长的索引预留空间.例如,设置<code>innodb_fill_factor</code>为80可以在排序索引构建的时候保留B树页面空间的20%.此设置适用于B树叶节点和非叶节点页面.但不适用于TEXT和BLOB条目的外部页面.保留的空间总量可能和配置的不完全相同,因为<code> innodb_fill_factor</code>被解释为示意而不是强制限制.</p>
+<p><strong>排序索引构建和全文索引支持</strong></p>
+<p>全文索引支持排序索引构建.</p>
+<p><strong>排序索引构建和压缩表</strong></p>
+<p>对于压缩表,之前的索引创建方法是向压缩和未压缩的页面同时添加条目.当修改日志(表示压缩页面上的可用空间)变满时,压缩页面会被重新压缩.如果压缩因为空间不足失败,页面会被拆分.对于已排序的索引构建,条目只会添加到未压缩的页面上.当一个未压缩的页面变满时会被压缩.自适应填充用于确保在大多数情况下压缩成功,但如果压缩失败,则会拆分页面并再次尝试压缩.此过程将继续到压缩成功.</p>
+<p><strong>排序索引构建和redo日志</strong></p>
+<p>redo日志在排序索引构建期间是禁用的.相对的,有一个检查点来确保索引构建能够承受崩溃或故障.检查点强制将所有脏页写入磁盘.在排序索引构建期间,会定期发信号通知页面清理线程刷新脏页确保可以快速处理检查点操作.通常,当干净页面的数量低于设定的阈值时,页面清理线程会刷新脏页面.对于排序索引构建,会立即刷新脏页以减少检查点开销并且并行化I&#x2F;O和CPU活动.</p>
+<p><strong>排序索引构建和统计优化(Optimizer Statistics)</strong></p>
+<p>排序索引构建可能导致统计优化与以前的索引创建方法生成的统计信息不同.统计数据的差异(不会影响工作负载性能)是由于用于填充索引的算法不同.</p>
+<h5 id="14-6-2-4-InnoDB全文索引-InnoDB-FULLTEXT-Indexes"><a href="#14-6-2-4-InnoDB全文索引-InnoDB-FULLTEXT-Indexes" class="headerlink" title="14.6.2.4 (InnoDB全文索引)InnoDB FULLTEXT Indexes"></a>14.6.2.4 (InnoDB全文索引)InnoDB FULLTEXT Indexes</h5><p>在基于文本的列上(CHAR,VARCHAR,或TEXT列)创建全文索引(FULLTEXT index)可以加速包含这些列的查询和DML操作,省略任何被定义为停用词的单词.</p>
+<p>全文索引可以定义为<code>CREATE TABLE</code>语句的一部分或使用<code>ALTER TABLE</code>或<code>CREATE INDEX</code>添加到已存在的表中.</p>
+<p>全文索引使用<code>MATCH() ... AGAINST</code>语法来执行.</p>
+<p><strong>InnoDB全文索引设计(InnoDB Full-Text Index Design)</strong></p>
+<p>InnoDB全文索引具有反向索引设计.反向索引存储单词列表,并且为每个单词存储出现该单词的文档列表.为了支持邻近搜索还存储了每个单词的位置信息作为字偏移.</p>
+<p><strong>InnoDB全文索引表(InnoDB Full-Text Index Tables)</strong></p>
+<p>当创建全文索引的时候,一系列的索引表会被创建,如下:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">CREATE</span> <span class="keyword">TABLE</span> opening_lines (</span><br><span class="line">       id <span class="type">INT</span> UNSIGNED AUTO_INCREMENT <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">PRIMARY</span> KEY,</span><br><span class="line">       opening_line TEXT(<span class="number">500</span>),</span><br><span class="line">       author <span class="type">VARCHAR</span>(<span class="number">200</span>),</span><br><span class="line">       title <span class="type">VARCHAR</span>(<span class="number">200</span>),</span><br><span class="line">       FULLTEXT idx (opening_line)</span><br><span class="line">       ) ENGINE<span class="operator">=</span>InnoDB;</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SELECT</span> table_id, name, space <span class="keyword">from</span> INFORMATION_SCHEMA.INNODB_SYS_TABLES</span><br><span class="line">       <span class="keyword">WHERE</span> name <span class="keyword">LIKE</span> <span class="string">&#x27;test/%&#x27;</span>;</span><br><span class="line"><span class="operator">+</span><span class="comment">----------+----------------------------------------------------+-------+</span></span><br><span class="line"><span class="operator">|</span> table_id <span class="operator">|</span> name                                               <span class="operator">|</span> space <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">----------+----------------------------------------------------+-------+</span></span><br><span class="line"><span class="operator">|</span>      <span class="number">333</span> <span class="operator">|</span> test<span class="operator">/</span>FTS_0000000000000147_00000000000001c9_INDEX_1 <span class="operator">|</span>   <span class="number">289</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>      <span class="number">334</span> <span class="operator">|</span> test<span class="operator">/</span>FTS_0000000000000147_00000000000001c9_INDEX_2 <span class="operator">|</span>   <span class="number">290</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>      <span class="number">335</span> <span class="operator">|</span> test<span class="operator">/</span>FTS_0000000000000147_00000000000001c9_INDEX_3 <span class="operator">|</span>   <span class="number">291</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>      <span class="number">336</span> <span class="operator">|</span> test<span class="operator">/</span>FTS_0000000000000147_00000000000001c9_INDEX_4 <span class="operator">|</span>   <span class="number">292</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>      <span class="number">337</span> <span class="operator">|</span> test<span class="operator">/</span>FTS_0000000000000147_00000000000001c9_INDEX_5 <span class="operator">|</span>   <span class="number">293</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>      <span class="number">338</span> <span class="operator">|</span> test<span class="operator">/</span>FTS_0000000000000147_00000000000001c9_INDEX_6 <span class="operator">|</span>   <span class="number">294</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>      <span class="number">330</span> <span class="operator">|</span> test<span class="operator">/</span>FTS_0000000000000147_BEING_DELETED            <span class="operator">|</span>   <span class="number">286</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>      <span class="number">331</span> <span class="operator">|</span> test<span class="operator">/</span>FTS_0000000000000147_BEING_DELETED_CACHE      <span class="operator">|</span>   <span class="number">287</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>      <span class="number">332</span> <span class="operator">|</span> test<span class="operator">/</span>FTS_0000000000000147_CONFIG                   <span class="operator">|</span>   <span class="number">288</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>      <span class="number">328</span> <span class="operator">|</span> test<span class="operator">/</span>FTS_0000000000000147_DELETED                  <span class="operator">|</span>   <span class="number">284</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>      <span class="number">329</span> <span class="operator">|</span> test<span class="operator">/</span>FTS_0000000000000147_DELETED_CACHE            <span class="operator">|</span>   <span class="number">285</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>      <span class="number">327</span> <span class="operator">|</span> test<span class="operator">/</span>opening_lines                                 <span class="operator">|</span>   <span class="number">283</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">----------+----------------------------------------------------+-------+</span></span><br></pre></td></tr></table></figure>
+<p>前面的6个表表示反向索引并被成为辅助索引表.当传入的文档被标记时,相应的单词(也称为标记(tokens))与其对应的位置信息和关联的文档ID(DOC_ID)一起被插入索引表中.根据单词的第一个字符的字符集的排序权重对6个索引表中的单词进行完全排序和分区.</p>
+<p>反向索引被划分为六个辅助索引表以支持并行索引创建.默认情况下,两个线程对单词和关联数据进行标记,排序和插入索引表.线程的数量使用<code> innodb_ft_sort_pll_degree</code>来配置.在大表上创建全文索引的时候考虑增加线程的数量.</p>
+<p>辅助索引表名称以FTS_为前缀，后缀为INDEX_ *.每个索引表都通过索引表名称中与索引表的table_id匹配的十六进制值与索引表相关联.例如,test&#x2F;opening_lines表的table_id是327,其十六进制值是0x147.如前面所示,”147”十六进制值出现在与test&#x2F;opening_lines表关联的索引表名中.</p>
+<p>表示全文索引的index_id的十六进制值也出现在辅助索引表名称中.例如,在辅助表名test&#x2F;FTS_0000000000000147_00000000000001c9_INDEX_1中,16进制的1c9就是10进制的457.opening_lines表上的索引定义可以使用<code> INFORMATION_SCHEMA.INNODB_SYS_INDEXES</code>表上查询457来识别索引.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SELECT</span> index_id, name, table_id, space <span class="keyword">from</span> INFORMATION_SCHEMA.INNODB_SYS_INDEXES</span><br><span class="line">       <span class="keyword">WHERE</span> index_id<span class="operator">=</span><span class="number">457</span>;</span><br><span class="line"><span class="operator">+</span><span class="comment">----------+------+----------+-------+</span></span><br><span class="line"><span class="operator">|</span> index_id <span class="operator">|</span> name <span class="operator">|</span> table_id <span class="operator">|</span> space <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">----------+------+----------+-------+</span></span><br><span class="line"><span class="operator">|</span>      <span class="number">457</span> <span class="operator">|</span> idx  <span class="operator">|</span>      <span class="number">327</span> <span class="operator">|</span>   <span class="number">283</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">----------+------+----------+-------+</span></span><br></pre></td></tr></table></figure>
+<p>如果主表是在每个表的文件表空间中创建的,则索引表存储在它们自己的表空间中.</p>
+<p>上例中显示的其他索引表称为公共索引表，用于删除处理和存储全文索引的内部状态.与为每个全文索引创建的反向索引表不同,这组表对于在特定表上创建的所有全文索引是通用的.</p>
+<p>即使删除了全文索引,也会保留公共辅助表.删除全文索引时,将保留为索引创建的FTS_DOC_ID列,因为删除FTS_DOC_ID列将需要重建表.管理FTS_DOC_ID列需要下面的表:</p>
+<ul>
+<li>FTS_*_DELETED和FTS_*_DELETED_CACHE</li>
+</ul>
+<p>  包含已删除但尚未从全文索引中删除其数据的文档的文档ID(DOC_ID).FTS_*_DELETED_CACHE是 FTS_*_DELETED在内存中的版本.</p>
+<ul>
+<li>FTS_*_BEING_DELETED 和 FTS_*_BEING_DELETED_CACHE</li>
+</ul>
+<p>  包含已删除文档的文档ID(DOC_ID),其数据当前正在从全文索引中删除.FTS_*_BEING_DELETED_CACHE是 FTS_*_BEING_DELETED的内存版本.</p>
+<ul>
+<li><p>FTS_*_CONFIG</p>
+<p>存储和全文索引内部状态相关的信息.最重要的是其存储了<code>FTS_SYNCED_DOC_ID</code>,它标识已解析并刷新到磁盘的文档.在崩溃恢复的情况下,<code> FTS_SYNCED_DOC_ID</code>的值于标识尚未刷新到磁盘的文档,以便可以重新解析文档并将其添加回全文索引缓存.</p>
+</li>
+</ul>
+<p><strong>InnoDB全文索引缓存(InnoDB Full-Text Index Cache)</strong></p>
+<p>当一篇文档被插入的时候会被识别,相关的单词和关联的数据会被插入到全文索引中.即使对于小型文档,此过程也可能导致在辅助索引表中进行大量小插入,从而使对这些表的并发访问成为争用的焦点.为避免此问题,InnoDB使用全文索引缓存临时缓存对最近插入的行进行的索引表插入.此内存缓存结构保留插入,直到缓存已满,然后批量将它们刷新到磁盘.你可以查询<code> INFORMATION_SCHEMA.INNODB_FT_INDEX_CACHE</code>表查看最近插入的行的标记数据.</p>
+<p>缓存和批处理刷新避免了对辅助索引表的频繁更新而导致的繁忙的插入和更新时间内的并发访问问题.批处理技术还避免了对同一个单词的多次插入,并最大限度地减少了重复条目.不是单独刷新每个单词,而是将同一个单词的插入合并并作为单个条目刷新到磁盘,从而提高插入效率,同时保持辅助索引表尽可能小.</p>
+<p><code>innodb_ft_cache_size</code>用于配置全文索引缓存大小(基于每个表),这会影响全文索引缓存的刷新频率.你还可以使用<code>innodb_ft_total_cache_size</code>配置来定义全局的全文索引缓存的大小限制.</p>
+<p>全文索引缓存存储与辅助索引表相同的信息.但是,全文索引缓存仅缓存最近插入的行的标记后的数据.已经刷到磁盘的数据在查询时不会返回到全文索引缓存中.对辅助索引表中的数据的查询会直接进行,并在返回之前将辅助索引表的结果与全文索引缓存的结果合并.</p>
+<p><strong>InnoDB全文索引文档ID和FTS_DOC_ID列</strong></p>
+<p>InnoDB使用唯一的文档标识符作为文档ID(DOC_ID)来映射全文索引到文档中出现的单词记录.映射需要索引表中的<code>FTS_DOC_ID</code>列.如果FTS_DOC_ID 列没有被定义的话InnoDB会在全文索引被创建的时候添加一个隐藏的FTS_DOC_ID 列.下面的例子展示了这种行为:</p>
+<p>下面是没有包括 FTS_DOC_ID 列的表定义:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">CREATE</span> <span class="keyword">TABLE</span> opening_lines (</span><br><span class="line">       id <span class="type">INT</span> UNSIGNED AUTO_INCREMENT <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">PRIMARY</span> KEY,</span><br><span class="line">       opening_line TEXT(<span class="number">500</span>),</span><br><span class="line">       author <span class="type">VARCHAR</span>(<span class="number">200</span>),</span><br><span class="line">       title <span class="type">VARCHAR</span>(<span class="number">200</span>)</span><br><span class="line">       ) ENGINE<span class="operator">=</span>InnoDB;</span><br></pre></td></tr></table></figure>
+<p>当你使用<code>CREATE FULLTEXT INDEX </code>语句来创建全文索引的时候会返回一个警告,报告InnoDB正在重建FTS_DOC_ID 列.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">CREATE</span> FULLTEXT INDEX idx <span class="keyword">ON</span> opening_lines(opening_line);</span><br><span class="line">Query OK, <span class="number">0</span> <span class="keyword">rows</span> affected, <span class="number">1</span> warning (<span class="number">0.19</span> sec)</span><br><span class="line">Records: <span class="number">0</span>  Duplicates: <span class="number">0</span>  Warnings: <span class="number">1</span></span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SHOW</span> WARNINGS;</span><br><span class="line"><span class="operator">+</span><span class="comment">---------+------+--------------------------------------------------+</span></span><br><span class="line"><span class="operator">|</span> Level   <span class="operator">|</span> Code <span class="operator">|</span> Message                                          <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">---------+------+--------------------------------------------------+</span></span><br><span class="line"><span class="operator">|</span> Warning <span class="operator">|</span>  <span class="number">124</span> <span class="operator">|</span> InnoDB rebuilding <span class="keyword">table</span> <span class="keyword">to</span> <span class="keyword">add</span> <span class="keyword">column</span> FTS_DOC_ID <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">---------+------+--------------------------------------------------+</span></span><br></pre></td></tr></table></figure>
+<p>使用<code> ALTER TABLE</code>向没有 FTS_DOC_ID 列的表添加全文索引的时候也会返回相同的警告.如果你在<code>CREATE TABLE</code>中创建全文索引时没有指定FTS_DOC_ID 列的话,InnoDB会增加一个隐藏的FTS_DOC_ID 列而不产生警告.</p>
+<p>在<code> CREATE TABLE</code>时指定FTS_DOC_ID 列比在已经加载了数据的表上创建全文索引代价要小.如果在加载数据之前在表上定义FTS_DOC_ID列的话,表和索引就不需要重建来添加新列.如果你不关心<code>CREATE FULLTEXT INDEX</code>性能,忽略FTS_DOC_ID列让InnoDB创建它.InnoDB在FTS_DOC_ID列上创建隐藏的FTS_DOC_ID列以及唯一索引(FTS_DOC_ID_INDEX).如果要创建自己的FTS_DOC_ID列,则必须将该列定义为<code>BIGINT UNSIGNED NOT NULL</code>并命名为FTS_DOC_ID(全部大写),如下例所示:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">CREATE</span> <span class="keyword">TABLE</span> opening_lines (</span><br><span class="line">       FTS_DOC_ID <span class="type">BIGINT</span> UNSIGNED AUTO_INCREMENT <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">PRIMARY</span> KEY,</span><br><span class="line">       opening_line TEXT(<span class="number">500</span>),</span><br><span class="line">       author <span class="type">VARCHAR</span>(<span class="number">200</span>),</span><br><span class="line">       title <span class="type">VARCHAR</span>(<span class="number">200</span>)</span><br><span class="line">       ) ENGINE<span class="operator">=</span>InnoDB;</span><br></pre></td></tr></table></figure>
+<p>如果你选择自己定义FTS_DOC_ID列,管理列以避免出现空值或重复值.无法重用FTS_DOC_ID值,这意味着FTS_DOC_ID值必须不断增加.</p>
+<p>(可选)你可以在FTS_DOC_ID列上创建所需的唯一FTS_DOC_ID_INDEX(全部大写).</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">CREATE</span> <span class="keyword">UNIQUE</span> INDEX FTS_DOC_ID_INDEX <span class="keyword">on</span> opening_lines(FTS_DOC_ID);</span><br></pre></td></tr></table></figure>
+<p> 如果你不创建FTS_DOC_ID_INDEX,InnoDB会自动创建它.</p>
+<p> 在MySQL 5.7.13之前,最大使用的FTS_DOC_ID值与新的FTS_DOC_ID值之间的允许间隔为10000.在MySQL 5.7.13及更高版本中,允许的间隙为65535.</p>
+<p> 为避免重建表,删除全文索引时将保留FTS_DOC_ID列.</p>
+<p> <strong>InnoDB全文索引删除处理(InnoDB Full-Text Index Deletion Handling)</strong></p>
+<p> 删除具有全文索引列的记录可能会导致辅助索引表中出现大量小删除,使这些表的并发访问成为性能瓶颈.为避免此问题,每当从索引表中删除记录时,已删除文档的文档ID(DOC_ID)将记录在特殊的FTS_*_DELETED表中,并且索引记录保留在全文索引中.在返回查询结果之前,FTS _ * _ DELETED表中的信息用于过滤掉已删除的文档ID.这种设计的好处是删除快速且廉价.缺点是删除记录后索引的大小不会立即减少.要删除已删除记录的全文索引条目,请使用<code>innodb_optimize_fulltext_only = ON</code>在索引表上运行<code>OPTIMIZE TABLE</code>以重建全文索引.</p>
+<p> <strong>InnoDB全文索引事务处理(InnoDB全文索引事务处理)</strong></p>
+<p> 由于其缓存和批处理行为,InnoDB 全文索引具有特殊的事务处理特性. 具体来说,全文索引的更新和插入在事务提交时处理,这意味着全文搜索只能看到提交的数据.以下示例演示了此行为.全文搜索仅在提交插入的行后返回结果.<br> <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"> mysql<span class="operator">&gt;</span> <span class="keyword">CREATE</span> <span class="keyword">TABLE</span> opening_lines (</span><br><span class="line">       id <span class="type">INT</span> UNSIGNED AUTO_INCREMENT <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">PRIMARY</span> KEY,</span><br><span class="line">       opening_line TEXT(<span class="number">500</span>),</span><br><span class="line">       author <span class="type">VARCHAR</span>(<span class="number">200</span>),</span><br><span class="line">       title <span class="type">VARCHAR</span>(<span class="number">200</span>),</span><br><span class="line">       FULLTEXT idx (opening_line)</span><br><span class="line">       ) ENGINE<span class="operator">=</span>InnoDB;</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">BEGIN</span>;</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">INSERT</span> <span class="keyword">INTO</span> opening_lines(opening_line,author,title) <span class="keyword">VALUES</span></span><br><span class="line">       (<span class="string">&#x27;Call me Ishmael.&#x27;</span>,<span class="string">&#x27;Herman Melville&#x27;</span>,<span class="string">&#x27;Moby-Dick&#x27;</span>),</span><br><span class="line">       (<span class="string">&#x27;A screaming comes across the sky.&#x27;</span>,<span class="string">&#x27;Thomas Pynchon&#x27;</span>,<span class="string">&#x27;Gravity\&#x27;</span>s Rainbow<span class="string">&#x27;),</span></span><br><span class="line"><span class="string">       (&#x27;</span>I am an invisible man.<span class="string">&#x27;,&#x27;</span>Ralph Ellison<span class="string">&#x27;,&#x27;</span>Invisible Man<span class="string">&#x27;),</span></span><br><span class="line"><span class="string">       (&#x27;</span><span class="keyword">Where</span> now? Who now? <span class="keyword">When</span> now?<span class="string">&#x27;,&#x27;</span>Samuel Beckett<span class="string">&#x27;,&#x27;</span>The Unnamable<span class="string">&#x27;),</span></span><br><span class="line"><span class="string">       (&#x27;</span>It was love <span class="keyword">at</span> <span class="keyword">first</span> sight.<span class="string">&#x27;,&#x27;</span>Joseph Heller<span class="string">&#x27;,&#x27;</span>Catch<span class="number">-22</span><span class="string">&#x27;),</span></span><br><span class="line"><span class="string">       (&#x27;</span><span class="keyword">All</span> this happened, more <span class="keyword">or</span> less.<span class="string">&#x27;,&#x27;</span>Kurt Vonnegut<span class="string">&#x27;,&#x27;</span>Slaughterhouse<span class="operator">-</span>Five<span class="string">&#x27;),</span></span><br><span class="line"><span class="string">       (&#x27;</span>Mrs. Dalloway said she would buy the flowers herself.<span class="string">&#x27;,&#x27;</span>Virginia Woolf<span class="string">&#x27;,&#x27;</span>Mrs. Dalloway<span class="string">&#x27;),</span></span><br><span class="line"><span class="string">       (&#x27;</span>It was a pleasure <span class="keyword">to</span> burn.<span class="string">&#x27;,&#x27;</span>Ray Bradbury<span class="string">&#x27;,&#x27;</span>Fahrenheit <span class="number">451</span><span class="string">&#x27;);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">mysql&gt; SELECT COUNT(*) FROM opening_lines WHERE MATCH(opening_line) AGAINST(&#x27;</span>Ishmael<span class="string">&#x27;);</span></span><br><span class="line"><span class="string">+----------+</span></span><br><span class="line"><span class="string">| COUNT(*) |</span></span><br><span class="line"><span class="string">+----------+</span></span><br><span class="line"><span class="string">|        0 |</span></span><br><span class="line"><span class="string">+----------+</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">mysql&gt; COMMIT;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">mysql&gt; SELECT COUNT(*) FROM opening_lines WHERE MATCH(opening_line) AGAINST(&#x27;</span>Ishmael<span class="string">&#x27;);</span></span><br><span class="line"><span class="string">+----------+</span></span><br><span class="line"><span class="string">| COUNT(*) |</span></span><br><span class="line"><span class="string">+----------+</span></span><br><span class="line"><span class="string">|        1 |</span></span><br><span class="line"><span class="string">+----------+</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>InnoDB全文索引监控</strong></p>
+<p>您可以通过查询以下INFORMATION_SCHEMA表来监视和检查InnoDB 全文索引</p>
+<ul>
+<li>INNODB_FT_CONFIG</li>
+<li>INNODB_FT_INDEX_TABLE</li>
+<li>INNODB_FT_INDEX_CACHE</li>
+<li>INNODB_FT_DEFAULT_STOPWORD</li>
+<li>INNODB_FT_DELETED</li>
+<li>INNODB_FT_BEING_DELETED</li>
+</ul>
+<p>你还可以通过查询INNODB_SYS_INDEXES和INNODB_SYS_TABLES查看全文索引和表的基本信息.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/%E6%A0%87%E7%AD%BE/MySQL/" rel="tag"># MySQL</a>
+              <a href="/%E6%A0%87%E7%AD%BE/InnoDB/" rel="tag"># InnoDB</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/03/02/%E9%98%BF%E9%87%8C%E4%BA%91RDS%E9%80%BB%E8%BE%91%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D%E4%B8%BB%E4%BB%8E/" rel="prev" title="阿里云RDS逻辑备份恢复主从">
+                  <i class="fa fa-chevron-left"></i> 阿里云RDS逻辑备份恢复主从
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/03/25/InnoDB%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3-14-6-3-%E8%A1%A8%E7%A9%BA%E9%97%B4/" rel="next" title="InnoDB官方文档--14.6.3 表空间(Tablespaces)">
+                  InnoDB官方文档--14.6.3 表空间(Tablespaces) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">MisakaTang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/TangMisaka23001" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":false,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

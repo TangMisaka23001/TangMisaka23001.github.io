@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"misakatang.cn","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.17.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"style":null,"show_result":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="问题产生在线上主从同步的slave数据库中产生了如下的错误： 12ERROR 1787 (HY000): When @@GLOBAL.ENFORCE_GTID_CONSISTENCY &#x3D; 1, the statements CREATE TEMPORARY TABLE and DROP TEMPORARY TABLE can be executed in a non-transactional c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一次从阿里云rds备份单库到服务器">
+<meta property="og:url" content="http://misakatang.cn/2019/02/16/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BB%8E%E9%98%BF%E9%87%8C%E4%BA%91rds%E5%A4%87%E4%BB%BD%E5%8D%95%E5%BA%93%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/index.html">
+<meta property="og:site_name" content="MisakaTang&#39;s Blog">
+<meta property="og:description" content="问题产生在线上主从同步的slave数据库中产生了如下的错误： 12ERROR 1787 (HY000): When @@GLOBAL.ENFORCE_GTID_CONSISTENCY &#x3D; 1, the statements CREATE TEMPORARY TABLE and DROP TEMPORARY TABLE can be executed in a non-transactional c">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-02-16T15:57:42.000Z">
+<meta property="article:modified_time" content="2024-03-14T08:33:24.914Z">
+<meta property="article:author" content="MisakaTang">
+<meta property="article:tag" content="问题解决">
+<meta property="article:tag" content="Mysql">
+<meta property="article:tag" content="阿里云">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://misakatang.cn/2019/02/16/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BB%8E%E9%98%BF%E9%87%8C%E4%BA%91rds%E5%A4%87%E4%BB%BD%E5%8D%95%E5%BA%93%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://misakatang.cn/2019/02/16/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BB%8E%E9%98%BF%E9%87%8C%E4%BA%91rds%E5%A4%87%E4%BB%BD%E5%8D%95%E5%BA%93%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/","path":"2019/02/16/记一次从阿里云rds备份单库到服务器/","title":"记一次从阿里云rds备份单库到服务器"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>记一次从阿里云rds备份单库到服务器 | MisakaTang's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4TSLH4NC9H"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-4TSLH4NC9H","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?de7c77febeeac252eee468207ae11ce4"></script>
+
+
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "jtb4czrfeu");
+</script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="MisakaTang's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">MisakaTang's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E4%BA%A7%E7%94%9F"><span class="nav-text">问题产生</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Xtrabackup"><span class="nav-text">Xtrabackup</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Xtrabackup%E7%9A%84%E5%8D%95%E8%A1%A8%E6%81%A2%E5%A4%8D"><span class="nav-text">Xtrabackup的单表恢复</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%96%B0%E8%A1%A8"><span class="nav-text">创建新表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%A1%A8%E7%A9%BA%E9%97%B4"><span class="nav-text">删除表空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%B7%E8%B4%9D%E6%95%B0%E6%8D%AE"><span class="nav-text">拷贝数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E5%85%A5%E8%A1%A8%E7%A9%BA%E9%97%B4"><span class="nav-text">导入表空间</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%BC%E5%85%A5%E6%8C%87%E5%AE%9A%E7%9A%84%E5%BA%93"><span class="nav-text">导入指定的库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mysqlfrm%E4%BB%8B%E7%BB%8D"><span class="nav-text">mysqlfrm介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%81%A2%E5%A4%8D%E5%8D%95%E5%BA%93%E7%9A%84%E8%84%9A%E6%9C%AC"><span class="nav-text">恢复单库的脚本</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F"><span class="nav-text">注意</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E4%B8%BB%E4%BB%8E%E5%90%8C%E6%AD%A5"><span class="nav-text">启动主从同步</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%BF%9E%E6%8E%A5"><span class="nav-text">参考连接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MisakaTang"
+      src="/images/misaka.jpg">
+  <p class="site-author-name" itemprop="name">MisakaTang</p>
+  <div class="site-description" itemprop="description">The limits of my language are the limits of my world</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/%E5%BD%92%E6%A1%A3/">
+          <span class="site-state-item-count">101</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TangMisaka23001" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TangMisaka23001" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mikasatang@gmail.com" title="E-Mail → mailto:mikasatang@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="http://blog.bbchen.top/" title="http:&#x2F;&#x2F;blog.bbchen.top" rel="noopener" target="_blank">BB chen的漂流记</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="http://blog.zhuzhenyuan.cn/" title="http:&#x2F;&#x2F;blog.zhuzhenyuan.cn" rel="noopener" target="_blank">Aurthur_的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://misakatang.cn/2019/02/16/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BB%8E%E9%98%BF%E9%87%8C%E4%BA%91rds%E5%A4%87%E4%BB%BD%E5%8D%95%E5%BA%93%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/misaka.jpg">
+      <meta itemprop="name" content="MisakaTang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MisakaTang's Blog">
+      <meta itemprop="description" content="The limits of my language are the limits of my world">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="记一次从阿里云rds备份单库到服务器 | MisakaTang's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          记一次从阿里云rds备份单库到服务器
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-02-16 15:57:42" itemprop="dateCreated datePublished" datetime="2019-02-16T15:57:42+00:00">2019-02-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-14 08:33:24" itemprop="dateModified" datetime="2024-03-14T08:33:24+00:00">2024-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/%E5%88%86%E7%B1%BB/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="问题产生"><a href="#问题产生" class="headerlink" title="问题产生"></a>问题产生</h1><p>在线上主从同步的slave数据库中产生了如下的错误：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ERROR 1787 (HY000): When @@GLOBAL.ENFORCE_GTID_CONSISTENCY = 1, the statements CREATE TEMPORARY TABLE and </span><br><span class="line">DROP TEMPORARY TABLE can be executed in a non-transactional context only, and require that AUTOCOMMIT = 1.</span><br></pre></td></tr></table></figure>
+<p>使用<code>show slave status</code>可以查看从库当前的同步状态,发现I&#x2F;O状态已经变为NO,尝试使用:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> sql_slave_skip_counter <span class="operator">=</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>之后产生如下的问题:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR 1858 (HY000): sql_slave_skip_counter can not be set when the server is running with @@GLOBAL.GTID_MODE = ON. Instead, for each transaction that you want to skip, generate an empty transaction with the same GTID as the transaction</span><br></pre></td></tr></table></figure>
+<p>根据错误说明使用一个空事务来跳过异常,代码如下:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">STOP SLAVE;</span><br><span class="line"><span class="keyword">SET</span> GTID_NEXT<span class="operator">=</span># binlog中事务的下一个位置;</span><br><span class="line"><span class="keyword">BEGIN</span>; <span class="keyword">COMMIT</span>; # 产生一个空事务并提交</span><br><span class="line"><span class="keyword">SET</span> GTID_NEXT<span class="operator">=</span>&quot;AUTOMATIC&quot;;</span><br><span class="line"><span class="keyword">START</span> SLAVE;</span><br></pre></td></tr></table></figure>
+<p>然而这样会导致主从的数据可能产生不一致的情况,这是我们想要避免的,并且希望主库可以不锁表导出数据即可进行备份.</p>
+<h1 id="Xtrabackup"><a href="#Xtrabackup" class="headerlink" title="Xtrabackup"></a>Xtrabackup</h1><p>查看阿里云的官方文档:<a target="_blank" rel="noopener" href="https://help.aliyun.com/knowledge_detail/41817.html">RDS for MySQL 物理备份文件恢复到自建数据库</a>发现可以使用<a target="_blank" rel="noopener" href="https://www.percona.com/doc/percona-xtrabackup/2.4/installation.html?spm=a2c4g.11186623.2.12.3f4d237434ZMpZ">Xtrabackup</a>来进行恢复.</p>
+<blockquote>
+<p>操作系统中已安装数据恢复工具Percona XtraBackup。MySQL 5.6及之前的版本需要安装 Percona XtraBackup 2.3。MySQL 5.7版本需要安装 Percona XtraBackup 2.4。可以从Percona XtraBackup官网下载安装，安装指导请参见官方文档 Percona XtraBackup 2.3、Percona XtraBackup 2.4。</p>
+</blockquote>
+<h1 id="Xtrabackup的单表恢复"><a href="#Xtrabackup的单表恢复" class="headerlink" title="Xtrabackup的单表恢复"></a>Xtrabackup的单表恢复</h1><p>但是上面的官方文档中仍旧有一个问题,在文档中写到:</p>
+<blockquote>
+<p>说明 由于软件限制，目前只支持将云数据库MySQL的备份文件恢复到安装在Linux系统中的自建MySQL数据库中。</p>
+</blockquote>
+<p>而在恢复数据的时候,我们想要只对<strong>业务用到的数据库进行恢复,mysql的配置信息库不希望恢复到从库中去</strong>(由于主从用户信息等都不相同).也就是说从备份的源上无法进行库的指定(Xtrabackup支持表的指定但是阿里云RDS没有这个选项).</p>
+<p>在查看了Xtrabackup网站上的教程之后,发现Xtrabackup可以单独对一张表进行恢复,即在阿里云文档的:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 解包</span></span></span><br><span class="line">cat &lt;数据备份文件名&gt;_qp.xb | xbstream -x -v -C /home/mysql/data</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 解压</span></span></span><br><span class="line">innobackupex --decompress --remove-original /home/mysql/data</span><br></pre></td></tr></table></figure>
+<p>操作也就是解压了需要同步的数据之后:</p>
+<h2 id="创建新表"><a href="#创建新表" class="headerlink" title="创建新表"></a>创建新表</h2><p>使用sql语句创建对应需要恢复的表(没有数据库就先创建数据库):</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 官方例子中用到的表</span></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `name_p4` (</span><br><span class="line">`id` <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">`name` text <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">`imdb_index` <span class="type">varchar</span>(<span class="number">12</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">`imdb_id` <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">`name_pcode_cf` <span class="type">varchar</span>(<span class="number">5</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">`name_pcode_nf` <span class="type">varchar</span>(<span class="number">5</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">`surname_pcode` <span class="type">varchar</span>(<span class="number">5</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line"><span class="keyword">PRIMARY</span> KEY (`id`)</span><br><span class="line">) ENGINE<span class="operator">=</span>InnoDB AUTO_INCREMENT<span class="operator">=</span><span class="number">2812744</span> <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8</span><br></pre></td></tr></table></figure>
+<h2 id="删除表空间"><a href="#删除表空间" class="headerlink" title="删除表空间"></a>删除表空间</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span>  <span class="keyword">ALTER</span> <span class="keyword">TABLE</span> name_p4 DISCARD TABLESPACE;</span><br></pre></td></tr></table></figure>
+<h2 id="拷贝数据"><a href="#拷贝数据" class="headerlink" title="拷贝数据"></a>拷贝数据</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将对应的数据库的对应的表(备份数据目录下)拷贝到mysql文件夹下同数据库的同表目录下</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cp</span> /mnt/backup/2012-08-28_10-29-09/imdb/name<span class="comment">#P#p4.exp /var/lib/mysql/imdb/name_p4.exp</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cp</span> /mnt/backup/2012-08-28_10-29-09/imdb/name<span class="comment">#P#p4.ibd /var/lib/mysql/imdb/name_p4.ibd</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="导入表空间"><a href="#导入表空间" class="headerlink" title="导入表空间"></a>导入表空间</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span>  <span class="keyword">ALTER</span> <span class="keyword">TABLE</span> name_p4 IMPORT TABLESPACE;</span><br></pre></td></tr></table></figure>
+
+<h1 id="导入指定的库"><a href="#导入指定的库" class="headerlink" title="导入指定的库"></a>导入指定的库</h1><p>知道了上面的对单表导入的原理,那么对指定的库的数据导入过程其实就是重复导入表的过程直至全部的表都恢复到库中为止.</p>
+<h2 id="mysqlfrm介绍"><a href="#mysqlfrm介绍" class="headerlink" title="mysqlfrm介绍"></a>mysqlfrm介绍</h2><blockquote>
+<p>mysqlfrm 是一个恢复性质的工具，用来读取.frm文件并从该文件中找到表定义数据生成CREATE语句。在大多数情况下，生成的CREATE语句用于在另一个服务器上创建表或进行诊断等。</p>
+</blockquote>
+<p>我们使用mysqlfrm来生成数据表创建语句.</p>
+<h2 id="恢复单库的脚本"><a href="#恢复单库的脚本" class="headerlink" title="恢复单库的脚本"></a>恢复单库的脚本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">注意:只能用在InnoDB表引擎的数据库上</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Usage: inno_restore_database.sh &lt;db_name_to_restore_to&gt; &lt;db_backup_directory&gt; 末尾不需要 /</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">mysql数据库磁盘位置</span></span><br><span class="line">datadir=/var/lib/mysql</span><br><span class="line">myport=3306</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">随意指定</span></span><br><span class="line">mysqlfrmport=3310</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">username=dbrestoredude</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">password=dbrestoredudespasswd</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">######################################################################################</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Gotta be root.</span></span><br><span class="line">if [ $UID -ne 0 ]; then echo &quot;Run this as root&quot; ; exit ; fi</span><br><span class="line"></span><br><span class="line">database=$1</span><br><span class="line">restoredir=$2</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">mysqlfrm检查</span></span><br><span class="line">which mysqlfrm &gt; /dev/null 2&gt;&amp;1</span><br><span class="line">if [ $? -ne 0 ] ; then echo &quot;Could not find the mysqlfrm utility. Install mysql-utilities.&quot;; exit ; fi</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">mysql目录检查</span></span><br><span class="line">if [ ! -f $datadir/mysql/user.frm ] ; then echo &quot;MySQL datadir not correct&quot; ; exit ; fi</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Check the restore directory, looking <span class="keyword">for</span> a cfg/exp/idb <span class="keyword">for</span> each frm.</span></span><br><span class="line">if [ ! -f $restoredir/db.opt ] ; then echo &quot;Restore directory invalid, couldn&#x27;t find db.opt in it&quot;; exit ; fi</span><br><span class="line">stoperror=0</span><br><span class="line">for restorename in $restoredir/*.frm</span><br><span class="line">do</span><br><span class="line">    chkname=$(echo $restorename|sed s/.frm$//)</span><br><span class="line">    for exten in cfg exp ibd</span><br><span class="line">    do</span><br><span class="line">        if [ ! -f $chkname.$exten ] ; then stoperror=1 ; fi</span><br><span class="line">    done</span><br><span class="line">done</span><br><span class="line">if [ $stoperror -eq 1 ] ; then</span><br><span class="line">    echo &quot;Could not file valid restore directory files (need a cfg, exp and ibd for each frm)&quot;</span><br><span class="line">    echo &quot;Did you specify a valid database directory within a backup?&quot;</span><br><span class="line">    echo &quot;Did you prepare or apply-log to the backup directory?&quot;</span><br><span class="line">    exit</span><br><span class="line">fi</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Get username and password <span class="keyword">if</span> the fields are blank.</span></span><br><span class="line">if [ -z $username ] ; then read -p &quot;Username: &quot; username ; fi</span><br><span class="line">if [ -z $password ] ; then read -s -p &quot;Password: &quot; password ; echo ; fi</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Check mysql permissions <span class="keyword">for</span> the given user.</span></span><br><span class="line">stoperror=0</span><br><span class="line">grants=$(mysql -B -u $username -p$password mysql -e &quot;show grants for current_user&quot;|grep &#x27;ON *.* TO&#x27;)</span><br><span class="line">if [ $? -ne 0 ] ; then exit ; fi</span><br><span class="line">if [[ $grants == *&quot;ALL PRIVILEGES&quot;* ]] ; then stoperror=1 ; fi</span><br><span class="line">if [[ $grants == *CREATE* ]] &amp;&amp; [[ $grants == *DROP* ]] &amp;&amp; [[ $grants == *ALTER* ]] ; then stoperror=1 ; fi</span><br><span class="line">if [ $stoperror != 1 ] ; then echo &quot;User $username does not have global CREATE, DROP and ALTER&quot; ; exit ; fi</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">###############################################################################</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除存在的数据库</span></span><br><span class="line">mysql -B -u $username -p$password -e &quot;DROP DATABASE IF EXISTS $database&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建数据库</span></span><br><span class="line">mysql -B -u $username -p$password -e &quot;CREATE DATABASE $database&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">get directory <span class="keyword">for</span> the original DB name</span></span><br><span class="line">backupdb=$(find $restoredir -maxdepth 0 -type d -printf &quot;%f\n&quot; |cut -d &#x27;/&#x27; -f 1)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用mysqlfrm来生产建表语句并且执行 流程:</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">mysqlfrm生成语句-管道-&gt;mysql</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">| sed s/<span class="string">&#x27;ENGINE=InnoDB&#x27;</span> / <span class="string">&#x27;ENGINE=InnoDB ROW_FORMAT=compact&#x27;</span> | 用来指定行格式</span></span><br><span class="line">echo &quot;Importing create table statements from frm files...&quot; ; echo</span><br><span class="line">mysqlfrm -q --user=root --server=$username:$password@localhost:$myport --port=$mysqlfrmport $restoredir |</span><br><span class="line">    grep -vE &quot;^#|WARNING: Using a password on the command line interface can be insecure.&quot; |</span><br><span class="line">    sed s/^$/&#x27;;&#x27;/ | sed s/^&#x27;CREATE TABLE `&#x27;$backupdb/&#x27;CREATE TABLE `&#x27;$database/ |</span><br><span class="line">    mysql -B -u $username -p$password</span><br><span class="line">echo &quot;Table structure imported.&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">主要代码,循环执行删除表空间,移动文件,恢复表空间</span></span><br><span class="line">for frmname in $restoredir/*.frm</span><br><span class="line">do</span><br><span class="line">    tablename=$(find $frmname -printf &quot;%f\n&quot;|sed s/.frm$//)</span><br><span class="line">    # ALTER TABLE ... DISCARD TABLESPACE</span><br><span class="line">    mysql -B -u $username -p$password $database -e &quot;ALTER TABLE $tablename DISCARD TABLESPACE&quot;</span><br><span class="line">    for exten in exp ibd #cfg :: exp ibd cfg 文件取决于数据库版本</span><br><span class="line">    do</span><br><span class="line">        which rsync &gt; /dev/null 2&gt;&amp;1</span><br><span class="line">        if [ $? -eq 0 ]</span><br><span class="line">        then</span><br><span class="line">            rsync --progress $restoredir/$tablename.$exten $datadir/$database/$tablename.$exten</span><br><span class="line">        else</span><br><span class="line">            \cp -v $restoredir/$tablename.$exten $datadir/$database/$tablename.$exten</span><br><span class="line">        fi</span><br><span class="line">        chown $(find $datadir/$database/$tablename.frm -printf &quot;%u.%g&quot;) $datadir/$database/$tablename.$exten</span><br><span class="line">    done</span><br><span class="line">    # ALTER TABLE ... IMPORT TABLESPACE</span><br><span class="line">    mysql -B -u $username -p$password $database -e &quot;ALTER TABLE $tablename IMPORT TABLESPACE&quot;</span><br><span class="line">done</span><br><span class="line">echo &quot;All done&quot;</span><br></pre></td></tr></table></figure>
+
+<h1 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h1><ol>
+<li>一开始由于部分表仍旧使用MyISAM引擎导致行格式不一致而使得表空间更改语句不生效,而MyISAM表也不支持compact,所以从库全部使用的InnoDB作为存储引擎.</li>
+<li>如果数据库用户配置比较复杂,可以优先尝试mysql相关命令是否生效,不生效则进行调整.</li>
+</ol>
+<h1 id="启动主从同步"><a href="#启动主从同步" class="headerlink" title="启动主从同步"></a>启动主从同步</h1><p>在启动之前,需要设置GTID相关信息(仅限于自己的生产服务器,文档中没有提到):</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">slave1<span class="operator">&gt;</span> reset master;</span><br><span class="line">slave1 <span class="operator">&gt;</span> <span class="keyword">show</span> <span class="keyword">global</span> variables <span class="keyword">like</span> <span class="string">&#x27;GTID_EXECUTED&#x27;</span>;</span><br><span class="line"><span class="operator">+</span><span class="comment">---------------+-------+</span></span><br><span class="line"><span class="operator">|</span> Variable_name <span class="operator">|</span> <span class="keyword">Value</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">---------------+-------+</span></span><br><span class="line"><span class="operator">|</span> gtid_executed <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">---------------+-------+</span></span><br><span class="line">slave1 <span class="operator">&gt;</span> <span class="keyword">set</span> <span class="keyword">global</span> GTID_PURGED<span class="operator">=</span>&quot;9a511b7b-7059-11e2-9a24-08002762b8af:1-14&quot;;</span><br><span class="line">slave1<span class="operator">&gt;</span> <span class="keyword">start</span> slave io_thread;</span><br><span class="line">slave1<span class="operator">&gt;</span> <span class="keyword">show</span> slave status\G</span><br><span class="line">[...]</span><br><span class="line">Slave_IO_Running: Yes</span><br><span class="line">Slave_SQL_Running: Yes</span><br><span class="line">[...]</span><br></pre></td></tr></table></figure>
+
+<p>然后使用<code>CHANGE MASTER</code>语句来进行主从同步设置.</p>
+<p>参见<a target="_blank" rel="noopener" href="https://www.percona.com/blog/2013/02/08/how-to-createrestore-a-slave-using-gtid-replication-in-mysql-5-6/">How to create&#x2F;restore a slave using GTID replication in MySQL 5.6</a></p>
+<h1 id="参考连接"><a href="#参考连接" class="headerlink" title="参考连接"></a>参考连接</h1><p><a target="_blank" rel="noopener" href="https://www.percona.com/forums/questions-discussions/percona-xtrabackup/12802-xtrabackup-restore-specific-database-from-a-full-backup">xtrabackup restore specific database from a full backup(单库的恢复方法)</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.ttlsa.com/mysql/mysql-utilities-mysqlfrm/">MySQL管理工具MySQL Utilities — mysqlfrm</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.percona.com/doc/percona-xtrabackup/2.3/howtos/recipes_ibkx_partition.html">Backing Up and Restoring Individual Partitions</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/%E6%A0%87%E7%AD%BE/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/" rel="tag"># 问题解决</a>
+              <a href="/%E6%A0%87%E7%AD%BE/Mysql/" rel="tag"># Mysql</a>
+              <a href="/%E6%A0%87%E7%AD%BE/%E9%98%BF%E9%87%8C%E4%BA%91/" rel="tag"># 阿里云</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/02/16/InnoDB%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3-14-3-InnoDB%E7%9A%84%E5%A4%9A%E7%89%88%E6%9C%AC/" rel="prev" title="InnoDB官方文档--14.3 InnoDB的多版本">
+                  <i class="fa fa-chevron-left"></i> InnoDB官方文档--14.3 InnoDB的多版本
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/02/18/InnoDB%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3-14-4-InnoDB-%E6%9E%B6%E6%9E%84-14-5-InnoDB-%E5%9C%A8%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E7%BB%93%E6%9E%84/" rel="next" title="InnoDB官方文档--14.4 InnoDB 架构|14.5 InnoDB 在内存中的结构">
+                  InnoDB官方文档--14.4 InnoDB 架构|14.5 InnoDB 在内存中的结构 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">MisakaTang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/TangMisaka23001" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":false,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

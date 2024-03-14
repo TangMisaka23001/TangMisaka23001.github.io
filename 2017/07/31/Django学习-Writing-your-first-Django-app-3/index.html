@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"misakatang.cn","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.17.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"style":null,"show_result":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="接着上一部分,在这个部分主要是添加网页相关的一些内容.对应的源码也放在了github仓库中mysite-part3 开始概述在我们的polls的应用中,我们需要以下的四个视图:  Question的index页面—显示最近的问题 Question的detail页面—显示一个问题的详细信息,可以投票 Question的results页面—显示一个问题的结果 投票功能—能够处理投票信息">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django学习--Writing your first Django app(3)">
+<meta property="og:url" content="http://misakatang.cn/2017/07/31/Django%E5%AD%A6%E4%B9%A0-Writing-your-first-Django-app-3/index.html">
+<meta property="og:site_name" content="MisakaTang&#39;s Blog">
+<meta property="og:description" content="接着上一部分,在这个部分主要是添加网页相关的一些内容.对应的源码也放在了github仓库中mysite-part3 开始概述在我们的polls的应用中,我们需要以下的四个视图:  Question的index页面—显示最近的问题 Question的detail页面—显示一个问题的详细信息,可以投票 Question的results页面—显示一个问题的结果 投票功能—能够处理投票信息">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://misakatang.oss-cn-beijing.aliyuncs.com/201707314.jpg">
+<meta property="article:published_time" content="2017-07-31T11:09:13.000Z">
+<meta property="article:modified_time" content="2024-03-14T08:33:24.910Z">
+<meta property="article:author" content="MisakaTang">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="Django">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://misakatang.oss-cn-beijing.aliyuncs.com/201707314.jpg">
+
+
+<link rel="canonical" href="http://misakatang.cn/2017/07/31/Django%E5%AD%A6%E4%B9%A0-Writing-your-first-Django-app-3/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://misakatang.cn/2017/07/31/Django%E5%AD%A6%E4%B9%A0-Writing-your-first-Django-app-3/","path":"2017/07/31/Django学习-Writing-your-first-Django-app-3/","title":"Django学习--Writing your first Django app(3)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Django学习--Writing your first Django app(3) | MisakaTang's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4TSLH4NC9H"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-4TSLH4NC9H","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?de7c77febeeac252eee468207ae11ce4"></script>
+
+
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "jtb4czrfeu");
+</script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="MisakaTang's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">MisakaTang's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B"><span class="nav-text">开始</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%A7%86%E5%9B%BE"><span class="nav-text">创建视图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9C%A8view%E4%B8%AD%E5%AF%B9%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9B%E8%A1%8C%E6%93%8D%E4%BD%9C"><span class="nav-text">在view中对数据库进行操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E7%BD%91%E9%A1%B5"><span class="nav-text">添加网页</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E7%A7%8D%E7%AE%80%E5%8D%95%E7%9A%84%E5%86%99%E6%B3%95"><span class="nav-text">一种简单的写法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%84%E7%90%86404%E9%94%99%E8%AF%AF"><span class="nav-text">处理404错误</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E7%A7%8D%E7%AE%80%E5%8D%95%E7%9A%84%E5%86%99%E6%B3%95-1"><span class="nav-text">一种简单的写法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8template"><span class="nav-text">使用template</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A7%BB%E9%99%A4template%E4%B8%AD%E7%9A%84URL%E7%A1%AC%E7%BC%96%E7%A0%81"><span class="nav-text">移除template中的URL硬编码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#URL%E7%9A%84%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4"><span class="nav-text">URL的命名空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MisakaTang"
+      src="/images/misaka.jpg">
+  <p class="site-author-name" itemprop="name">MisakaTang</p>
+  <div class="site-description" itemprop="description">The limits of my language are the limits of my world</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/%E5%BD%92%E6%A1%A3/">
+          <span class="site-state-item-count">101</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TangMisaka23001" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TangMisaka23001" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mikasatang@gmail.com" title="E-Mail → mailto:mikasatang@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="http://blog.bbchen.top/" title="http:&#x2F;&#x2F;blog.bbchen.top" rel="noopener" target="_blank">BB chen的漂流记</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="http://blog.zhuzhenyuan.cn/" title="http:&#x2F;&#x2F;blog.zhuzhenyuan.cn" rel="noopener" target="_blank">Aurthur_的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://misakatang.cn/2017/07/31/Django%E5%AD%A6%E4%B9%A0-Writing-your-first-Django-app-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/misaka.jpg">
+      <meta itemprop="name" content="MisakaTang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MisakaTang's Blog">
+      <meta itemprop="description" content="The limits of my language are the limits of my world">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Django学习--Writing your first Django app(3) | MisakaTang's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Django学习--Writing your first Django app(3)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-07-31 11:09:13" itemprop="dateCreated datePublished" datetime="2017-07-31T11:09:13+00:00">2017-07-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-14 08:33:24" itemprop="dateModified" datetime="2024-03-14T08:33:24+00:00">2024-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/%E5%88%86%E7%B1%BB/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>接着上一部分,在这个部分主要是添加网页相关的一些内容.<br>对应的源码也放在了github仓库中<a target="_blank" rel="noopener" href="https://github.com/TangMisaka23001/mysite/tree/part3">mysite-part3</a></p>
+<h1 id="开始"><a href="#开始" class="headerlink" title="开始"></a><a href="#%E5%BC%80%E5%A7%8B" title="开始"></a>开始</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a><a href="#%E6%A6%82%E8%BF%B0" title="概述"></a>概述</h2><p>在我们的polls的应用中,我们需要以下的四个视图:</p>
+<ul>
+<li>Question的index页面—显示最近的问题</li>
+<li>Question的detail页面—显示一个问题的详细信息,可以投票</li>
+<li>Question的results页面—显示一个问题的结果</li>
+<li>投票功能—能够处理投票信息<span id="more"></span>
+<a href="#%E8%A7%86%E5%9B%BE" title="视图"></a>视图</li>
+</ul>
+<hr>
+<p>在Django中,每一个视图都是由一个函数来处理的,简单来说,在正则表达式匹配到相应的链接之后,会将处理的信息交给对应的视图的函数来处理这一请求.<br>在django中的参数传递使用的是简单的URL形式,如: <strong><code>/newsarchive/&lt;year&gt;/&lt;month&gt;</code></strong>(后面的两个URL的地址将会以值的方式传递进入视图)</p>
+<h1 id="创建视图"><a href="#创建视图" class="headerlink" title="创建视图"></a><a href="#%E5%88%9B%E5%BB%BA%E8%A7%86%E5%9B%BE" title="创建视图"></a>创建视图</h1><p>我们在<strong>polls&#x2F;views.py</strong>文件中创建以下几个简单的view:  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">detail</span>(<span class="params">request, question_id</span>):    </span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&quot;You&#x27;re looking at question %s.&quot;</span> % question_id)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">results</span>(<span class="params">request, question_id</span>):    </span><br><span class="line">    response = <span class="string">&quot;You&#x27;re looking at the results of question %s.&quot;</span>    </span><br><span class="line">    <span class="keyword">return</span> HttpResponse(response % question_id)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">vote</span>(<span class="params">request, question_id</span>):    </span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&quot;You&#x27;re voting on question %s.&quot;</span> % question_id)</span><br></pre></td></tr></table></figure>
+<p>然后我们需要在<strong>polls&#x2F;urls.py</strong>中匹配相对应的视图到网页中:  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> views</span><br><span class="line">urlpatterns = [    </span><br><span class="line">    url(<span class="string">r&#x27;^$&#x27;</span>, views.index, name=<span class="string">&#x27;index&#x27;</span>),    </span><br><span class="line">    url(<span class="string">r&#x27;^(?P&lt;question_id&gt;[0-9]+)/$&#x27;</span>, views.detail, name=<span class="string">&#x27;detail&#x27;</span>),    </span><br><span class="line">    url(<span class="string">r&#x27;^(?P&lt;question_id&gt;[0-9]+)/results/$&#x27;</span>, views.results, name=<span class="string">&#x27;results&#x27;</span>),    </span><br><span class="line">    url(<span class="string">r&#x27;^(?P&lt;question_id&gt;[0-9]+)/vote/$&#x27;</span>, views.vote, name=<span class="string">&#x27;vote&#x27;</span>),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>接下来就可以在浏览器里对上面的几个url进行访问了.</p>
+<h1 id="在view中对数据库进行操作"><a href="#在view中对数据库进行操作" class="headerlink" title="在view中对数据库进行操作"></a><a href="#%E5%9C%A8view%E4%B8%AD%E5%AF%B9%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9B%E8%A1%8C%E6%93%8D%E4%BD%9C" title="在view中对数据库进行操作"></a>在view中对数据库进行操作</h1><p>让我们对index函数进行一些修改,让其显示最近的5条question.  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponse</span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> Question</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>(<span class="params">request</span>):    </span><br><span class="line">    latest_question_list = Question.objects.order_by(<span class="string">&#x27;-pub_date&#x27;</span>)[:<span class="number">5</span>]    </span><br><span class="line">    output = <span class="string">&#x27;, &#x27;</span>.join([q.question_text <span class="keyword">for</span> q <span class="keyword">in</span> latest_question_list])    </span><br><span class="line">    <span class="keyword">return</span> HttpResponse(output)</span><br><span class="line"><span class="comment"># 下面是之前写的代码,不需要更改</span></span><br></pre></td></tr></table></figure>
+<p>这样就可以在网页上看到前5条question信息了,但是这样在网页上的显示效果不是很好.</p>
+<h1 id="添加网页"><a href="#添加网页" class="headerlink" title="添加网页"></a><a href="#%E6%B7%BB%E5%8A%A0%E7%BD%91%E9%A1%B5" title="添加网页"></a>添加网页</h1><p>在django中,网页通常存放在template文件夹中,但是在项目生成的时候并不存在这一文件夹,所以需要我们自己在polls文件夹中新建一个<strong>template</strong>文件夹,django会自动扫描这个文件夹下面的文件.<br>然后我们在template的文件夹下,再创建一个polls文件夹,然后在里面创建一个index.html文件.在里面写如下的代码:  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123; % if latest_question_list % &#125;    </span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span>    </span><br><span class="line">    &#123; % for question in latest_question_list % &#125;        </span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/polls/&#123;&#x27;&#123; question.id &#125;&#x27; &#125;/&quot;</span>&gt;</span>&#123;&#x27;&#123;            question.question_text &#125;&#x27; &#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span>    </span><br><span class="line">        &#123; % endfor % &#125;    </span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">&#123; % else % &#125;    </span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>No polls are available.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123; % endif % &#125;</span><br></pre></td></tr></table></figure>
+<p>然后我们要更新index函数让它使用我们的template:  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponse</span><br><span class="line"><span class="keyword">from</span> django.template <span class="keyword">import</span> loader</span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> Question</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>(<span class="params">request</span>):    </span><br><span class="line">    latest_question_list = Question.objects.order_by(<span class="string">&#x27;-pub_date&#x27;</span>)[:<span class="number">5</span>]    </span><br><span class="line">    template = loader.get_template(<span class="string">&#x27;polls/index.html&#x27;</span>)    </span><br><span class="line">    context = &#123;        </span><br><span class="line">        <span class="string">&#x27;latest_question_list&#x27;</span>: latest_question_list,    </span><br><span class="line">        &#125;    </span><br><span class="line">    <span class="keyword">return</span> HttpResponse(template.render(context, request))</span><br></pre></td></tr></table></figure>
+
+<p>在网页中的运行效果如下:<br><a target="_blank" rel="noopener" href="http://misakatang.oss-cn-beijing.aliyuncs.com/201707314.jpg" title="图片"><img src="http://misakatang.oss-cn-beijing.aliyuncs.com/201707314.jpg" alt="图片"></a></p>
+<h2 id="一种简单的写法"><a href="#一种简单的写法" class="headerlink" title="一种简单的写法"></a><a href="#%E4%B8%80%E7%A7%8D%E7%AE%80%E5%8D%95%E7%9A%84%E5%86%99%E6%B3%95" title="一种简单的写法"></a>一种简单的写法</h2><p>对于HttpResponse的请求过于常见,所以django提供了一个更简单的方式来返回HttpResponse请求.我们可以改写index()函数如下:  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> Question</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>(<span class="params">request</span>):    </span><br><span class="line">    latest_question_list = Question.objects.order_by(<span class="string">&#x27;-pub_date&#x27;</span>)[:<span class="number">5</span>]    </span><br><span class="line">    context = &#123;<span class="string">&#x27;latest_question_list&#x27;</span>: latest_question_list&#125;    </span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;polls/index.html&#x27;</span>, context)</span><br></pre></td></tr></table></figure>
+<p>相对于上面的写法来说,这样的方法确实简单了不少.</p>
+<h1 id="处理404错误"><a href="#处理404错误" class="headerlink" title="处理404错误"></a><a href="#%E5%A4%84%E7%90%86404%E9%94%99%E8%AF%AF" title="处理404错误"></a>处理404错误</h1><p>在<strong>polls&#x2F;views.py</strong>中修改detail文件如下:  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">detail</span>(<span class="params">request, question_id</span>):    </span><br><span class="line">    <span class="keyword">try</span>:        </span><br><span class="line">        question = Question.objects.get(pk=question_id)    </span><br><span class="line">    <span class="keyword">except</span> Question.DoesNotExist:        </span><br><span class="line">        <span class="keyword">raise</span> Http404(<span class="string">&quot;Question does not exist&quot;</span>)    </span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;polls/detail.html&#x27;</span>, &#123;<span class="string">&#x27;question&#x27;</span>: question&#125;)</span><br></pre></td></tr></table></figure>
+<p>在这里,如果查询的id不存在,就会产生一个404错误.<br>然后我们需要创建一个detail的html页面:<br><code>&#123;&#39;&#123; question &#125;&#39; &#125;</code></p>
+<h2 id="一种简单的写法-1"><a href="#一种简单的写法-1" class="headerlink" title="一种简单的写法"></a><a href="#%E4%B8%80%E7%A7%8D%E7%AE%80%E5%8D%95%E7%9A%84%E5%86%99%E6%B3%95-1" title="一种简单的写法"></a>一种简单的写法</h2><p>可以使用**get_object_or_404()**函数来处理Http404信息.代码如下:  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">detail</span>(<span class="params">request, question_id</span>):    </span><br><span class="line">    question = get_object_or_404(Question, pk=question_id)    </span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;polls/detail.html&#x27;</span>, &#123;<span class="string">&#x27;question&#x27;</span>: question&#125;)</span><br></pre></td></tr></table></figure>
+
+<h1 id="使用template"><a href="#使用template" class="headerlink" title="使用template"></a><a href="#%E4%BD%BF%E7%94%A8template" title="使用template"></a>使用template</h1><p>让我们将detail.html修改成下方的代码:  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;h1&gt;&#123;<span class="string">&#x27;&#123; question.question_text &#125;&#x27;</span> &#125;&lt;/h1&gt;</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">    &#123; % <span class="keyword">for</span> choice <span class="keyword">in</span> question.choice_set.<span class="built_in">all</span> % &#125;    </span><br><span class="line">        &lt;li&gt;&#123;<span class="string">&#x27;&#123; choice.choice_text &#125;&#x27;</span> &#125;&lt;/li&gt;</span><br><span class="line">    &#123; % endfor % &#125;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+<p>在这个模板中,我们使用了<strong>question.question_text</strong>这个变量,使用{‘{ }’ }来获取这个对象属性.<br>在这里我们还用到了{ % for % }{ % endfor % }这个for循环的模板,用来遍历里面的信息.</p>
+<h1 id="移除template中的URL硬编码"><a href="#移除template中的URL硬编码" class="headerlink" title="移除template中的URL硬编码"></a><a href="#%E7%A7%BB%E9%99%A4template%E4%B8%AD%E7%9A%84URL%E7%A1%AC%E7%BC%96%E7%A0%81" title="移除template中的URL硬编码"></a>移除template中的URL硬编码</h1><p>我们在index.html中写的链接形式如下:<br><code>&lt;li&gt;&lt;a href=&quot;/polls/&#123;&#39;&#123; question.id &#125;&#39; &#125;/&quot;&gt;&#123;&#39;&#123; question.question_text &#125;&#39; &#125;&lt;/a&gt;&lt;/li&gt;</code><br>在这里,问题就是我们使用了硬编码,将url在页面中写死了,这对以后的修改维护是一个很大的问题.所以我们可以将li标签改写成如下的形式:<br><code>&lt;li&gt;&lt;a href=&quot;&#123; % url &#39;detail&#39; question.id % &#125;&quot;&gt;&#123;&#39;&#123; question.question_text &#125;&#39; &#125;&lt;/a&gt;&lt;/li&gt;</code><br>这样做我们就在url中匹配了name为detail的url地址:<br><code>url(r&#39;^(?P&lt;question_id&gt;[0-9]+)/$&#39;, views.detail, name=&#39;detail&#39;),</code></p>
+<h1 id="URL的命名空间"><a href="#URL的命名空间" class="headerlink" title="URL的命名空间"></a><a href="#URL%E7%9A%84%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4" title="URL的命名空间"></a>URL的命名空间</h1><p>现在我们的项目中只有polls这一个app,如果在一个大的项目中,不止一个app的话,里面的urlname很容易冲突,这时候我们可以在urls.py文件的开头加上<strong>app_name</strong>这一个属性,这样就可以解决命名冲突的问题,我们可以以如下的方式来访问到这个url:<br><code>&lt;li&gt;&lt;a href=&quot;&#123; % url &#39;polls:detail&#39; question.id % &#125;&quot;&gt;&#123;&#39;&#123; question.question_text &#125;&#39; &#125;&lt;/a&gt;&lt;/li&gt;</code><br>在这个项目中,我们仍旧可以以之前的方法来访问不需要做修改.</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a><a href="#%E6%80%BB%E7%BB%93" title="总结"></a>总结</h1><p>这一个部分中,主要是学习了一些django中的模板方法,如render(),get_object_or_404()之类的,还有html页面中template的使用,总体来说是非常的简单的.最后是关于url命名空间和解决硬编码问题的一些东西.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/%E6%A0%87%E7%AD%BE/Python/" rel="tag"># Python</a>
+              <a href="/%E6%A0%87%E7%AD%BE/Django/" rel="tag"># Django</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/07/30/Django%E5%AD%A6%E4%B9%A0-Writing-your-first-Django-app-2/" rel="prev" title="Django学习--Writing your first Django app(2)">
+                  <i class="fa fa-chevron-left"></i> Django学习--Writing your first Django app(2)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/07/31/LeetCode%E5%88%B7%E9%A2%98-500-Keyboard-Row/" rel="next" title="LeetCode刷题--500. Keyboard Row">
+                  LeetCode刷题--500. Keyboard Row <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">MisakaTang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/TangMisaka23001" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":false,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

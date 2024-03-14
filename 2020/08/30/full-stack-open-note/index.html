@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"misakatang.cn","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.17.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"style":null,"show_result":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="深入浅出现代Web编程:https:&#x2F;&#x2F;fullstackopen.com&#x2F;zh&#x2F; full_stack_open.xmind 前端JavaScriptVariables const  let  var (不建议使用)  Arrays const t2 &#x3D; t.concat(5) const m1 &#x3D; t.map(value &#x3D;&gt; value * 2) 解构赋值: const [first,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入浅出现代Web编程(全栈公开课 2020) 笔记">
+<meta property="og:url" content="http://misakatang.cn/2020/08/30/full-stack-open-note/index.html">
+<meta property="og:site_name" content="MisakaTang&#39;s Blog">
+<meta property="og:description" content="深入浅出现代Web编程:https:&#x2F;&#x2F;fullstackopen.com&#x2F;zh&#x2F; full_stack_open.xmind 前端JavaScriptVariables const  let  var (不建议使用)  Arrays const t2 &#x3D; t.concat(5) const m1 &#x3D; t.map(value &#x3D;&gt; value * 2) 解构赋值: const [first,">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://misakatang.oss-cn-beijing.aliyuncs.com/blog_picture/fullstack.png">
+<meta property="article:published_time" content="2020-08-30T14:58:27.000Z">
+<meta property="article:modified_time" content="2024-03-14T08:33:24.914Z">
+<meta property="article:author" content="MisakaTang">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="课程">
+<meta property="article:tag" content="Xmind">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="Javascript">
+<meta property="article:tag" content="Express">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://misakatang.oss-cn-beijing.aliyuncs.com/blog_picture/fullstack.png">
+
+
+<link rel="canonical" href="http://misakatang.cn/2020/08/30/full-stack-open-note/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://misakatang.cn/2020/08/30/full-stack-open-note/","path":"2020/08/30/full-stack-open-note/","title":"深入浅出现代Web编程(全栈公开课 2020) 笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>深入浅出现代Web编程(全栈公开课 2020) 笔记 | MisakaTang's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4TSLH4NC9H"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-4TSLH4NC9H","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?de7c77febeeac252eee468207ae11ce4"></script>
+
+
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "jtb4czrfeu");
+</script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="MisakaTang's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">MisakaTang's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E7%8E%B0%E4%BB%A3Web%E7%BC%96%E7%A8%8B-https-fullstackopen-com-zh"><span class="nav-text">深入浅出现代Web编程:https:&#x2F;&#x2F;fullstackopen.com&#x2F;zh&#x2F;</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF"><span class="nav-text">前端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript"><span class="nav-text">JavaScript</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Variables"><span class="nav-text">Variables</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Arrays"><span class="nav-text">Arrays</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Objects"><span class="nav-text">Objects</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Functions"><span class="nav-text">Functions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Classes"><span class="nav-text">Classes</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Destructuring-%E8%A7%A3%E6%9E%84"><span class="nav-text">Destructuring (解构)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B1%95%E5%BC%80%E8%AF%AD%E6%B3%95"><span class="nav-text">对象的展开语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#promises-axios"><span class="nav-text">promises(axios)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#template-string"><span class="nav-text">template string</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Property-definitions"><span class="nav-text">Property definitions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ESLint"><span class="nav-text">ESLint</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#async-await"><span class="nav-text">async&#x2F;await</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#local-storage"><span class="nav-text">local storage</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TypeScript"><span class="nav-text">TypeScript</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React"><span class="nav-text">React</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Component-%E7%BB%84%E4%BB%B6"><span class="nav-text">Component 组件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSX"><span class="nav-text">JSX</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hook"><span class="nav-text">Hook</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86"><span class="nav-text">事件处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B8%B2%E6%9F%93"><span class="nav-text">渲染</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B0%83%E8%AF%95"><span class="nav-text">调试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#React-router"><span class="nav-text">React router</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B7%E5%BC%8F"><span class="nav-text">样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#production-build-%E7%94%9F%E4%BA%A7%E6%9E%84%E5%BB%BA"><span class="nav-text">production build (生产构建)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Flux-%E6%9E%B6%E6%9E%84"><span class="nav-text">Flux-架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Webpack"><span class="nav-text">Webpack</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E7%AB%AF"><span class="nav-text">后端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Express"><span class="nav-text">Express</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#REST"><span class="nav-text">REST</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CORS"><span class="nav-text">CORS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6"><span class="nav-text">部署静态文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB"><span class="nav-text">MongoDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="nav-text">错误处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-text">目录结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%86%E9%92%A5%E8%AE%A4%E8%AF%81"><span class="nav-text">密钥认证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GraphQL"><span class="nav-text">GraphQL</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Testing"><span class="nav-text">Testing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BD%99"><span class="nav-text">其余</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E6%8F%90%E5%8F%96-%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99"><span class="nav-text">模块提取 (单一职责原则)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%99%E6%9D%90"><span class="nav-text">教材</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-js"><span class="nav-text">Node.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%BA%90"><span class="nav-text">资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-text">工具</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MisakaTang"
+      src="/images/misaka.jpg">
+  <p class="site-author-name" itemprop="name">MisakaTang</p>
+  <div class="site-description" itemprop="description">The limits of my language are the limits of my world</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/%E5%BD%92%E6%A1%A3/">
+          <span class="site-state-item-count">101</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TangMisaka23001" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TangMisaka23001" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mikasatang@gmail.com" title="E-Mail → mailto:mikasatang@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="http://blog.bbchen.top/" title="http:&#x2F;&#x2F;blog.bbchen.top" rel="noopener" target="_blank">BB chen的漂流记</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="http://blog.zhuzhenyuan.cn/" title="http:&#x2F;&#x2F;blog.zhuzhenyuan.cn" rel="noopener" target="_blank">Aurthur_的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://misakatang.cn/2020/08/30/full-stack-open-note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/misaka.jpg">
+      <meta itemprop="name" content="MisakaTang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MisakaTang's Blog">
+      <meta itemprop="description" content="The limits of my language are the limits of my world">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="深入浅出现代Web编程(全栈公开课 2020) 笔记 | MisakaTang's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          深入浅出现代Web编程(全栈公开课 2020) 笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-08-30 14:58:27" itemprop="dateCreated datePublished" datetime="2020-08-30T14:58:27+00:00">2020-08-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-14 08:33:24" itemprop="dateModified" datetime="2024-03-14T08:33:24+00:00">2024-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/%E5%88%86%E7%B1%BB/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="深入浅出现代Web编程-https-fullstackopen-com-zh"><a href="#深入浅出现代Web编程-https-fullstackopen-com-zh" class="headerlink" title="深入浅出现代Web编程:https://fullstackopen.com/zh/"></a>深入浅出现代Web编程:<a target="_blank" rel="noopener" href="https://fullstackopen.com/zh/">https://fullstackopen.com/zh/</a></h1><p><img src="https://misakatang.oss-cn-beijing.aliyuncs.com/blog_picture/fullstack.png"></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/TangMisaka23001/TangMisaka23001.github.io/blob/source/xmind/fullstackopen.xmind">full_stack_open.xmind</a></p>
+<h2 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h2><h3 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h3><h4 id="Variables"><a href="#Variables" class="headerlink" title="Variables"></a>Variables</h4><ul>
+<li>const </li>
+<li>let </li>
+<li>var (不建议使用)</li>
+</ul>
+<h4 id="Arrays"><a href="#Arrays" class="headerlink" title="Arrays"></a>Arrays</h4><ul>
+<li><code>const t2 = t.concat(5)</code></li>
+<li><code>const m1 = t.map(value =&gt; value * 2)</code></li>
+<li>解构赋值: <code>const [first, second, ...rest] = t</code>  </li>
+<li>展开语法<ul>
+<li>[…numbers, 4, 5]</li>
+</ul>
+</li>
+</ul>
+<h4 id="Objects"><a href="#Objects" class="headerlink" title="Objects"></a>Objects</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> object3 = &#123;</span><br><span class="line">  <span class="attr">name</span>: &#123;</span><br><span class="line">    <span class="attr">first</span>: <span class="string">&#x27;Dan&#x27;</span>,</span><br><span class="line">    <span class="attr">last</span>: <span class="string">&#x27;Abramov&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">grades</span>: [<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">3</span>],</span><br><span class="line">  <span class="attr">department</span>: <span class="string">&#x27;Stanford University&#x27;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>对象展开<ul>
+<li><code>const changedNote = &#123; ...note, important: !note.important &#125;</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="Functions"><a href="#Functions" class="headerlink" title="Functions"></a>Functions</h4><ul>
+<li>箭头函数<ul>
+<li>完整过程  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">sum</span> = (<span class="params">p1, p2</span>) =&gt; &#123;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p1)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p2)</span><br><span class="line"><span class="keyword">return</span> p1 + p2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>只有一个参数  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">square</span> = p =&gt; &#123;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p)</span><br><span class="line"><span class="keyword">return</span> p * p</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>只包含一个表达式<ul>
+<li><code>const square = p =&gt; p * p</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Object methods and “this”<ul>
+<li>使用箭头函数可以解决与 this相关的一系列问题</li>
+</ul>
+</li>
+</ul>
+<h4 id="Classes"><a href="#Classes" class="headerlink" title="Classes"></a>Classes</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">age</span> = age</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">greet</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;hello, my name is &#x27;</span> + <span class="variable language_">this</span>.<span class="property">name</span>)</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> adam = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;Adam Ondra&#x27;</span>, <span class="number">35</span>)</span><br><span class="line">adam.<span class="title function_">greet</span>()</span><br></pre></td></tr></table></figure>
+<h4 id="Destructuring-解构"><a href="#Destructuring-解构" class="headerlink" title="Destructuring (解构)"></a>Destructuring (解构)</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">Hello</span> = (<span class="params">&#123; name, age &#125;</span>) =&gt; &#123;  <span class="keyword">const</span> <span class="title function_">bornYear</span> = (<span class="params"></span>) =&gt; <span class="keyword">new</span> <span class="title class_">Date</span>().<span class="title function_">getFullYear</span>() - age</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        Hello &#123;name&#125;, you are &#123;age&#125; years old</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>So you were probably born in &#123;bornYear()&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>解构使变量的赋值变得更加容易，因为我们可以使用它来提取和收集对象属性的值，将其提取到单独的变量中</li>
+<li><code>const &#123; name, age &#125; = props</code></li>
+<li><code>const Hello = (&#123; name, age &#125;) =&gt; &#123;</code></li>
+</ul>
+<h4 id="对象的展开语法"><a href="#对象的展开语法" class="headerlink" title="对象的展开语法"></a>对象的展开语法</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">handleLeftClick</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> newClicks = &#123; </span><br><span class="line">    ...clicks, </span><br><span class="line">    <span class="attr">left</span>: clicks.<span class="property">left</span> + <span class="number">1</span> </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">setClicks</span>(newClicks)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>&#123; ...clicks, right: 1 &#125;</code></li>
+<li><code>Math.max(...notes.map(n =&gt; n.id))</code></li>
+</ul>
+<h4 id="promises-axios"><a href="#promises-axios" class="headerlink" title="promises(axios)"></a>promises(axios)</h4><ul>
+<li>表示异步操作的对象</li>
+<li>注册一个事件处理访问操作的结果 &#x3D;&#x3D;&gt; .then()  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">axios</span><br><span class="line">.<span class="title function_">get</span>(<span class="string">&#x27;http://localhost:3001/notes&#x27;</span>)</span><br><span class="line">.<span class="title function_">then</span>(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> notes = response.<span class="property">data</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(notes)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li>错误处理  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.<span class="title function_">catch</span>(<span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;fail&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="template-string"><a href="#template-string" class="headerlink" title="template string"></a>template string</h4><ul>
+<li><code>console.log(</code>importance of ${id} needs to be toggled<code>)</code></li>
+</ul>
+<h4 id="Property-definitions"><a href="#Property-definitions" class="headerlink" title="Property definitions"></a>Property definitions</h4><ul>
+<li><code>export default &#123; getAll, create, update &#125;</code></li>
+</ul>
+<h4 id="ESLint"><a href="#ESLint" class="headerlink" title="ESLint"></a>ESLint</h4><ul>
+<li>node_modules&#x2F;.bin&#x2F;eslint –init</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb">Airbnb 的 ESlint</a></li>
+</ul>
+<h4 id="async-await"><a href="#async-await" class="headerlink" title="async&#x2F;await"></a>async&#x2F;await</h4><ul>
+<li>错误处理<ul>
+<li>express-async-errors</li>
+</ul>
+</li>
+</ul>
+<h4 id="local-storage"><a href="#local-storage" class="headerlink" title="local storage"></a>local storage</h4><ul>
+<li>window.localStorage</li>
+</ul>
+<h4 id="TypeScript"><a href="#TypeScript" class="headerlink" title="TypeScript"></a>TypeScript</h4><ul>
+<li>主要语言特性<ul>
+<li>类型注解<ul>
+<li>const birthdayGreeter &#x3D; (name: string, age: number): string &#x3D;&gt; {</li>
+</ul>
+</li>
+<li>结构化类型</li>
+<li>类型推断</li>
+<li>类型擦除</li>
+</ul>
+</li>
+<li>ts-node-dev</li>
+<li><a target="_blank" rel="noopener" href="https://www.typescriptlang.org/docs/handbook/Utility-types.html">工具类型</a><ul>
+<li>Pick</li>
+<li>Omit</li>
+</ul>
+</li>
+</ul>
+<h3 id="React"><a href="#React" class="headerlink" title="React"></a>React</h3><h4 id="Component-组件"><a href="#Component-组件" class="headerlink" title="Component 组件"></a>Component 组件</h4><ul>
+<li>语法<ul>
+<li><p>箭头函数 + 代码简写</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">App</span> = (<span class="params"></span>) =&gt; (</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>Hello world<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></li>
+<li><p>不简写版本</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">App</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line"><span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>Hello world<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>多组件</p>
+<ul>
+<li>React 的核心理念，就是将许多定制化的、可重用的组件组合成应用</li>
+</ul>
+</li>
+<li><p>props</p>
+<ul>
+<li>向组件传递数据<ul>
+<li><code>const Hello = (props) =&gt;</code></li>
+<li><code>&lt;Hello name=&quot;Maya&quot; age=&#123;26 + 10&#125; /&gt;</code></li>
+</ul>
+</li>
+<li>将状态传递给子组件<ul>
+<li>状态提升<ul>
+<li>将共享状态提升到它们最接近的共同祖先</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>组件辅助函数: 在函数中定义函数</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">Hello</span> = (<span class="params">props</span>) =&gt; &#123;</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">bornYear</span> = (<span class="params"></span>) =&gt; &#123;    <span class="keyword">const</span> yearNow = <span class="keyword">new</span> <span class="title class_">Date</span>().<span class="title function_">getFullYear</span>()    <span class="keyword">return</span> yearNow - props.<span class="property">age</span>  &#125;</span><br><span class="line"><span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        Hello &#123;props.name&#125;, you are &#123;props.age&#125; years old</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>So you were probably born in &#123;bornYear()&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span>    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>将事件处理传递给子组件</p>
+<ul>
+<li><code>handleClick = &#123; () =&gt; func() &#125;</code></li>
+</ul>
+</li>
+<li><p>受控组件</p>
+<ul>
+<li>组件现在控制了元素的行为</li>
+<li>注册一个事件处理来同步对元素所做的更改和组件的状态  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;input</span><br><span class="line">value=&#123;newNote&#125;</span><br><span class="line">onChange=&#123;handleNoteChange&#125; /&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">handleNoteChange</span> = (<span class="params">event</span>) =&gt; &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(event.<span class="property">target</span>.<span class="property">value</span>)</span><br><span class="line">  <span class="title function_">setNewNote</span>(event.<span class="property">target</span>.<span class="property">value</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>表单</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;form onSubmit=&#123;addNote&#125;&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">input</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">  <span class="attr">value</span>=<span class="string">&#123;newNote&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">  <span class="attr">onChange</span>=<span class="string">&#123;handleNoteChange&#125;</span>        /&gt;</span></span></span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span>save<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line">&lt;/form&gt;  </span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">handleNoteChange</span> = (<span class="params">event</span>) =&gt; &#123;    <span class="variable language_">console</span>.<span class="title function_">log</span>(event.<span class="property">target</span>.<span class="property">value</span>)    <span class="title function_">setNewNote</span>(event.<span class="property">target</span>.<span class="property">value</span>)  &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h4 id="JSX"><a href="#JSX" class="headerlink" title="JSX"></a>JSX</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://babeljs.io/repl/">Babel</a></li>
+</ul>
+<h4 id="Hook"><a href="#Hook" class="headerlink" title="Hook"></a>Hook</h4><ul>
+<li><p>Hook的规则</p>
+<ul>
+<li>不能从循环、条件表达式或任何不是定义组件的函数的地方调用 useState</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/hooks-state.html">state hook</a></p>
+<ul>
+<li>导入 useState 函数<ul>
+<li><code>import React, &#123; useState &#125; from &#39;react&#39;</code></li>
+</ul>
+</li>
+<li>定义组件的函数体<ul>
+<li><code>const [ counter, setCounter ] = useState(0)</code></li>
+</ul>
+</li>
+<li>每次 setCounter 修改状态时，它都会导致组件重新渲染</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/hooks-effect.html">effect hooks </a></p>
+<ul>
+<li>从服务器获取数据时使用的正确工具  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">axios</span><br><span class="line">.<span class="title function_">get</span>(<span class="string">&#x27;http://localhost:3001/notes&#x27;</span>)     </span><br><span class="line">.<span class="title function_">then</span>(<span class="function"><span class="params">response</span> =&gt;</span> &#123;    </span><br><span class="line">    <span class="title function_">setNotes</span>(response.<span class="property">data</span>)      </span><br><span class="line">    &#125;)  </span><br><span class="line">&#125;, [])</span><br></pre></td></tr></table></figure></li>
+<li>在函数组件中执行副作用</li>
+<li>数据获取、设置订阅和手动更改 React 组件中的 DOM</li>
+</ul>
+</li>
+</ul>
+<h4 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h4><ul>
+<li>鼠标事件<ul>
+<li><code>&lt;button onClick=&#123;() =&gt; console.log(&#39;clicked&#39;)&#125;&gt;</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="渲染"><a href="#渲染" class="headerlink" title="渲染"></a>渲染</h4><ul>
+<li><p>页面重渲染</p>
+<ul>
+<li>ReactDOM.render</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/conditional-rendering.html">条件渲染</a></p>
+</li>
+<li><p>渲染集合</p>
+<ul>
+<li><code>notes.map(note =&gt; &lt;li&gt;&#123;note.content&#125;&lt;/li&gt;)</code></li>
+<li>Key-属性<ul>
+<li>React 使用数组中对象的key属性来确定组件在重新渲染时，如何更新组件生成的视图</li>
+<li><code>&lt;li key=&#123;note.id&#125;&gt;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h4><ul>
+<li>React developer tools扩展</li>
+</ul>
+<h4 id="React-router"><a href="#React-router" class="headerlink" title="React router"></a><a target="_blank" rel="noopener" href="https://github.com/reacttraining/React-router">React router</a></h4><ul>
+<li>Parameterized route</li>
+<li>useHistory</li>
+</ul>
+<h3 id="样式"><a href="#样式" class="headerlink" title="样式"></a>样式</h3><ul>
+<li>CSS</li>
+<li>Inline styles</li>
+<li>UI libraries<ul>
+<li><a target="_blank" rel="noopener" href="https://getbootstrap.com/%20%E5%B7%A5%E5%85%B7%E5%8C%85">Bootstrap</a></li>
+<li><a target="_blank" rel="noopener" href="https://fullstackopen.com/zh/part7/reactstrap">reactstrap</a></li>
+<li><a target="_blank" rel="noopener" href="https://material-ui.com/">MaterialUI</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="production-build-生产构建"><a href="#production-build-生产构建" class="headerlink" title="production build (生产构建)"></a>production build (生产构建)</h3><ul>
+<li>npm run build<ul>
+<li>创建一个名为build 的目录</li>
+<li>代码的Minified版本将生成到static 目录</li>
+<li>所有的 JavaScript 都将被缩小到一个文件中</li>
+</ul>
+</li>
+</ul>
+<h3 id="Flux-架构"><a href="#Flux-架构" class="headerlink" title="Flux-架构"></a>Flux-架构</h3><ul>
+<li>redux<ul>
+<li>Action </li>
+<li>reducer<ul>
+<li>Reducer 状态必须由不可变 immutable 对象组成</li>
+</ul>
+</li>
+<li>store</li>
+<li>dispatch</li>
+<li>subscribe</li>
+<li>immutable</li>
+</ul>
+</li>
+<li>react-redux<ul>
+<li>Provider</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/substack/deep-freeze">deep-freeze</a><ul>
+<li>确保 reducer 被正确定义为不可变函数</li>
+</ul>
+</li>
+<li>Pure functions</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/gaearon/redux-thunk">redux-thunk</a></li>
+</ul>
+<h3 id="Webpack"><a href="#Webpack" class="headerlink" title="Webpack"></a>Webpack</h3><h2 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h2><h3 id="Express"><a href="#Express" class="headerlink" title="Express"></a>Express</h3><ul>
+<li><p>路由参数</p>
+<ul>
+<li><code>app.get(&#39;/api/notes/:id&#39;, ...)</code>   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/api/notes/:id&#x27;</span>, <span class="function">(<span class="params">request, response</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> id = request.<span class="property">params</span>.<span class="property">id</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>错误处理</p>
+<ul>
+<li><code>response.status(404).end()</code></li>
+</ul>
+</li>
+<li><p>json-parser</p>
+<ul>
+<li><code>app.use(express.json())</code></li>
+</ul>
+</li>
+<li><p>Promise chaining</p>
+</li>
+</ul>
+<h3 id="REST"><a href="#REST" class="headerlink" title="REST"></a>REST</h3><ul>
+<li>统一接口 uniform interface</li>
+</ul>
+<h3 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h3><ul>
+<li><code>const cors = require(&#39;cors&#39;)</code></li>
+</ul>
+<h3 id="部署静态文件"><a href="#部署静态文件" class="headerlink" title="部署静态文件"></a>部署静态文件</h3><ul>
+<li><code>app.use(express.static(&#39;build&#39;))</code></li>
+</ul>
+<h3 id="MongoDB"><a href="#MongoDB" class="headerlink" title="MongoDB"></a>MongoDB</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://www.mongodb.com/cloud/Atlas">MongoDB Atlas</a></li>
+<li>Schema</li>
+<li>model</li>
+<li>validation</li>
+</ul>
+<h3 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h3><ul>
+<li><code>.catch(error =&gt; &#123;</code></li>
+<li>移入中间件<ul>
+<li><a target="_blank" rel="noopener" href="https://sentry.io/welcome/">Sentry</a></li>
+</ul>
+</li>
+<li>next 函数<ul>
+<li><code>.catch(error =&gt; next(error))</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">├── index.js</span><br><span class="line">├── app.js</span><br><span class="line">├── build</span><br><span class="line">│   └── ...</span><br><span class="line">├── controllers</span><br><span class="line">│   └── notes.js</span><br><span class="line">├── models</span><br><span class="line">│   └── note.js</span><br><span class="line">├── package-lock.json</span><br><span class="line">├── package.json</span><br><span class="line">├── utils</span><br><span class="line">│   ├── config.js</span><br><span class="line">│   ├── logger.js</span><br><span class="line">│   └── middleware.js</span><br></pre></td></tr></table></figure>
+<h3 id="密钥认证"><a href="#密钥认证" class="headerlink" title="密钥认证"></a>密钥认证</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/auth0/node-jsonwebtoken">jsonwebtoken </a></li>
+</ul>
+<h3 id="GraphQL"><a href="#GraphQL" class="headerlink" title="GraphQL"></a>GraphQL</h3><ul>
+<li>Apollo server</li>
+</ul>
+<h2 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h2><ul>
+<li>Jest<ul>
+<li>afterAll</li>
+<li>beforeEach</li>
+</ul>
+</li>
+<li>mock<ul>
+<li>mongo-mock</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/visionmedia/supertest">supertest</a></li>
+</ul>
+<h2 id="其余"><a href="#其余" class="headerlink" title="其余"></a>其余</h2><h3 id="模块提取-单一职责原则"><a href="#模块提取-单一职责原则" class="headerlink" title="模块提取 (单一职责原则)"></a>模块提取 (单一职责原则)</h3><ul>
+<li>components</li>
+<li>service</li>
+</ul>
+<h3 id="教材"><a href="#教材" class="headerlink" title="教材"></a>教材</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">Mozilla’s Javascript Guide</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript">重新认识JavaScript(JS 教程)</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/getify/You-Dont-Know-JS">You-Dont-Know-JS</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=BMUiFMZr7vk&list=PL0zVEGEvSaeEd9hlmCXrk5yUyqUag-n84">Functional Javascript</a></li>
+</ul>
+<h3 id="Node-js"><a href="#Node-js" class="headerlink" title="Node.js"></a>Node.js</h3><ul>
+<li>基于谷歌的 chrome V8 引擎的 JavaScript 运行时环境</li>
+</ul>
+<h3 id="资源"><a href="#资源" class="headerlink" title="资源"></a>资源</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PL0zVEGEvSaeEd9hlmCXrk5yUyqUag-n84">Functional Programming in JavaScript</a></li>
+</ul>
+<h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><ul>
+<li>create-react-app</li>
+<li>JSONView</li>
+<li>npm<ul>
+<li>json-server</li>
+<li>axios </li>
+<li>express </li>
+<li>nodemon (代码热更新)<ul>
+<li><code>npm install --save-dev nodemon</code></li>
+</ul>
+</li>
+<li><code>npm install cors --save</code></li>
+<li>Mongoose<ul>
+<li><code>npm install mongoose --save</code></li>
+</ul>
+</li>
+<li>dotenv <ul>
+<li><code>npm install dotenv --save</code></li>
+</ul>
+</li>
+<li><code>npm install eslint --save-dev</code></li>
+<li><code>npm install --save-dev jest</code></li>
+<li><code>npm install --save-dev deep-freeze</code></li>
+<li><code>npm install --save react-redux</code></li>
+<li><code>npm install --save-dev redux-devtools-extension</code></li>
+<li><code>npm install --save-dev ts-node-dev</code></li>
+</ul>
+</li>
+<li>Postman</li>
+<li>Visual Studio Code REST client</li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/Redux-DevTools/lmhkpmbekcpmknklioeibfkpmmfibljd">Redux DevTools</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/%E6%A0%87%E7%AD%BE/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
+              <a href="/%E6%A0%87%E7%AD%BE/%E8%AF%BE%E7%A8%8B/" rel="tag"># 课程</a>
+              <a href="/%E6%A0%87%E7%AD%BE/Xmind/" rel="tag"># Xmind</a>
+              <a href="/%E6%A0%87%E7%AD%BE/React/" rel="tag"># React</a>
+              <a href="/%E6%A0%87%E7%AD%BE/Javascript/" rel="tag"># Javascript</a>
+              <a href="/%E6%A0%87%E7%AD%BE/Express/" rel="tag"># Express</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/04/29/the-log/" rel="prev" title="The Log: What every software engineer should know about real-time data's unifying abstraction">
+                  <i class="fa fa-chevron-left"></i> The Log: What every software engineer should know about real-time data's unifying abstraction
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/09/12/raspberry-pi-install-ubuntu-server/" rel="next" title="服务器迁移到树莓派">
+                  服务器迁移到树莓派 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">MisakaTang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/TangMisaka23001" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":false,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

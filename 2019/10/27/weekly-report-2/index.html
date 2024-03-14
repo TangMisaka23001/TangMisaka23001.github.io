@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"misakatang.cn","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.17.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"style":null,"show_result":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="写在前面之前也是写了一篇这周搞的一些新东西,其实当时就是看了V2站长开始写周报也有了点想法但是想想似乎每周也没有那么多可写的内容,就先随便写了一篇.但是最近也算是有点清闲又骚了很多新的东西就不免想要记录一下,正好趁着给博客重新进行了一波整理分类之后也是下了开始写周报的决心吧,但是频率可能也就是2周或者3周记录和总结一下. ps. 目前格式就按照事情来排列然后加以描述 v2ray在经历了一系列不可描">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我的周报(2)">
+<meta property="og:url" content="http://misakatang.cn/2019/10/27/weekly-report-2/index.html">
+<meta property="og:site_name" content="MisakaTang&#39;s Blog">
+<meta property="og:description" content="写在前面之前也是写了一篇这周搞的一些新东西,其实当时就是看了V2站长开始写周报也有了点想法但是想想似乎每周也没有那么多可写的内容,就先随便写了一篇.但是最近也算是有点清闲又骚了很多新的东西就不免想要记录一下,正好趁着给博客重新进行了一波整理分类之后也是下了开始写周报的决心吧,但是频率可能也就是2周或者3周记录和总结一下. ps. 目前格式就按照事情来排列然后加以描述 v2ray在经历了一系列不可描">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://misakatang.oss-cn-beijing.aliyuncs.com/snipaste/Snipaste_2019-10-27_15-31-20.png">
+<meta property="og:image" content="https://misakatang.oss-cn-beijing.aliyuncs.com/snipaste/Snipaste_2019-10-27_16-38-57.png">
+<meta property="og:image" content="https://misakatang.oss-cn-beijing.aliyuncs.com/snipaste/Snipaste_2019-10-27_15-51-45.png">
+<meta property="og:image" content="https://misakatang.oss-cn-beijing.aliyuncs.com/snipaste/Snipaste_2019-10-27_15-52-34.png">
+<meta property="og:image" content="https://misakatang.oss-cn-beijing.aliyuncs.com/picture/20191027_161824.jpg?x-oss-process=image/resize,w_800,h_450">
+<meta property="og:image" content="https://misakatang.oss-cn-beijing.aliyuncs.com/picture/20191027_161844.jpg?x-oss-process=image/resize,w_800,h_450">
+<meta property="og:image" content="https://misakatang.oss-cn-beijing.aliyuncs.com/snipaste/Snipaste_2019-10-27_16-00-00.png">
+<meta property="og:image" content="https://misakatang.oss-cn-beijing.aliyuncs.com/snipaste/Snipaste_2019-10-27_16-15-26.png">
+<meta property="og:image" content="https://misakatang.oss-cn-beijing.aliyuncs.com/picture/20191027_161718.jpg?x-oss-process=image/resize,w_450,h_800/rotate,0">
+<meta property="article:published_time" content="2019-10-27T15:07:21.000Z">
+<meta property="article:modified_time" content="2024-03-14T08:33:24.914Z">
+<meta property="article:author" content="MisakaTang">
+<meta property="article:tag" content="周报">
+<meta property="article:tag" content="v2ray">
+<meta property="article:tag" content="JetBrains">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://misakatang.oss-cn-beijing.aliyuncs.com/snipaste/Snipaste_2019-10-27_15-31-20.png">
+
+
+<link rel="canonical" href="http://misakatang.cn/2019/10/27/weekly-report-2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://misakatang.cn/2019/10/27/weekly-report-2/","path":"2019/10/27/weekly-report-2/","title":"我的周报(2)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>我的周报(2) | MisakaTang's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4TSLH4NC9H"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-4TSLH4NC9H","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?de7c77febeeac252eee468207ae11ce4"></script>
+
+
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "jtb4czrfeu");
+</script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="MisakaTang's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">MisakaTang's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-text">写在前面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#v2ray"><span class="nav-text">v2ray</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-2"><span class="nav-text">HTTP&#x2F;2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CDN"><span class="nav-text">CDN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v2-ui"><span class="nav-text">v2-ui</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%B0%E5%9C%A8%E7%9A%84v2ray%E9%85%8D%E7%BD%AE"><span class="nav-text">现在的v2ray配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Aria2-Filebrowser"><span class="nav-text">Aria2+Filebrowser</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NextCloud"><span class="nav-text">NextCloud</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JetBrains-%E5%85%8D%E8%B4%B9License"><span class="nav-text">JetBrains 免费License</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%92%96%E5%95%A1"><span class="nav-text">咖啡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%9A%E5%AE%A2%E5%88%86%E7%B1%BB"><span class="nav-text">博客分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AA%91%E8%A1%8C"><span class="nav-text">骑行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8B%A5%E9%A5%AD"><span class="nav-text">若饭</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MisakaTang"
+      src="/images/misaka.jpg">
+  <p class="site-author-name" itemprop="name">MisakaTang</p>
+  <div class="site-description" itemprop="description">The limits of my language are the limits of my world</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/%E5%BD%92%E6%A1%A3/">
+          <span class="site-state-item-count">101</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TangMisaka23001" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TangMisaka23001" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mikasatang@gmail.com" title="E-Mail → mailto:mikasatang@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="http://blog.bbchen.top/" title="http:&#x2F;&#x2F;blog.bbchen.top" rel="noopener" target="_blank">BB chen的漂流记</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="http://blog.zhuzhenyuan.cn/" title="http:&#x2F;&#x2F;blog.zhuzhenyuan.cn" rel="noopener" target="_blank">Aurthur_的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://misakatang.cn/2019/10/27/weekly-report-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/misaka.jpg">
+      <meta itemprop="name" content="MisakaTang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MisakaTang's Blog">
+      <meta itemprop="description" content="The limits of my language are the limits of my world">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="我的周报(2) | MisakaTang's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          我的周报(2)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-10-27 15:07:21" itemprop="dateCreated datePublished" datetime="2019-10-27T15:07:21+00:00">2019-10-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-14 08:33:24" itemprop="dateModified" datetime="2024-03-14T08:33:24+00:00">2024-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/%E5%88%86%E7%B1%BB/%E7%94%9F%E6%B4%BB/" itemprop="url" rel="index"><span itemprop="name">生活</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>之前也是写了一篇<a href="https://misakatang.cn/2019/09/08/what-new-things-this-week/">这周搞的一些新东西</a>,其实当时就是看了V2站长开始写周报也有了点想法但是想想似乎每周也没有那么多可写的内容,就先随便写了一篇.但是最近也算是有点清闲又骚了很多新的东西就不免想要记录一下,正好趁着给博客重新进行了一波整理分类之后也是下了开始写周报的决心吧,但是频率可能也就是2周或者3周记录和总结一下.</p>
+<p>ps. 目前格式就按照事情来排列然后加以描述</p>
+<h2 id="v2ray"><a href="#v2ray" class="headerlink" title="v2ray"></a>v2ray</h2><p>在经历了一系列不可描述的会议之后,在2个星期前我的hk服务器算是终于又通了$$了,但是鉴于封杀时的效率还是有点怕自己的ip被封了的,所以就趁着摸鱼的时光研究了一下v2ray.当然不是深入研究,最开始是找了一个一键部署的脚本,也就是填一下配置就能直接用了感觉还是很不错的.</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/233boy/v2ray/wiki/V2Ray%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC">V2Ray一键安装脚本</a></p>
+<h3 id="HTTP-2"><a href="#HTTP-2" class="headerlink" title="HTTP&#x2F;2"></a>HTTP&#x2F;2</h3><p>在后来看了这个<a target="_blank" rel="noopener" href="https://toutyrater.github.io/advanced/h2.html">v2ray-HTTP&#x2F;2</a>之后发现HTTP&#x2F;2似乎是很”香”就打算尝试一下,但是:</p>
+<blockquote>
+<p>与其它的传输层协议一样在 streamSettings 中配置，不过要注意的是使用 HTTP&#x2F;2 要开启 TLS。</p>
+</blockquote>
+<p>似乎是要上HTTPS了,鉴于现在的域名还用在博客上就又重新申请了一个域名用来申请一个免费的HTTPS证书然后用来配置HTTP&#x2F;2.</p>
+<h3 id="CDN"><a href="#CDN" class="headerlink" title="CDN"></a>CDN</h3><blockquote>
+<p>Cloudflare 还是太慢了，用国内的吧，绝对能体验飞一般的速度，正好 V2Ray 已经支持 HTTP&#x2F;2 了，又拍云、七牛、阿里都不错，腾讯的 h2 还在内测，百度不清楚。不过说真的，CDN 的话国外的还是有些水土不服，强烈建议使用国内的，速度提升非常大，也非常稳定，高峰期毫无压力，在重点 IP 段也无所畏惧。</p>
+</blockquote>
+<p>就是跟着上面的HTTP&#x2F;2又顺势看了CDN,想的是如果能使用国内CDN的话岂不是速度能快的飞起(毕竟现在延迟有200ms左右),但是在看了<a target="_blank" rel="noopener" href="https://resdon.cn/article/free-cdn.html">国内免费CDN对比与申请部署教程</a>之后尝试了一下又拍云才发现:<strong>国内的备案太痛苦了!!!</strong>.并且阿里云的备案要求购买轻量应用服务器续费3个月以上,但是在我续费之后仍然不能申请备案服务号也就放弃了,还是选择了cloudflare.</p>
+<h3 id="v2-ui"><a href="#v2-ui" class="headerlink" title="v2-ui"></a>v2-ui</h3><p>是在看<a target="_blank" rel="noopener" href="https://blog.sprov.xyz/2019/03/11/cdn-v2ray-safe-proxy/">拯救被墙的IP，CDN + v2ray，安全的科学上网方法</a>这篇博客的时候发现的,发现比一键部署脚本还是挺不错的毕竟有GUI可以用来动态配置.</p>
+<h3 id="现在的v2ray配置"><a href="#现在的v2ray配置" class="headerlink" title="现在的v2ray配置"></a>现在的v2ray配置</h3><p>大致的流程:</p>
+<ol>
+<li>使用cloudflare来解析域名(修改DNS)</li>
+<li>添加一个A解析指向v2ray的ip,Name自己填写,我使用了www</li>
+<li>在SSL&#x2F;TLS选项卡中选择Full(Encrypts end-to-end, using a self signed certificate on the server)</li>
+<li>在v2-ui中新建一个账号,端口使用了80(玄学:因为大部分网站都使用80端口做web服务所以不容易被侦测),配置http(就是http&#x2F;2),host和域名都填了上面解析的域名,然后选择申请的免费ssl证书</li>
+<li>导出配置</li>
+</ol>
+<p>下面是我的配置截图:<br><img src="https://misakatang.oss-cn-beijing.aliyuncs.com/snipaste/Snipaste_2019-10-27_15-31-20.png" alt="HTTP/2+TLS"></p>
+<h2 id="Aria2-Filebrowser"><a href="#Aria2-Filebrowser" class="headerlink" title="Aria2+Filebrowser"></a>Aria2+Filebrowser</h2><p>有了服务器就会开始折腾,因为自己电脑挂bt有点慢而且AMD出名的功耗高也不想因为下个视频就一直开着于是就想到在服务器上在整一个Aria来挂bt然后再来一个远程播放岂不美哉?</p>
+<p>当然有轮子是最好的,于是就找到了:<a target="_blank" rel="noopener" href="https://www.moerats.com/archives/750/">使用Docker安装Aria2+AriaNg+Filebrowser，可离线BT下载&#x2F;在线播放</a>,直接docker run 非常不错:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name ccaa -d -p 6800:6800 -p 6080:6080 -v /home/root/aria-download:/Down moerats/ccaa:latest</span><br></pre></td></tr></table></figure>
+<p>当然-v不是必要的,这是为了后面做铺垫</p>
+<h2 id="NextCloud"><a href="#NextCloud" class="headerlink" title="NextCloud"></a>NextCloud</h2><blockquote>
+<p>Nextcloud是一套用于创建网络硬盘的客户端－服务器软件。其功能与Dropbox相近，但Nextcloud是自由及开放源代码软件，每个人都可以在私人服务器上安装并运行它。</p>
+<p>与Dropbox等专有服务相比，Nextcloud的开放架构让用户可以利用应用程序的方式在服务器上新增额外的功能，并让用户可以完全掌控自己的数据。<br>Nextcloud的文件存储在一般的目录结构中，并可透过WebDAV访问。用户的文件会在传输时加密。Nextcloud可与在Windows（Windows XP、Vista、7与8）、macOS（10.6或更新版本）或是多种Linux散布版上运行的客户端同步。</p>
+<p>Nextcloud用户可以管理日历（使用CalDAV）、联系人（CardDAV）、计划工作与流媒体（Ampache）。</p>
+<p>从管理的角度来看，Nextcloud允许用户与组群管理（透过OpenID或LDAP）。透过用户间与／或组群间的读／写权限调整达到分享文件的目的。另外，Nextcloud的用户可以创建公开的URL来分享文件。也可以记录与文件相关的动作，以及利用文件访问规则来禁止对特定文件的访问[2]。</p>
+<p>此外，用户也可以透过浏览器使用Nextcloud的文本编辑器、书签服务、缩略网址服务、相册、RSS阅读器与文件查看器。因为有良好的扩展性，Nextcloud可以透过鼠标点一下即可完成安装的应用程序强化其功能，并可连线至Dropbox、Google云端硬盘与Amazon S3。                                  ————来自<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Nextcloud">维基百科</a></p>
+</blockquote>
+<p>上面的-v当然是这里用到了,原因是有些视频格式对于Filebrowser来说太难了,并不能正确的解析,在线观看也就无从说起了.所以在一番调研之后决定在为了能看视频的同时顺便尝试一下这私人网盘是什么感觉的.</p>
+<p>当然还是方便的docker部署了:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --restart=always --name nextcloud -p 8888:80 -v /root/nextcloud:/data -v /home/root/aria-download:/aria docker.io/nextcloud</span><br></pre></td></tr></table></figure>
+<p>然后在NextCloud挂载外部存储就可以了.</p>
+<p><img src="https://misakatang.oss-cn-beijing.aliyuncs.com/snipaste/Snipaste_2019-10-27_16-38-57.png"></p>
+<h2 id="JetBrains-免费License"><a href="#JetBrains-免费License" class="headerlink" title="JetBrains 免费License"></a>JetBrains 免费License</h2><p>在毕业几个月之后终于意识到:我的学生邮箱没了,也就是说不能再白嫖好用的idea了(才怪),在琢磨了一番之后发现了官方的面向开发者的免费许可:<a target="_blank" rel="noopener" href="https://www.jetbrains.com/shop/eform/opensource?product=ALL">Open Source License Request</a>,于是就用这个博客项目尝试了一波,一开始也是没有抱多大希望的,毕竟项目没人star也没人fork,但是在几天之后收到了:<br><img src="https://misakatang.oss-cn-beijing.aliyuncs.com/snipaste/Snipaste_2019-10-27_15-51-45.png"></p>
+<p>于是就快乐的激活了许可:<br><img src="https://misakatang.oss-cn-beijing.aliyuncs.com/snipaste/Snipaste_2019-10-27_15-52-34.png"></p>
+<p>虽然感觉还是受之有愧,但是毕竟JB对开发者这么好也就只能收下这份许可来继续激励我写博客吧.</p>
+<h2 id="咖啡"><a href="#咖啡" class="headerlink" title="咖啡"></a>咖啡</h2><p>不知道是什么时候养成的习惯吧,但是现在似乎是已经离不开咖啡了,之前的出租房地方比较小的时候还是喝一喝挂耳咖啡,在这次搬家之后也是空间Dark♂了很多然后就趁着双11入了一个法压壶+咖啡豆,一是挂耳确实有点贵,买咖啡豆的话买些意式拼配的豆子也是比挂耳便宜了许多,再者也是想尝试一下是不是法压壶能够提升一下鉴赏咖啡的水平.</p>
+<p><img src="https://misakatang.oss-cn-beijing.aliyuncs.com/picture/20191027_161824.jpg?x-oss-process=image/resize,w_800,h_450"></p>
+<p><img src="https://misakatang.oss-cn-beijing.aliyuncs.com/picture/20191027_161844.jpg?x-oss-process=image/resize,w_800,h_450"></p>
+<p>在尝试了两次之后发现还是挺不错的,也是开始进行变量控制来尝试自己最喜欢的配比跟步骤吧:<br><img src="https://misakatang.oss-cn-beijing.aliyuncs.com/snipaste/Snipaste_2019-10-27_16-00-00.png"></p>
+<h2 id="博客分类"><a href="#博客分类" class="headerlink" title="博客分类"></a>博客分类</h2><p>空闲的时候重新回来看了看博客的分类着实有些杂乱,后面打算写文章也不知道往哪里分比较好就重构了一下自己博客的分类方式,现在也算是比较满意了吧(最起码新写博客的时候不再为了这个分类头疼了).</p>
+<p><img src="https://misakatang.oss-cn-beijing.aliyuncs.com/snipaste/Snipaste_2019-10-27_16-15-26.png"></p>
+<h2 id="骑行"><a href="#骑行" class="headerlink" title="骑行"></a>骑行</h2><p>鉴于不断增加的体重和国庆回家期间被家里人的不断叮嘱,还是觉得要增加一下运动量的嘛,正好拿到了人才补助的钱就想着整了一辆自行车,一来可以代步二来附近也没什么可以跑步的场地正好尝试一下骑行的快乐⑧.</p>
+<h2 id="若饭"><a href="#若饭" class="headerlink" title="若饭"></a>若饭</h2><p>这是之前看小众软件的时候被推荐了一波,结合上面打算运动一下减减肥的理念,也就尝试了一下新手套餐发现液体的饮料还是比较能接受的(喝上去感觉和豆奶很像),就整了一罐粉末来当晚饭.个人感觉还是可以接受的,饱腹感也还可以.就先体验一下,说不定也会有回购和体验的测评.</p>
+<p><img src="https://misakatang.oss-cn-beijing.aliyuncs.com/picture/20191027_161718.jpg?x-oss-process=image/resize,w_450,h_800/rotate,0"></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>周报周报,可能对我来说更像是多了一个文字输出的渠道吧,毕竟网络社交渠道基本都已经是断绝了,有一个输出口也不见得是一件坏事.</p>
+<p>当然有时候似乎很坚信自己现在清晰的知道自己究竟想要什么,在做什么,但是有时在陌生的边缘徘徊的时候又觉得自己似乎几年来还是一个dio样子又不免让人觉得蕉躁.</p>
+<p>当然,多想多看,多写写日志吧.</p>
+<blockquote>
+<p>吾尝终日而思矣 不如须臾之所学也</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/%E6%A0%87%E7%AD%BE/%E5%91%A8%E6%8A%A5/" rel="tag"># 周报</a>
+              <a href="/%E6%A0%87%E7%AD%BE/v2ray/" rel="tag"># v2ray</a>
+              <a href="/%E6%A0%87%E7%AD%BE/JetBrains/" rel="tag"># JetBrains</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/10/11/jenkins-docker-deploy-spring-app/" rel="prev" title="用Jenkins pipeline(流水线)实现SpringBoot Application的docker构建和持续集成(CI)">
+                  <i class="fa fa-chevron-left"></i> 用Jenkins pipeline(流水线)实现SpringBoot Application的docker构建和持续集成(CI)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/10/27/riding-diary-1/" rel="next" title="我的骑行日志(1) -- 夜行西湖">
+                  我的骑行日志(1) -- 夜行西湖 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">MisakaTang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/TangMisaka23001" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":false,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

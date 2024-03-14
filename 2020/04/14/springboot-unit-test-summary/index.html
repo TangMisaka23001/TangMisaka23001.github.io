@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"misakatang.cn","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.17.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"style":null,"show_result":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前言对于测试的重要性，虽然不想说什么漂亮话，但是作为敏捷开发实践的重要一环，以及本着对自己代码负责的理念，在项目中保证必要的单元测试和覆盖率还是非常重要的。 在研究怎么在SpringBoot中优雅的进行单元测试的过程中，主要参考了：  有赞单元测试实践:主要参考了工具选型的思路和整合的思路。 SpringTest文档 SpringBoot Test文档 SpringBoot 中文翻译文档–测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot单元测试小结">
+<meta property="og:url" content="http://misakatang.cn/2020/04/14/springboot-unit-test-summary/index.html">
+<meta property="og:site_name" content="MisakaTang&#39;s Blog">
+<meta property="og:description" content="前言对于测试的重要性，虽然不想说什么漂亮话，但是作为敏捷开发实践的重要一环，以及本着对自己代码负责的理念，在项目中保证必要的单元测试和覆盖率还是非常重要的。 在研究怎么在SpringBoot中优雅的进行单元测试的过程中，主要参考了：  有赞单元测试实践:主要参考了工具选型的思路和整合的思路。 SpringTest文档 SpringBoot Test文档 SpringBoot 中文翻译文档–测试">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://misakatang.oss-cn-beijing.aliyuncs.com/blog_picture/image-20200414201352164.png">
+<meta property="article:published_time" content="2020-04-14T20:26:40.000Z">
+<meta property="article:modified_time" content="2024-03-14T08:33:24.914Z">
+<meta property="article:author" content="MisakaTang">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="SpringBoot">
+<meta property="article:tag" content="Mock">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://misakatang.oss-cn-beijing.aliyuncs.com/blog_picture/image-20200414201352164.png">
+
+
+<link rel="canonical" href="http://misakatang.cn/2020/04/14/springboot-unit-test-summary/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://misakatang.cn/2020/04/14/springboot-unit-test-summary/","path":"2020/04/14/springboot-unit-test-summary/","title":"SpringBoot单元测试小结"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>SpringBoot单元测试小结 | MisakaTang's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4TSLH4NC9H"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-4TSLH4NC9H","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?de7c77febeeac252eee468207ae11ce4"></script>
+
+
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "jtb4czrfeu");
+</script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="MisakaTang's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">MisakaTang's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%AD%E5%89%8D%E8%A8%80"><span class="nav-text">续前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PowerMock"><span class="nav-text">PowerMock</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringBoot%E9%9B%86%E6%88%90Mock"><span class="nav-text">SpringBoot集成Mock</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringBoot%E8%87%AA%E5%B8%A6MockBean"><span class="nav-text">SpringBoot自带MockBean</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MockMvc"><span class="nav-text">MockMvc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dubbo-Service%E7%9A%84Mock"><span class="nav-text">Dubbo Service的Mock</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95"><span class="nav-text">扩展</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MisakaTang"
+      src="/images/misaka.jpg">
+  <p class="site-author-name" itemprop="name">MisakaTang</p>
+  <div class="site-description" itemprop="description">The limits of my language are the limits of my world</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/%E5%BD%92%E6%A1%A3/">
+          <span class="site-state-item-count">101</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TangMisaka23001" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TangMisaka23001" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mikasatang@gmail.com" title="E-Mail → mailto:mikasatang@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="http://blog.bbchen.top/" title="http:&#x2F;&#x2F;blog.bbchen.top" rel="noopener" target="_blank">BB chen的漂流记</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="http://blog.zhuzhenyuan.cn/" title="http:&#x2F;&#x2F;blog.zhuzhenyuan.cn" rel="noopener" target="_blank">Aurthur_的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://misakatang.cn/2020/04/14/springboot-unit-test-summary/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/misaka.jpg">
+      <meta itemprop="name" content="MisakaTang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MisakaTang's Blog">
+      <meta itemprop="description" content="The limits of my language are the limits of my world">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="SpringBoot单元测试小结 | MisakaTang's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SpringBoot单元测试小结
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-04-14 20:26:40" itemprop="dateCreated datePublished" datetime="2020-04-14T20:26:40+00:00">2020-04-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-14 08:33:24" itemprop="dateModified" datetime="2024-03-14T08:33:24+00:00">2024-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/%E5%88%86%E7%B1%BB/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>对于测试的重要性，虽然不想说什么漂亮话，但是作为敏捷开发实践的重要一环，以及本着对自己代码负责的理念，在项目中保证必要的单元测试和覆盖率还是非常重要的。</p>
+<p>在研究怎么在SpringBoot中优雅的进行单元测试的过程中，主要参考了：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://tech.youzan.com/youzan-test-practice/">有赞单元测试实践</a>:主要参考了工具选型的思路和整合的思路。</li>
+<li><a target="_blank" rel="noopener" href="https://docs.spring.io/spring/docs/current/spring-framework-reference/testing.html">SpringTest文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-testing">SpringBoot Test文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://jack80342.gitbook.io/spring-boot/iv.-spring-boot-features/43.-testing">SpringBoot 中文翻译文档–测试</a></li>
+</ol>
+<p>在文档中主要参考了MockMvc的使用,关于MockMvc之前也写过blog:<a href="https://misakatang.cn/2018/10/18/%E7%BF%BB%E8%AF%91-Spring-MVC-Test-Framework-MockMvc%E4%BD%BF%E7%94%A8/">翻译:Spring MVC Test Framework–MockMvc使用</a>.在当时主要是尝试了对单个项目的端口测试,在这次研究中主要考虑如何方便的对单个服务中依赖的服务进行打桩(stub)和Mock.</p>
+<h2 id="续前言"><a href="#续前言" class="headerlink" title="续前言"></a>续前言</h2><p>原本是打算把每个框架的使用方法都写写的,但是在几天的整合实践之后发现官方的文档都很友善所以下面就当作一个内容的小结,把一些需要注意的点总结一下,详细的用法还是看官方文档就可以了.</p>
+<h2 id="PowerMock"><a href="#PowerMock" class="headerlink" title="PowerMock"></a><a target="_blank" rel="noopener" href="https://github.com/powermock/powermock">PowerMock</a></h2><p>PowerMock在单测中的应用场景主要是对单测服务所依赖静态类的Mock.</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/powermock/powermock/wiki/Mockito">官方的文档地址</a>(主要使用了Mockito接口)</p>
+<p>使用方法官方也给出了例子,在静态方法Mock时主要需要<code>@PrepareForTest</code>注解:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1.类注解@PrepareForTest</span></span><br><span class="line"><span class="meta">@PrepareForTest(Static.class)</span> <span class="comment">// Static.class contains static methods</span></span><br><span class="line"><span class="comment">// 2.指定需要mock的静态方法</span></span><br><span class="line">PowerMockito.mockStatic(Static.class);</span><br><span class="line"><span class="comment">// 3.使用Mockito接口来mock</span></span><br><span class="line"><span class="comment">// 在mock返回值为`void`的静态方法时可以使用`PowerMockito`的`when()`来进行mock</span></span><br><span class="line">Mockito.when(Static.firstStaticMethod(param)).thenReturn(value);</span><br><span class="line"><span class="comment">// 4.校验mock结果</span></span><br><span class="line">PowerMockito.verifyStatic(Static.class); <span class="comment">// 1</span></span><br><span class="line">Static.firstStaticMethod(param); <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="SpringBoot集成Mock"><a href="#SpringBoot集成Mock" class="headerlink" title="SpringBoot集成Mock"></a>SpringBoot集成Mock</h2><p>整合主要参考了<a target="_blank" rel="noopener" href="https://tech.youzan.com/youzan-test-practice/">有赞单元测试实践</a>中的整合方法,主要是需要整合PowerMock使得能够对静态类进行mock.</p>
+<p>由于mock静态方法需要</p>
+<blockquote>
+<p><code>@PrepareForTest(&#123;Static.class&#125;)</code></p>
+</blockquote>
+<p>注解所以需要将<code>UnitRunner</code>指定为<code>PowerMockRunner</code>,而由于需要和Spring整合,则需要<code>SpringRunner</code>,整合结果:</p>
+<blockquote>
+<p><code>@RunWith(PowerMockRunner.class)</code></p>
+<p><code>@PowerMockRunnerDelegate(SpringRunner.class)</code></p>
+</blockquote>
+<p>最终的整合结果为:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// powermock</span></span><br><span class="line"><span class="meta">@RunWith(PowerMockRunner.class)</span></span><br><span class="line"><span class="comment">// 整合springtest</span></span><br><span class="line"><span class="meta">@PowerMockRunnerDelegate(SpringRunner.class)</span></span><br><span class="line"><span class="comment">// 排除java.security</span></span><br><span class="line"><span class="meta">@PowerMockIgnore( &#123;&quot;javax.management.*&quot;, &quot;javax.net.ssl.*&quot;&#125;)</span></span><br><span class="line"><span class="comment">// mock静态类注解</span></span><br><span class="line"><span class="meta">@PrepareForTest(Static.class)</span></span><br><span class="line"><span class="comment">// SpringBoot测试的注解</span></span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br></pre></td></tr></table></figure>
+
+<p>参照有赞的单元测试基类代码:<br><img src="https://misakatang.oss-cn-beijing.aliyuncs.com/blog_picture/image-20200414201352164.png" alt="image-20200414201352164"></p>
+<h2 id="SpringBoot自带MockBean"><a href="#SpringBoot自带MockBean" class="headerlink" title="SpringBoot自带MockBean"></a>SpringBoot自带MockBean</h2><p>主要基于SpringBoot的文档(发现SpringBoot相关的东西还是得多看官方文档才行)介绍的<code>@MockBean</code>注解.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.junit.*;</span><br><span class="line"><span class="keyword">import</span> org.junit.runner.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.context.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.mock.mockito.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.test.context.junit4.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.assertj.core.api.Assertions.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.mockito.BDDMockito.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RunWith(SpringRunner.class)</span></span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyTests</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@MockBean</span></span><br><span class="line">    <span class="keyword">private</span> RemoteService remoteService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> Reverser reverser;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">exampleTest</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// RemoteService has been injected into the reverser bean</span></span><br><span class="line">        given(<span class="built_in">this</span>.remoteService.someCall()).willReturn(<span class="string">&quot;mock&quot;</span>);</span><br><span class="line">        <span class="type">String</span> <span class="variable">reverse</span> <span class="operator">=</span> reverser.reverseSomeCall();</span><br><span class="line">        assertThat(reverse).isEqualTo(<span class="string">&quot;kcom&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="MockMvc"><a href="#MockMvc" class="headerlink" title="MockMvc"></a>MockMvc</h2><p>主要是有了一个注解方法来代替之前的手动创建mockMvc的形式,在这里记录一下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.junit.jupiter.api.Test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.context.SpringBootTest;</span><br><span class="line"><span class="keyword">import</span> org.springframework.test.web.servlet.MockMvc;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="meta">@AutoConfigureMockMvc</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MockMvcExampleTests</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">exampleTest</span><span class="params">(<span class="meta">@Autowired</span> MockMvc mvc)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        mvc.perform(get(<span class="string">&quot;/&quot;</span>)).andExpect(status().isOk()).andExpect(content().string(<span class="string">&quot;Hello World&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还有一个<code>@WebMvcTest</code>注解应该等价于之前的mockmvc的standalone启动模式:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.junit.*;</span><br><span class="line"><span class="keyword">import</span> org.junit.runner.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.autoconfigure.web.servlet.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.mock.mockito.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.assertj.core.api.Assertions.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.mockito.BDDMockito.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RunWith(SpringRunner.class)</span></span><br><span class="line"><span class="meta">@WebMvcTest(UserVehicleController.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyControllerTests</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> MockMvc mvc;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@MockBean</span></span><br><span class="line">    <span class="keyword">private</span> UserVehicleService userVehicleService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testExample</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        given(<span class="built_in">this</span>.userVehicleService.getVehicleDetails(<span class="string">&quot;sboot&quot;</span>))</span><br><span class="line">                .willReturn(<span class="keyword">new</span> <span class="title class_">VehicleDetails</span>(<span class="string">&quot;Honda&quot;</span>, <span class="string">&quot;Civic&quot;</span>));</span><br><span class="line">        <span class="built_in">this</span>.mvc.perform(get(<span class="string">&quot;/sboot/vehicle&quot;</span>).accept(MediaType.TEXT_PLAIN))</span><br><span class="line">                .andExpect(status().isOk()).andExpect(content().string(<span class="string">&quot;Honda Civic&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Dubbo-Service的Mock"><a href="#Dubbo-Service的Mock" class="headerlink" title="Dubbo Service的Mock"></a>Dubbo Service的Mock</h2><p>&#x2F;&#x2F; TODO</p>
+<h2 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h2><p><a target="_blank" rel="noopener" href="https://github.com/j-easy/easy-random">easy-random</a>:</p>
+<blockquote>
+<p>Easy Random is a library that generates random Java beans.</p>
+</blockquote>
+<p>在项目中主要用在单测需要复杂的DTO的时候,如果项目中对现有的复杂DTO没用random工具的话还是非常不错的.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/%E6%A0%87%E7%AD%BE/Java/" rel="tag"># Java</a>
+              <a href="/%E6%A0%87%E7%AD%BE/SpringBoot/" rel="tag"># SpringBoot</a>
+              <a href="/%E6%A0%87%E7%AD%BE/Mock/" rel="tag"># Mock</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/10/27/riding-diary-1/" rel="prev" title="我的骑行日志(1) -- 夜行西湖">
+                  <i class="fa fa-chevron-left"></i> 我的骑行日志(1) -- 夜行西湖
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/04/15/java-fork-join-framework-note/" rel="next" title="Fork/Join框架论文笔记和总结">
+                  Fork/Join框架论文笔记和总结 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">MisakaTang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/TangMisaka23001" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":false,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

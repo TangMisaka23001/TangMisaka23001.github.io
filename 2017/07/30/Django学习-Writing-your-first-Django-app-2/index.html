@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"misakatang.cn","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.17.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"style":null,"show_result":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="开始这是Writing your first Django app, part 2接着第一部分的例子继续,在这个部分我们要设置数据库,创建第一个模型并且快速介绍一下django的自动生成的admin管理页面.自己写的代码也同步在github的仓库里:mysite-part2 数据库设置现在,打开mysite&#x2F;settings.py文件,这是一个默认的python模型的设置.Python默">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django学习--Writing your first Django app(2)">
+<meta property="og:url" content="http://misakatang.cn/2017/07/30/Django%E5%AD%A6%E4%B9%A0-Writing-your-first-Django-app-2/index.html">
+<meta property="og:site_name" content="MisakaTang&#39;s Blog">
+<meta property="og:description" content="开始这是Writing your first Django app, part 2接着第一部分的例子继续,在这个部分我们要设置数据库,创建第一个模型并且快速介绍一下django的自动生成的admin管理页面.自己写的代码也同步在github的仓库里:mysite-part2 数据库设置现在,打开mysite&#x2F;settings.py文件,这是一个默认的python模型的设置.Python默">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://misakatang.oss-cn-beijing.aliyuncs.com/201707311.jpg">
+<meta property="og:image" content="http://misakatang.oss-cn-beijing.aliyuncs.com/201707312.jpg">
+<meta property="og:image" content="http://misakatang.oss-cn-beijing.aliyuncs.com/201707313.jpg">
+<meta property="article:published_time" content="2017-07-30T20:49:20.000Z">
+<meta property="article:modified_time" content="2024-03-14T08:33:24.910Z">
+<meta property="article:author" content="MisakaTang">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="Django">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://misakatang.oss-cn-beijing.aliyuncs.com/201707311.jpg">
+
+
+<link rel="canonical" href="http://misakatang.cn/2017/07/30/Django%E5%AD%A6%E4%B9%A0-Writing-your-first-Django-app-2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://misakatang.cn/2017/07/30/Django%E5%AD%A6%E4%B9%A0-Writing-your-first-Django-app-2/","path":"2017/07/30/Django学习-Writing-your-first-Django-app-2/","title":"Django学习--Writing your first Django app(2)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Django学习--Writing your first Django app(2) | MisakaTang's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4TSLH4NC9H"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-4TSLH4NC9H","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?de7c77febeeac252eee468207ae11ce4"></script>
+
+
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "jtb4czrfeu");
+</script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="MisakaTang's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">MisakaTang's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B"><span class="nav-text">开始</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E7%BD%AE"><span class="nav-text">数据库设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%B0%E5%9C%A8-%E6%89%93%E5%BC%80mysite-settings-py%E6%96%87%E4%BB%B6-%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AA%E9%BB%98%E8%AE%A4%E7%9A%84python%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%AE%BE%E7%BD%AE-Python%E9%BB%98%E8%AE%A4%E4%BD%BF%E7%94%A8%E7%9A%84%E6%98%AFSQLite%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%A6%82%E6%9E%9C%E4%B8%8D%E9%9C%80%E8%A6%81%E8%87%AA%E5%B7%B1%E9%85%8D%E7%BD%AE%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E8%AF%9D-%E4%BD%BF%E7%94%A8%E9%BB%98%E8%AE%A4%E7%9A%84%E5%8D%B3%E5%8F%AF-%E8%80%8C%E4%B8%94SQLite%E6%95%B0%E6%8D%AE%E5%BA%93%E5%B7%B2%E7%BB%8F%E5%9C%A8Python%E7%9A%84%E6%A8%A1%E5%9D%97%E9%87%8C-%E4%B8%8D%E9%9C%80%E8%A6%81%E9%A2%9D%E5%A4%96%E7%9A%84%E5%AE%89%E8%A3%85-%E8%BF%99%E9%87%8C%E5%AF%B9%E4%BA%8E%E5%85%B6%E4%BB%96%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E9%85%8D%E7%BD%AE%E4%B8%8D%E5%81%9A%E8%A7%A3%E9%87%8A-%E5%9B%A0%E4%B8%BA%E5%8F%AA%E6%98%AF%E5%85%A5%E9%97%A8%E7%A8%8B%E5%BA%8F-%E4%B9%8B%E5%90%8E%E5%9C%A8%E7%94%A8%E5%88%B0%E5%A6%82Mysql%E7%9A%84%E6%97%B6%E5%80%99%E4%BC%9A%E5%86%8D%E8%AE%B2%E5%88%B0-%E7%8E%B0%E5%9C%A8%E5%8F%AA%E8%A6%81%E8%BE%93%E5%85%A5%E5%A6%82%E4%B8%8B%E7%9A%84%E5%91%BD%E4%BB%A4%E5%B0%B1%E5%8F%AF%E4%BB%A5%E7%94%9F%E6%88%90%E5%AF%B9%E5%BA%94%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93-%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8-python-manage-py-migrate%E7%9C%8B%E5%88%B0%E5%A6%82%E4%B8%8B%E7%9A%84%E4%BF%A1%E6%81%AF%E7%9A%84%E8%AF%9D-%E5%B0%B1%E8%AF%B4%E6%98%8E%E7%94%9F%E6%88%90%E5%AE%8C%E6%88%90%E4%BA%86-%E5%88%9B%E5%BB%BA%E6%A8%A1%E5%9E%8B"><span class="nav-text">现在,打开mysite&#x2F;settings.py文件,这是一个默认的python模型的设置.Python默认使用的是SQLite数据库,如果不需要自己配置数据库的话,使用默认的即可.而且SQLite数据库已经在Python的模块里,不需要额外的安装.这里对于其他数据库的配置不做解释,因为只是入门程序,之后在用到如Mysql的时候会再讲到.现在只要输入如下的命令就可以生成对应的数据库(第一次使用):$ python manage.py migrate看到如下的信息的话,就说明生成完成了:12345678910111213141516Operations to perform:      Apply all migrations: admin, auth, contenttypes, sessionsRunning migrations:  Applying contenttypes.0001_initial... OK  Applying auth.0001_initial... OK  Applying admin.0001_initial... OK  Applying admin.0002_logentry_remove_auto_add... OK  Applying contenttypes.0002_remove_content_type_name... OK  Applying auth.0002_alter_permission_name_max_length... OK  Applying auth.0003_alter_user_email_max_length... OK  Applying auth.0004_alter_user_username_opts... OK  Applying auth.0005_alter_user_last_login_null... OK  Applying auth.0006_require_contenttypes_0002... OK  Applying auth.0007_alter_validators_add_error_messages... OK  Applying auth.0008_alter_user_username_max_length... OK  Applying sessions.0001_initial... OK创建模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E6%A8%A1%E5%9E%8B"><span class="nav-text">激活模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F"><span class="nav-text">注意</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8DDjango-Admin"><span class="nav-text">介绍Django Admin</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA"><span class="nav-text">创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E7%AE%A1%E7%90%86%E6%A8%A1%E5%9D%97"><span class="nav-text">添加管理模块</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MisakaTang"
+      src="/images/misaka.jpg">
+  <p class="site-author-name" itemprop="name">MisakaTang</p>
+  <div class="site-description" itemprop="description">The limits of my language are the limits of my world</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/%E5%BD%92%E6%A1%A3/">
+          <span class="site-state-item-count">101</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TangMisaka23001" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TangMisaka23001" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mikasatang@gmail.com" title="E-Mail → mailto:mikasatang@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="http://blog.bbchen.top/" title="http:&#x2F;&#x2F;blog.bbchen.top" rel="noopener" target="_blank">BB chen的漂流记</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="http://blog.zhuzhenyuan.cn/" title="http:&#x2F;&#x2F;blog.zhuzhenyuan.cn" rel="noopener" target="_blank">Aurthur_的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://misakatang.cn/2017/07/30/Django%E5%AD%A6%E4%B9%A0-Writing-your-first-Django-app-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/misaka.jpg">
+      <meta itemprop="name" content="MisakaTang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MisakaTang's Blog">
+      <meta itemprop="description" content="The limits of my language are the limits of my world">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Django学习--Writing your first Django app(2) | MisakaTang's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Django学习--Writing your first Django app(2)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-07-30 20:49:20" itemprop="dateCreated datePublished" datetime="2017-07-30T20:49:20+00:00">2017-07-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-14 08:33:24" itemprop="dateModified" datetime="2024-03-14T08:33:24+00:00">2024-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/%E5%88%86%E7%B1%BB/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="开始"><a href="#开始" class="headerlink" title="开始"></a><a href="#%E5%BC%80%E5%A7%8B" title="开始"></a>开始</h1><p>这是<strong>Writing your first Django app, part 2</strong><br>接着第一部分的例子继续,在这个部分我们要设置数据库,创建第一个模型并且快速介绍一下django的自动生成的admin管理页面.<br>自己写的代码也同步在github的仓库里:<a target="_blank" rel="noopener" href="https://github.com/TangMisaka23001/mysite/tree/part2">mysite-part2</a></p>
+<h1 id="数据库设置"><a href="#数据库设置" class="headerlink" title="数据库设置"></a><a href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E7%BD%AE" title="数据库设置"></a>数据库设置</h1><h1 id="现在-打开mysite-settings-py文件-这是一个默认的python模型的设置-Python默认使用的是SQLite数据库-如果不需要自己配置数据库的话-使用默认的即可-而且SQLite数据库已经在Python的模块里-不需要额外的安装-这里对于其他数据库的配置不做解释-因为只是入门程序-之后在用到如Mysql的时候会再讲到-现在只要输入如下的命令就可以生成对应的数据库-第一次使用-python-manage-py-migrate看到如下的信息的话-就说明生成完成了-创建模型"><a href="#现在-打开mysite-settings-py文件-这是一个默认的python模型的设置-Python默认使用的是SQLite数据库-如果不需要自己配置数据库的话-使用默认的即可-而且SQLite数据库已经在Python的模块里-不需要额外的安装-这里对于其他数据库的配置不做解释-因为只是入门程序-之后在用到如Mysql的时候会再讲到-现在只要输入如下的命令就可以生成对应的数据库-第一次使用-python-manage-py-migrate看到如下的信息的话-就说明生成完成了-创建模型" class="headerlink" title="现在,打开mysite&#x2F;settings.py文件,这是一个默认的python模型的设置.Python默认使用的是SQLite数据库,如果不需要自己配置数据库的话,使用默认的即可.而且SQLite数据库已经在Python的模块里,不需要额外的安装.这里对于其他数据库的配置不做解释,因为只是入门程序,之后在用到如Mysql的时候会再讲到.现在只要输入如下的命令就可以生成对应的数据库(第一次使用):$ python manage.py migrate看到如下的信息的话,就说明生成完成了:创建模型"></a>现在,打开mysite&#x2F;settings.py文件,这是一个默认的python模型的设置.<br>Python默认使用的是SQLite数据库,如果不需要自己配置数据库的话,使用默认的即可.而且SQLite数据库已经在Python的模块里,不需要额外的安装.<br>这里对于其他数据库的配置不做解释,因为只是入门程序,之后在用到如Mysql的时候会再讲到.<br>现在只要输入如下的命令就可以生成对应的数据库(第一次使用):<br><code>$ python manage.py migrate</code><br>看到如下的信息的话,就说明生成完成了:<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Operations to perform:  </span><br><span class="line">    Apply all migrations: admin, auth, contenttypes, sessions</span><br><span class="line">Running migrations:  </span><br><span class="line">Applying contenttypes.0001_initial... OK  </span><br><span class="line">Applying auth.0001_initial... OK  </span><br><span class="line">Applying admin.0001_initial... OK  </span><br><span class="line">Applying admin.0002_logentry_remove_auto_add... OK  </span><br><span class="line">Applying contenttypes.0002_remove_content_type_name... OK  </span><br><span class="line">Applying auth.0002_alter_permission_name_max_length... OK  </span><br><span class="line">Applying auth.0003_alter_user_email_max_length... OK  </span><br><span class="line">Applying auth.0004_alter_user_username_opts... OK  </span><br><span class="line">Applying auth.0005_alter_user_last_login_null... OK  </span><br><span class="line">Applying auth.0006_require_contenttypes_0002... OK  </span><br><span class="line">Applying auth.0007_alter_validators_add_error_messages... OK  </span><br><span class="line">Applying auth.0008_alter_user_username_max_length... OK  </span><br><span class="line">Applying sessions.0001_initial... OK</span><br></pre></td></tr></table></figure><br><a href="#%E5%88%9B%E5%BB%BA%E6%A8%A1%E5%9E%8B" title="创建模型"></a>创建模型</h1><p>在这个简单的app里,需要创建2个模型,Question和Choice.Question里包含了问题和提问的时间,Choice里包含了选择的文字和投票的信息.<br>在<strong>polls&#x2F;models.py</strong>文件里添加如下的信息:  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Question</span>(models.Model):    </span><br><span class="line">    question_text = models.CharField(max_length=<span class="number">200</span>)    </span><br><span class="line">    pub_date = models.DateTimeField(<span class="string">&#x27;date published&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Choice</span>(models.Model):    </span><br><span class="line">    question = models.ForeignKey(Question, on_delete=models.CASCADE)    </span><br><span class="line">    choice_text = models.CharField(max_length=<span class="number">200</span>)    </span><br><span class="line">    votes = models.IntegerField(default=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>对应每一个class都会在数据库中生成对应的表和字段.而在对字段添加属性和限制的时候,使用的是Field类.对于Field的详细信息不做过多的描述.</p>
+<h1 id="激活模型"><a href="#激活模型" class="headerlink" title="激活模型"></a><a href="#%E6%BF%80%E6%B4%BB%E6%A8%A1%E5%9E%8B" title="激活模型"></a>激活模型</h1><p>首先需要在settings.py文件里将app导入项目中,在<strong>INSTALLED_APPS</strong>属性中添加<strong>polls.apps.PollsConfig</strong>路径即可,如下:  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = [    </span><br><span class="line">    <span class="string">&#x27;polls.apps.PollsConfig&#x27;</span>,    </span><br><span class="line">    <span class="string">&#x27;django.contrib.admin&#x27;</span>,    </span><br><span class="line">    <span class="string">&#x27;django.contrib.auth&#x27;</span>,    </span><br><span class="line">    <span class="string">&#x27;django.contrib.contenttypes&#x27;</span>,    </span><br><span class="line">    <span class="string">&#x27;django.contrib.sessions&#x27;</span>,    </span><br><span class="line">    <span class="string">&#x27;django.contrib.messages&#x27;</span>,    </span><br><span class="line">    <span class="string">&#x27;django.contrib.staticfiles&#x27;</span>,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>接下来就可以在命令行中输入:<br><code>$ python manage.py makemigrations polls</code><br>当看到如下的信息的时候,就表示正确运行了.  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">for &#x27;polls&#x27;:</span><br><span class="line"></span><br><span class="line">polls/migrations/0001_initial.py:  </span><br><span class="line">    - Create model Choice  </span><br><span class="line">    - Create model Question  </span><br><span class="line">    - Add field question to choice</span><br></pre></td></tr></table></figure>
+
+<p>接下来就可以在代码中对这2个对象进行操作了,在官方的文档中还介绍了如何在shell中来对数据库进行操作,这里就不写出来了,需要的话在官网可以看到.</p>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a><a href="#%E6%B3%A8%E6%84%8F" title="注意"></a>注意</h2><p>在模型中添加__str__() 很重要,这样就不会在读取对象的时候只看到对象的class名了.  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">from</span> django.utils.encoding <span class="keyword">import</span> python_2_unicode_compatible</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Question</span>(models.Model):    </span><br><span class="line">    <span class="comment"># ...这里是之前已经写好的代码,只需要在后面添加一个str的方法即可    </span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):        </span><br><span class="line">        <span class="keyword">return</span> self.question_text</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Choice</span>(models.Model):    </span><br><span class="line">    <span class="comment"># ...这里是之前已经写好的代码,只需要在后面添加一个str的方法即可    </span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):        </span><br><span class="line">        <span class="keyword">return</span> self.choice_text</span><br></pre></td></tr></table></figure>
+
+<p>至此,对于简单的数据库模型的操作就可以进行了,在代码中直接使用如:**Question.objects.all()<strong>来查询所有的对象,用</strong>save()**函数就可以向数据库中插入对象,Django推荐在查询的时候使用filter来进行限定条件的查询,比如:  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Question.objects.<span class="built_in">filter</span>(<span class="built_in">id</span>=<span class="number">1</span>)</span><br><span class="line">Question.objects.<span class="built_in">filter</span>(question_text__startswith=<span class="string">&#x27;What&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>注:</strong>__startswith这类的方法是更高级的查询限制的方法,详细的可以查看官方的文档,这里的意思很明显就是,查询question_text字段中以what开头的信息.</p>
+<h1 id="介绍Django-Admin"><a href="#介绍Django-Admin" class="headerlink" title="介绍Django Admin"></a><a href="#%E4%BB%8B%E7%BB%8DDjango-Admin" title="介绍Django Admin"></a>介绍Django Admin</h1><p>这也算是我非常喜欢的一个Django的特性了,对后台管理的操作可以直接使用内置的模块来很简单的生成,简直是快速开发的福音.</p>
+<h2 id="创建"><a href="#创建" class="headerlink" title="创建"></a><a href="#%E5%88%9B%E5%BB%BA" title="创建"></a>创建</h2><p>只需要下面的一行命令就可以:<br><code>$ python manage.py createsuperuser</code><br>接下来就会需要你填写Username,Email和password,输入正确之后就打开了Django的admin模块了.<br>接下来启动服务器,然后在浏览器中输入<a target="_blank" rel="noopener" href="http://127.0.0.1:8000/admin/">http://127.0.0.1:8000/admin/</a>就可以访问admin后台了.<br><a target="_blank" rel="noopener" href="http://misakatang.oss-cn-beijing.aliyuncs.com/201707311.jpg" title="图片"><img src="http://misakatang.oss-cn-beijing.aliyuncs.com/201707311.jpg" alt="图片"></a><br>进入之后就可以看到如下的页面:<br><a target="_blank" rel="noopener" href="http://misakatang.oss-cn-beijing.aliyuncs.com/201707312.jpg" title="tupian"><img src="http://misakatang.oss-cn-beijing.aliyuncs.com/201707312.jpg" alt="tupian"></a></p>
+<h2 id="添加管理模块"><a href="#添加管理模块" class="headerlink" title="添加管理模块"></a><a href="#%E6%B7%BB%E5%8A%A0%E7%AE%A1%E7%90%86%E6%A8%A1%E5%9D%97" title="添加管理模块"></a>添加管理模块</h2><p>在polls&#x2F;admin.py文件中添加<strong>一行代码</strong>,就可以把Question这个表添加在admin管理中,简直不要太爽了.  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> Question</span><br><span class="line"></span><br><span class="line">admin.site.register(Question)</span><br></pre></td></tr></table></figure>
+<p>刷新页面之后,就可以在后台页面看到polls app中多了Questions的管理页面:<br><a target="_blank" rel="noopener" href="http://misakatang.oss-cn-beijing.aliyuncs.com/201707313.jpg" title="图片"><img src="http://misakatang.oss-cn-beijing.aliyuncs.com/201707313.jpg" alt="图片"></a><br>然后就可以对Question进行操作了~</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a><a href="#%E6%80%BB%E7%BB%93" title="总结"></a>总结</h1><p>Django确实非常的方便,在对于简单的页面的开发的时候,确实是很快.特别是类似于admin一样的现成的模块,拿来就可以直接使用.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/%E6%A0%87%E7%AD%BE/Python/" rel="tag"># Python</a>
+              <a href="/%E6%A0%87%E7%AD%BE/Django/" rel="tag"># Django</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/07/30/LeetCode%E5%88%B7%E9%A2%98-476-Number-Complement/" rel="prev" title="LeetCode刷题--476. Number Complement">
+                  <i class="fa fa-chevron-left"></i> LeetCode刷题--476. Number Complement
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/07/31/Django%E5%AD%A6%E4%B9%A0-Writing-your-first-Django-app-3/" rel="next" title="Django学习--Writing your first Django app(3)">
+                  Django学习--Writing your first Django app(3) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">MisakaTang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/TangMisaka23001" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":false,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

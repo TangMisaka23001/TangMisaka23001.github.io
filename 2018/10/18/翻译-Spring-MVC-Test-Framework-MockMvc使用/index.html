@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"misakatang.cn","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.17.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"style":null,"show_result":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前言国庆回来之后算是正是开始了Spring Boot的工作,而Java组里因为没有写任何的单元测试,每次测试都是靠Swagger的web页面自己填参数来测试,于是在这次新版本的迭代中我变成了第一个被要求贯彻实施每个controller都要写测试的人,不过单元测试,从我做起,真的很重要啊. 然后在选择的时候发现了MockMvc这个Spring自带的测试利器,个人认为主要的优势就在于可以直接在Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="翻译:Spring MVC Test Framework--MockMvc使用">
+<meta property="og:url" content="http://misakatang.cn/2018/10/18/%E7%BF%BB%E8%AF%91-Spring-MVC-Test-Framework-MockMvc%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="MisakaTang&#39;s Blog">
+<meta property="og:description" content="前言国庆回来之后算是正是开始了Spring Boot的工作,而Java组里因为没有写任何的单元测试,每次测试都是靠Swagger的web页面自己填参数来测试,于是在这次新版本的迭代中我变成了第一个被要求贯彻实施每个controller都要写测试的人,不过单元测试,从我做起,真的很重要啊. 然后在选择的时候发现了MockMvc这个Spring自带的测试利器,个人认为主要的优势就在于可以直接在Java">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-10-18T20:44:18.000Z">
+<meta property="article:modified_time" content="2024-03-14T08:33:24.910Z">
+<meta property="article:author" content="MisakaTang">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="MockMvc">
+<meta property="article:tag" content="JavaTest">
+<meta property="article:tag" content="Test">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://misakatang.cn/2018/10/18/%E7%BF%BB%E8%AF%91-Spring-MVC-Test-Framework-MockMvc%E4%BD%BF%E7%94%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://misakatang.cn/2018/10/18/%E7%BF%BB%E8%AF%91-Spring-MVC-Test-Framework-MockMvc%E4%BD%BF%E7%94%A8/","path":"2018/10/18/翻译-Spring-MVC-Test-Framework-MockMvc使用/","title":"翻译:Spring MVC Test Framework--MockMvc使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>翻译:Spring MVC Test Framework--MockMvc使用 | MisakaTang's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4TSLH4NC9H"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-4TSLH4NC9H","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?de7c77febeeac252eee468207ae11ce4"></script>
+
+
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "jtb4czrfeu");
+</script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="MisakaTang's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">MisakaTang's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-MVC-Test-Framework"><span class="nav-text">Spring MVC Test Framework</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Server-Side-Tests"><span class="nav-text">Server-Side Tests</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Static-Imports"><span class="nav-text">Static Imports</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Setup-Choices"><span class="nav-text">Setup Choices</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Setup-Features"><span class="nav-text">Setup Features</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Performing-Requests"><span class="nav-text">Performing Requests</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Defining-Expectations"><span class="nav-text">Defining Expectations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Filter-Registrations"><span class="nav-text">Filter Registrations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Differences-Between-Out-of-Container-and-End-to-End-Integration-Tests"><span class="nav-text">Differences Between Out-of-Container and End-to-End Integration Tests</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Further-Server-Side-Test-Examples"><span class="nav-text">Further Server-Side Test Examples</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MisakaTang"
+      src="/images/misaka.jpg">
+  <p class="site-author-name" itemprop="name">MisakaTang</p>
+  <div class="site-description" itemprop="description">The limits of my language are the limits of my world</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/%E5%BD%92%E6%A1%A3/">
+          <span class="site-state-item-count">101</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TangMisaka23001" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TangMisaka23001" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mikasatang@gmail.com" title="E-Mail → mailto:mikasatang@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="http://blog.bbchen.top/" title="http:&#x2F;&#x2F;blog.bbchen.top" rel="noopener" target="_blank">BB chen的漂流记</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="http://blog.zhuzhenyuan.cn/" title="http:&#x2F;&#x2F;blog.zhuzhenyuan.cn" rel="noopener" target="_blank">Aurthur_的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://misakatang.cn/2018/10/18/%E7%BF%BB%E8%AF%91-Spring-MVC-Test-Framework-MockMvc%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/misaka.jpg">
+      <meta itemprop="name" content="MisakaTang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MisakaTang's Blog">
+      <meta itemprop="description" content="The limits of my language are the limits of my world">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="翻译:Spring MVC Test Framework--MockMvc使用 | MisakaTang's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          翻译:Spring MVC Test Framework--MockMvc使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-10-18 20:44:18" itemprop="dateCreated datePublished" datetime="2018-10-18T20:44:18+00:00">2018-10-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-14 08:33:24" itemprop="dateModified" datetime="2024-03-14T08:33:24+00:00">2024-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/%E5%88%86%E7%B1%BB/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>国庆回来之后算是正是开始了Spring Boot的工作,而Java组里因为没有写任何的单元测试,每次测试都是靠Swagger的web页面自己填参数来测试,于是在这次新版本的迭代中我变成了第一个被要求贯彻实施每个controller都要写测试的人,不过<strong>单元测试,从我做起</strong>,真的很重要啊.</p>
+<p>然后在选择的时候发现了MockMvc这个Spring自带的测试利器,个人认为主要的优势就在于可以直接在Java中模拟HTTP请求,而且对于模拟请求和参数的解析也是一把好手,<em>当然就是选择它啊!</em>,我当然是赞成的.然后在寻找资料的时候因为一开始没有看官方文档也是被搞懵了很久,在看了官方文档之后才豁然开朗,于是就为了自己,翻译一下记录一下,以防健忘的自己以后重复找轮子.</p>
+<p>这里是文档地址:<a target="_blank" rel="noopener" href="https://docs.spring.io/spring/docs/current/spring-framework-reference/testing.html#testing-introduction">https://docs.spring.io/spring/docs/current/spring-framework-reference/testing.html#testing-introduction</a>,因为这次只测试和服务器端的单元测试,所以文档也就翻了这部分.</p>
+<h1 id="Spring-MVC-Test-Framework"><a href="#Spring-MVC-Test-Framework" class="headerlink" title="Spring MVC Test Framework"></a>Spring MVC Test Framework</h1><p>Spring MVC Test框架为使用流畅的API测试Spring MVC代码提供了最高级的支持,你可以使用JUnit,TestNG或者其他任何的测试框架.它被构建在<code>spring-test</code>模块的<a href="#jump">Servlet API mock 对象</a>之上,因此不使用运行中的Servlet容器.它使用<code>DispatcherServlet</code>来提供完整的Spring MVC运行时的行为并且除了独立的模块之外还提供了使用TestContext框架来加载实际的Spring配置的支持,也就是说你可以手动执行Controller的实例并且一次测试一个.</p>
+<p>Spring MVC Test还使用<code>RestTemplate</code>来提供客户端的代码测试.客户端的测试模拟服务端的响应所以也不会使用正在运行的服务.</p>
+<blockquote>
+<p>Spring Boot提供了一个选项来写一个完整的,端到端的包含运行中服务的集成测试.如果这是你的目标,查看<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications">Spring Boot reference page</a>.获取更多关于容器外和端到端集成测试的区别的信息,查看<a href="#jump">Differences Between Out-of-Container and End-to-End Integration Tests</a></p>
+</blockquote>
+<h2 id="Server-Side-Tests"><a href="#Server-Side-Tests" class="headerlink" title="Server-Side Tests"></a>Server-Side Tests</h2><p>你可以使用JUnit或者TestNG为Spring MVC controller编写一个普通的单元测试.如果要这么做的话,实例化conreoller,使用mocked或者stubbed依赖注入,然后使用它们的方法就行了(例如:<code>MockHttpServletRequest</code>,<code>MockHttpServletResponse</code>,和其他有必要用到的).然而,当你这样来写单元测试的时候,很多东西是测试不到的,例如:RequestMapping,数据绑定,类型转换,数据的合法性验证等等.此外,其他的controller方法,例如<code>@InitBinder</code>,<code>@ModelAttribute</code>和<code>@ExceptionHandler</code>也会作为请求过程生命周期中的一部分被请求到.</p>
+<p>Spring MVC Test的目标是提供一个高效的方式来测试controller通过执行请求和生成response通过实际的<code>DispatcherServlet</code>.</p>
+<p>Spring MVC Test构建在熟悉的<code>spring-test</code>模块的<a target="_blank" rel="noopener" href="https://docs.spring.io/spring/docs/current/spring-framework-reference/testing.html#mock-objects-servlet">“mock” implementations of the Servlet API</a>之上.这也就允许我们不需要运行一个Servlet容器就可以模拟请求和生成response.在大部分情况下,一切都会像真实环境一样工作但是也有几个例外:[Differences Between Out-of-Container and End-to-End Integration Tests](### Differences Between Out-of-Container and End-to-End Integration Tests).下面的代码是基于JUnit Jupiter使用Spring MVC Test的例子:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringJUnitWebConfig(locations = &quot;test-servlet-context.xml&quot;)</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ExampleTests</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> MockMvc mockMvc;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@BeforeEach</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">setup</span><span class="params">(WebApplicationContext wac)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">getAccount</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="built_in">this</span>.mockMvc.perform(get(<span class="string">&quot;/accounts/1&quot;</span>)</span><br><span class="line">        .accept(MediaType.parseMediaType(<span class="string">&quot;application/json;charset=UTF-8&quot;</span>)))</span><br><span class="line">        .andExpect(status().isOk())</span><br><span class="line">        .andExpect(content().contentType(<span class="string">&quot;application/json&quot;</span>))</span><br><span class="line">        .andExpect(jsonPath(<span class="string">&quot;$.name&quot;</span>).value(<span class="string">&quot;Lee&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的测试依赖于TestContext框架提供支持的<code>WebApplicationContext</code>来从位于相同的package的xml配置文件中加载Spring的配置,基于Java和Groovy的配置文件也是支持的.<a target="_blank" rel="noopener" href="https://github.com/spring-projects/spring-framework/tree/master/spring-test/src/test/java/org/springframework/test/web/servlet/samples/context">看这里</a></p>
+<p>MockMVC实例模拟了一个<code>GET</code>请求了<code>/accounts/1</code>并且验证response的结果状态码是200,content-type是<code>application/json</code>,并且response body有一个JSON属性名<code>name</code>的key值是<code>Lee</code>.<code>jsonPath</code>的语法通过Jayway<a target="_blank" rel="noopener" href="https://github.com/jayway/JsonPath">JsonPath project</a>提供支持.更多其他的关于验证结果和模拟请求的选项在后面的文档中会讨论.</p>
+<h3 id="Static-Imports"><a href="#Static-Imports" class="headerlink" title="Static Imports"></a>Static Imports</h3><p>上面例子代码中的API需要几个静态的imports,例如<code>MockMvcRequestBuilders.*</code>,<code>MockMvcResultMatchers.*</code>和<code>MockMvcBuilders.*</code>.下面导包操作就省略了.</p>
+<h3 id="Setup-Choices"><a href="#Setup-Choices" class="headerlink" title="Setup Choices"></a>Setup Choices</h3><p>你有2种主要的方式来创建<code>MockMVC</code>实例.第一种是通过TestContext框架加载Spring MVC配置文件,这样会加载Spring的配置信息并且通过注入<code>WebApplicationContext</code>到测试中来构建一个<code>MockMVC</code>实例.下面是示例代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith(SpringRunner.class)</span></span><br><span class="line"><span class="meta">@WebAppConfiguration</span></span><br><span class="line"><span class="meta">@ContextConfiguration(&quot;my-servlet-context.xml&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyWebTests</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> WebApplicationContext wac;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> MockMvc mockMvc;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setup</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.mockMvc = MockMvcBuilders.webAppContextSetup(<span class="built_in">this</span>.wac).build();</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第二种选择是手动创建一个controller实例而不加载Spring的配置信息.相对的,通过大致比较MVC JavaConfig或者MVC namespace来自动的创建一个默认的配置.你可以在一定程度上自定义.下面是实例代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyWebTests</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> MockMvc mockMvc;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setup</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.mockMvc = MockMvcBuilders.standaloneSetup(<span class="keyword">new</span> <span class="title class_">AccountController</span>()).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你会选择哪一种方式呢?#反正我是第二种hhh</p>
+<p><code>webAppContextSetup</code>会加载你实际的Spring MVC配置信息,导致一个更完整的集成测试.自从TestContext框架缓存加载Spring配置信息之后会让测试运行的更快,甚至在你引入了更多的测试的时候.此外,你可以通过Spring configuration注入mock service到你的controller以便于专注地在web层进行测试.下面的例子声明了一个mock service使用Mockito:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;accountService&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.mockito.Mockito&quot;</span> <span class="attr">factory-method</span>=<span class="string">&quot;mock&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">value</span>=<span class="string">&quot;org.example.AccountService&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>然后你可以把mock service注入到测试中并且配置成你想要的样子.下面是示例代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith(SpringRunner.class)</span></span><br><span class="line"><span class="meta">@WebAppConfiguration</span></span><br><span class="line"><span class="meta">@ContextConfiguration(&quot;test-servlet-context.xml&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AccountTests</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> WebApplicationContext wac;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> MockMvc mockMvc;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> AccountService accountService;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种<code>单独的设置</code>,从另一个方面看更接近一个单元测试,每次只测试一个controller.你可以使用mock依赖手动注入controller,并且这不涉及到加载Spring配置信息.这种测试更加关注于”style”并且让看到哪个controller正在被测试变得更容易,是否需要特定的Spring MVC配置文件才能运行,等等.这种<code>单独设置</code>的方式也是一种便利的写ad-hoc测试来验证具体的行为或者debug一个issue的方式.</p>
+<p>在集成和单元测试的争论下,没有对的或者错的答案.然而使用<code>单独设置</code>就意味着需要额外的<code>webAppContextSetup</code>测试来验证你的Sring配置文件.或者你也可以用<code>webAppContextSetup</code>来写你的所有的测试,这样可以始终测试你的Spring配置信息.</p>
+<h3 id="Setup-Features"><a href="#Setup-Features" class="headerlink" title="Setup Features"></a>Setup Features</h3><p>无论你使用那种方式来构建MockMVC,所有的<code>MockMvcBuilder</code>实现都提供了一些常见并且很实用的特性.例如,你可以为所有的请求声明一个<code>Accept</code>头并且对于所有的response希望返回200的状态码和<code>Content-Type</code>头.下面是示例代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// static import of MockMvcBuilders.standaloneSetup</span></span><br><span class="line"></span><br><span class="line"><span class="type">MockMvc</span> <span class="variable">mockMvc</span> <span class="operator">=</span> standaloneSetup(<span class="keyword">new</span> <span class="title class_">MusicController</span>())</span><br><span class="line">    .defaultRequest(get(<span class="string">&quot;/&quot;</span>).accept(MediaType.APPLICATION_JSON))</span><br><span class="line">    .alwaysExpect(status().isOk())</span><br><span class="line">    .alwaysExpect(content().contentType(<span class="string">&quot;application/json;charset=UTF-8&quot;</span>))</span><br><span class="line">    .build();</span><br></pre></td></tr></table></figure>
+
+<p>此外,第三方框架(和应用)可以预先打包设置声明,比如在<code>MockMvcConfigurer</code>.Spring框架有一个内置的实现可以通过请求来保存和重用HTTP session.你可以像下面一样使用:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// static import of SharedHttpSessionConfigurer.sharedHttpSession</span></span><br><span class="line"></span><br><span class="line"><span class="type">MockMvc</span> <span class="variable">mockMvc</span> <span class="operator">=</span> MockMvcBuilders.standaloneSetup(<span class="keyword">new</span> <span class="title class_">TestController</span>())</span><br><span class="line">    .apply(sharedHttpSession())</span><br><span class="line">    .build();</span><br><span class="line"></span><br><span class="line"><span class="comment">// Use mockMvc to perform requests...</span></span><br></pre></td></tr></table></figure>
+<p>查看<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-framework/docs/5.1.1.RELEASE/javadoc-api/org/springframework/test/web/servlet/setup/ConfigurableMockMvcBuilder.html">Javadoc for <code>ConfigurableMockMvcBuilder</code></a>,列出了所有MockMvc内建的特性或者使用ide来查看.</p>
+<h3 id="Performing-Requests"><a href="#Performing-Requests" class="headerlink" title="Performing Requests"></a>Performing Requests</h3><p>你可以使用任何的HTTP方法来模拟请求:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mockMvc.perform(post(<span class="string">&quot;/hotels/&#123;id&#125;&quot;</span>, <span class="number">42</span>).accept(MediaType.APPLICATION_JSON));</span><br></pre></td></tr></table></figure>
+<p>你也可以使用<code>MockMultipartHttpServletRequest</code>内的模拟文件上传请求,这样就不会实际的解析一个多部分的请求.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mockMvc.perform(multipart(<span class="string">&quot;/doc&quot;</span>).file(<span class="string">&quot;a1&quot;</span>, <span class="string">&quot;ABC&quot;</span>.getBytes(<span class="string">&quot;UTF-8&quot;</span>)));</span><br></pre></td></tr></table></figure>
+<p>你可以添加一个请求参数使用URI template风格:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mockMvc.perform(get(<span class="string">&quot;/hotels?thing=&#123;thing&#125;&quot;</span>, <span class="string">&quot;somewhere&quot;</span>));</span><br></pre></td></tr></table></figure>
+<p>你还可以添加Servlet请求参数不管是请求参数还是表单参数.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mockMvc.perform(get(<span class="string">&quot;/hotels&quot;</span>).param(<span class="string">&quot;thing&quot;</span>, <span class="string">&quot;somewhere&quot;</span>));</span><br></pre></td></tr></table></figure>
+<p>如果应用的编码依赖于Servlet请求参数并且没有明确检查请求的字符串,你使用那个选项都没关系.但是请记住,提供的请求参数使用URI template的时候被编码,在请求参数经过<code>param()</code>方法的时候是预计已经被编码的.</p>
+<p>在大多数的情况下,最好是把context path和Servlet path放在请求的URI外面.如果你必须要在完整的URI下测试,确定设置了<code>contextPath</code>和<code>servletPath</code>,request mapping才能正常工作.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mockMvc.perform(get(<span class="string">&quot;/app/main/hotels/&#123;id&#125;&quot;</span>).contextPath(<span class="string">&quot;/app&quot;</span>).servletPath(<span class="string">&quot;/main&quot;</span>))</span><br></pre></td></tr></table></figure>
+<p>在上面的例子里,给每个模拟请求设置<code>contextPath</code>和<code>servletPath</code>是很笨重的.你可以设置默认的请求参数来代替:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyWebTests</span> &#123;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">private</span> MockMvc mockMvc;</span><br><span class="line"></span><br><span class="line"> <span class="meta">@Before</span></span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setup</span><span class="params">()</span> &#123;</span><br><span class="line"> mockMvc = standaloneSetup(<span class="keyword">new</span> <span class="title class_">AccountController</span>())</span><br><span class="line">    .defaultRequest(get(<span class="string">&quot;/&quot;</span>)</span><br><span class="line">    .contextPath(<span class="string">&quot;/app&quot;</span>).servletPath(<span class="string">&quot;/main&quot;</span>)</span><br><span class="line">    .accept(MediaType.APPLICATION_JSON)).build();</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>上面的设置会影响所有通过这个MockMvc实例模拟的请求.如果相同的属性也在给定的请求里出现了,会覆盖默认的值.这也就是为什么HTTP方法和URI在默认的请求下没有影响,因为必须在每个请求中指定它们.</p>
+<h3 id="Defining-Expectations"><a href="#Defining-Expectations" class="headerlink" title="Defining Expectations"></a>Defining Expectations</h3><p>你可以定义预计的结果通过添加一个或者更多的<code>.andExpect(..)</code>在模拟请求之后:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mockMvc.perform(get(<span class="string">&quot;/accounts/1&quot;</span>)).andExpect(status().isOk());</span><br></pre></td></tr></table></figure>
+<p><code>MockMvcResultMatchers.*</code>提供了大量的expectations,其中一些嵌套了更详细的expectations.</p>
+<p>Expectations分为两大类,第一类断言验证响应的属性,这些都是最重要的结果断言.</p>
+<p>第二类断言超出了response的范围,这些断言可以让你检查Spring MVC的特定方面,例如哪个controller的方法处理了请求,是否一个异常被抛出和处理,模型的content是什么,哪个view被选择,哪些属性被添加,等等..他们也运行检查Servlet的特定方面,例如请求和会话属性.</p>
+<p>下面的测试断言绑定或者验证失败:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mockMvc.perform(post(<span class="string">&quot;/persons&quot;</span>))</span><br><span class="line">    .andExpect(status().isOk())</span><br><span class="line">    .andExpect(model().attributeHasErrors(<span class="string">&quot;person&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+<p>很多时候,当你在写测试,打印出模拟请求的结果是很有帮助的,可以使用<code>MockMvcResultHandlers</code>的静态方法<code>print()</code>来做到:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mockMvc.perform(post(<span class="string">&quot;/persons&quot;</span>))</span><br><span class="line">    .andDo(print())</span><br><span class="line">    .andExpect(status().isOk())</span><br><span class="line">    .andExpect(model().attributeHasErrors(<span class="string">&quot;person&quot;</span>));</span><br></pre></td></tr></table></figure>
+<p>只要请求过程没有造成一个没有处理的异常,<code>print()</code>方法就会打印出所有可得到的结果数据到<code>System.out</code>.Spring Framework 4.2引入了一个<code>log()</code>方法和两个附加的变种的<code>print()</code>方法,一个接收<code>OutputStream</code>一个接收<code>Writer</code>.例如,请求<code>print(System.err)</code>打印结果到<code>System.err</code>.当请求<code>print(myWriter)</code>的时候会打印数据到规定的地方.如果你想要使用结果数据日志来代替打印,使用<code>log()</code>方法,会把数据使用<code>DEBUG</code>打到<code>org.springframework.test.web.servlet.result</code>配置下.</p>
+<p>在某些情况下,你也许想直接访问并且不想验证其他结果可以在后面加<code>.andReturn()</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">MvcResult</span> <span class="variable">mvcResult</span> <span class="operator">=</span> mockMvc.perform(post(<span class="string">&quot;/persons&quot;</span>)).andExpect(status().isOk()).andReturn();</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+
+<p>如果所有的测试有使用相同的expectations,你可以设置一个公共的expectations构建在<code>MockMvc</code>实例里面:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">standaloneSetup(<span class="keyword">new</span> <span class="title class_">SimpleController</span>())</span><br><span class="line">    .alwaysExpect(status().isOk())</span><br><span class="line">    .alwaysExpect(content().contentType(<span class="string">&quot;application/json;charset=UTF-8&quot;</span>))</span><br><span class="line">    .build()</span><br></pre></td></tr></table></figure>
+<p>注意公用的expectations总是会被使用并且无法被覆盖.</p>
+<p>当JSON响应内容包含使用<a target="_blank" rel="noopener" href="https://github.com/spring-projects/spring-hateoas">Spring HATEOAS</a>创建的超媒体链接时.你可以使用JsonPath表达式来验证结果连接:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mockMvc.perform(get(<span class="string">&quot;/people&quot;</span>).accept(MediaType.APPLICATION_JSON))</span><br><span class="line">    .andExpect(jsonPath(<span class="string">&quot;$.links[?(@.rel == &#x27;self&#x27;)].href&quot;</span>).value(<span class="string">&quot;http://localhost:8080/people&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+<p>当xml被包含的时候可以使用xpath表达式来验证:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, String&gt; ns = Collections.singletonMap(<span class="string">&quot;ns&quot;</span>, <span class="string">&quot;http://www.w3.org/2005/Atom&quot;</span>);</span><br><span class="line">mockMvc.perform(get(<span class="string">&quot;/handle&quot;</span>).accept(MediaType.APPLICATION_XML))</span><br><span class="line">    .andExpect(xpath(<span class="string">&quot;/person/ns:link[@rel=&#x27;self&#x27;]/@href&quot;</span>, ns).string(<span class="string">&quot;http://localhost:8080/people&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+<h3 id="Filter-Registrations"><a href="#Filter-Registrations" class="headerlink" title="Filter Registrations"></a>Filter Registrations</h3><p>当设置一个<code>MockMvc</code>实例的时候,你可以注册一个或多个Servlet <code>Filter</code>实例:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mockMvc = standaloneSetup(<span class="keyword">new</span> <span class="title class_">PersonController</span>()).addFilters(<span class="keyword">new</span> <span class="title class_">CharacterEncodingFilter</span>()).build();</span><br></pre></td></tr></table></figure>
+<p>注册过滤通过<code>spring-test</code>的<code>MockFilterChain</code>来调用,并且把最后一个过滤器委托给<code>DispatcherServlet</code>.</p>
+<p><span id="jump"></span></p>
+<h3 id="Differences-Between-Out-of-Container-and-End-to-End-Integration-Tests"><a href="#Differences-Between-Out-of-Container-and-End-to-End-Integration-Tests" class="headerlink" title="Differences Between Out-of-Container and End-to-End Integration Tests"></a>Differences Between Out-of-Container and End-to-End Integration Tests</h3><p>就像之前提到的,Spring MVC Test构建在<code>spring-test</code>的Servlet API mock objects之上并且没有使用运行中的Servlet容器.因此,这和在客户端和服务器运行的完整的端到端的集成测试有一些很重要的区别.</p>
+<p>最简单的方式就是从思考一个空白的<code>MockHttpServletRequest</code>开始.在这里面你添加什么,请求就会变成什么样.令你吃惊的也许是这里没有完整的上下文路径在默认情况下,没有<code>jsessionid</code>的cookie,没有转发,错误或是异步调度并且因此,没有实际的JSP转义.与此相对的,转发和重定向URL被保存在<code>MockHttpServletResponse</code>里并且可以使用表达式来断言它.</p>
+<p>这也就意味着,如果你使用JSP,你可以验证请求转发到的JSP页面,但是没有HTML被呈现.换句话说,JSP不会被调用.但请注意，所有其他不依赖转发的渲染技术,例如Thymeleaf和Freemarker,会在response body里像期待的那样呈现HTML内容.相同的,JSON,XML和其他一切通过<code>@ResponseBody</code>注解传递的格式都可以.</p>
+<p>另外,你也可以考虑通过使用Spring Boot的<code>@WebIntegrationTest</code>来实现完整的端到端的集成测试.查看<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications">Spring Boot Reference Guide</a>.</p>
+<p>每种方法都有利弊.Spring MVC Test提供的选项和传统的单元测试的完整集成测试所停留的面是不一样的.可以肯定的是,Spring MVC中没有任何属于传统单元测试的选项,但是有一点接近它.例如,你可以通过把mock service注入到controller中的方式来隔离web层,在这种情况下你测试web层只需要通过<code>DispatcherServlet</code>但是实际上你是使用了Spring配置信息的,就像你可以隔离掉数据访问层之上的层面来测试数据访问层一样.当然,你也可以使用单独的配置,每次只关注一个controller并且手动提供使其运行所必须的配置文件.</p>
+<p>使用Spring MVC的另一个重大的区别是,从概念上讲,这些测试是服务端的,所以你可以检查哪个Handler被使用了,如果一个异常被HandlerExceptionResolver处理了,这时候模型的内容是什么,绑定的是什么错误和其他的信息(可以很轻松的获取).这也就意味着写expectations会变得简单,因为server这时候就不是一个黑盒了,就像是通过实际的HTTP客户端去测试一样.传统的单元测试的优势是:易于编写,推理和调试但是不能完全取代完整的集成测试.同时,重要的是不要忽略了最重要的是要去检查response这件事.简而言之,即使在一个项目中,也存在多种的测试的风格和策略(条条大路通罗马).</p>
+<h3 id="Further-Server-Side-Test-Examples"><a href="#Further-Server-Side-Test-Examples" class="headerlink" title="Further Server-Side Test Examples"></a>Further Server-Side Test Examples</h3><p>这个框架自己的测试包含了<a target="_blank" rel="noopener" href="https://github.com/spring-projects/spring-framework/tree/master/spring-test/src/test/java/org/springframework/test/web/servlet/samples">很多测试的例子</a>为了展示如何使用Spring MVC Test.你可以打开这些例子来寻找更多的灵感.同时,<a target="_blank" rel="noopener" href="https://github.com/spring-projects/spring-mvc-showcase"><code>spring-mvc-showcase</code></a>项目覆盖了完整的基于Spring MVC Test的测试.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/%E6%A0%87%E7%AD%BE/Java/" rel="tag"># Java</a>
+              <a href="/%E6%A0%87%E7%AD%BE/MockMvc/" rel="tag"># MockMvc</a>
+              <a href="/%E6%A0%87%E7%AD%BE/JavaTest/" rel="tag"># JavaTest</a>
+              <a href="/%E6%A0%87%E7%AD%BE/Test/" rel="tag"># Test</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/10/14/%E8%B7%9F%E7%9D%80qsc%E6%90%9E%E6%9C%BA-%E5%99%A8%E5%AD%A6%E4%B9%A0-%E4%BB%8E%E8%B5%8C%E5%8D%9A%E6%9C%BA%E5%88%B0%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F/" rel="prev" title="跟着qsc搞机(器学习)--从赌博机到推荐系统">
+                  <i class="fa fa-chevron-left"></i> 跟着qsc搞机(器学习)--从赌博机到推荐系统
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/10/18/%E8%A1%A5%E5%85%85-%E5%9C%A8MockMvc%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%90%84%E7%A7%8DPOST%E6%8F%90%E4%BA%A4%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E5%BC%8F/" rel="next" title="补充:在MockMvc中使用各种POST提交数据的方式">
+                  补充:在MockMvc中使用各种POST提交数据的方式 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">MisakaTang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/TangMisaka23001" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":false,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

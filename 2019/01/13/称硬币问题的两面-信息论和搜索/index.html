@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"misakatang.cn","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.17.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"style":null,"show_result":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="开始首先给出我们要解决的问题:  有 12 枚外表一模一样的硬币，其中一枚是假币，其余都是真币。假币的重量与真币不同，但是更重还是更轻不知道。给你一个没有砝码和刻度的天平，最少称几次才能确保找出假币?  类似的题目的变种也非常的多而且经常会时不时出现在我的面前,但是一法通 万法通,只要掌握了方法这类问题也就变成了有通解的简单数学题而已.以前的我也是这么想的,但是在机缘巧合之下看到了这个硬币的两面,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="称硬币问题的两面--信息论和搜索">
+<meta property="og:url" content="http://misakatang.cn/2019/01/13/%E7%A7%B0%E7%A1%AC%E5%B8%81%E9%97%AE%E9%A2%98%E7%9A%84%E4%B8%A4%E9%9D%A2-%E4%BF%A1%E6%81%AF%E8%AE%BA%E5%92%8C%E6%90%9C%E7%B4%A2/index.html">
+<meta property="og:site_name" content="MisakaTang&#39;s Blog">
+<meta property="og:description" content="开始首先给出我们要解决的问题:  有 12 枚外表一模一样的硬币，其中一枚是假币，其余都是真币。假币的重量与真币不同，但是更重还是更轻不知道。给你一个没有砝码和刻度的天平，最少称几次才能确保找出假币?  类似的题目的变种也非常的多而且经常会时不时出现在我的面前,但是一法通 万法通,只要掌握了方法这类问题也就变成了有通解的简单数学题而已.以前的我也是这么想的,但是在机缘巧合之下看到了这个硬币的两面,">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2019/01/13/5c3aecc2807a9.png">
+<meta property="og:image" content="https://i.loli.net/2019/01/13/5c3aed5fc7110.png">
+<meta property="og:image" content="https://i.loli.net/2019/01/13/5c3aedae1cc47.png">
+<meta property="og:image" content="http://mindhacks.cn/wp-content/uploads/2009/02/23131201.jpg">
+<meta property="article:published_time" content="2019-01-13T15:21:09.000Z">
+<meta property="article:modified_time" content="2024-03-14T08:33:24.914Z">
+<meta property="article:author" content="MisakaTang">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="计算机哲学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2019/01/13/5c3aecc2807a9.png">
+
+
+<link rel="canonical" href="http://misakatang.cn/2019/01/13/%E7%A7%B0%E7%A1%AC%E5%B8%81%E9%97%AE%E9%A2%98%E7%9A%84%E4%B8%A4%E9%9D%A2-%E4%BF%A1%E6%81%AF%E8%AE%BA%E5%92%8C%E6%90%9C%E7%B4%A2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://misakatang.cn/2019/01/13/%E7%A7%B0%E7%A1%AC%E5%B8%81%E9%97%AE%E9%A2%98%E7%9A%84%E4%B8%A4%E9%9D%A2-%E4%BF%A1%E6%81%AF%E8%AE%BA%E5%92%8C%E6%90%9C%E7%B4%A2/","path":"2019/01/13/称硬币问题的两面-信息论和搜索/","title":"称硬币问题的两面--信息论和搜索"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>称硬币问题的两面--信息论和搜索 | MisakaTang's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4TSLH4NC9H"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-4TSLH4NC9H","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?de7c77febeeac252eee468207ae11ce4"></script>
+
+
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "jtb4czrfeu");
+</script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="MisakaTang's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">MisakaTang's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B"><span class="nav-text">开始</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A6%BB%E6%95%A3%E6%95%B0%E5%AD%A6"><span class="nav-text">离散数学</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hamming-Code"><span class="nav-text">Hamming Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%87%E7%A8%8B"><span class="nav-text">过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-text">例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E4%BA%86"><span class="nav-text">解决了!</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%89%E9%99%90%E5%9F%9F"><span class="nav-text">有限域</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E8%AE%BA-%E8%BF%98%E6%98%AF%E4%BF%A1%E6%81%AF%E8%AE%BA"><span class="nav-text">信息论,还是信息论!</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%88%86"><span class="nav-text">二分</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MisakaTang"
+      src="/images/misaka.jpg">
+  <p class="site-author-name" itemprop="name">MisakaTang</p>
+  <div class="site-description" itemprop="description">The limits of my language are the limits of my world</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/%E5%BD%92%E6%A1%A3/">
+          <span class="site-state-item-count">101</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TangMisaka23001" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TangMisaka23001" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mikasatang@gmail.com" title="E-Mail → mailto:mikasatang@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="http://blog.bbchen.top/" title="http:&#x2F;&#x2F;blog.bbchen.top" rel="noopener" target="_blank">BB chen的漂流记</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="http://blog.zhuzhenyuan.cn/" title="http:&#x2F;&#x2F;blog.zhuzhenyuan.cn" rel="noopener" target="_blank">Aurthur_的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://misakatang.cn/2019/01/13/%E7%A7%B0%E7%A1%AC%E5%B8%81%E9%97%AE%E9%A2%98%E7%9A%84%E4%B8%A4%E9%9D%A2-%E4%BF%A1%E6%81%AF%E8%AE%BA%E5%92%8C%E6%90%9C%E7%B4%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/misaka.jpg">
+      <meta itemprop="name" content="MisakaTang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MisakaTang's Blog">
+      <meta itemprop="description" content="The limits of my language are the limits of my world">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="称硬币问题的两面--信息论和搜索 | MisakaTang's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          称硬币问题的两面--信息论和搜索
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-01-13 15:21:09" itemprop="dateCreated datePublished" datetime="2019-01-13T15:21:09+00:00">2019-01-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-14 08:33:24" itemprop="dateModified" datetime="2024-03-14T08:33:24+00:00">2024-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/%E5%88%86%E7%B1%BB/%E7%94%9F%E6%B4%BB/" itemprop="url" rel="index"><span itemprop="name">生活</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h1><p>首先给出我们要解决的问题:</p>
+<blockquote>
+<p>有 12 枚外表一模一样的硬币，其中一枚是假币，其余都是真币。假币的重量与真币不同，但是更重还是更轻不知道。给你一个没有砝码和刻度的天平，最少称几次才能确保找出假币?</p>
+</blockquote>
+<p>类似的题目的变种也非常的多而且经常会时不时出现在我的面前,但是<strong>一法通 万法通</strong>,只要掌握了方法这类问题也就变成了有通解的简单数学题而已.以前的我也是这么想的,但是在机缘巧合之下看到了这个硬币的两面,感觉非常有趣便在此记录一下.</p>
+<h1 id="离散数学"><a href="#离散数学" class="headerlink" title="离散数学"></a>离散数学</h1><p>让我们先从逻辑谓词的角度来看看这个问题.当然如果你对离散学习非常熟悉的话,在看到这个问题的时候应该就能想到:”这不就是纠错码吗?”,没错,离散数学的解决方法就是纠错码.</p>
+<h2 id="Hamming-Code"><a href="#Hamming-Code" class="headerlink" title="Hamming Code"></a>Hamming Code</h2><blockquote>
+<p>汉明码（Hamming Code）是广泛用于内存和磁盘纠错的编码。汉明码不仅可以用来检测转移数据时发生的错误，还可以用来修正错误。（要注意的是，汉明码只能发现和修正一位错误，对于两位或者两位以上的错误无法正确和发现）。</p>
+</blockquote>
+<p><strong>纠错</strong>,<strong>一位</strong>,完美适应我们提出的硬币问题!那么我们就开始吧~</p>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>首先对于硬币称重这个问题来说,我们可以假设称完硬币有状态:1(左边),2(右边),而将0保留为没有上天平的硬币.那么我们就有$3^3&#x3D;27$种状态:000,001,002…..,221,222.首先可以排除000这种状态,因为这表明这个硬币没有被用到(浪费显然是不可能的).然后我们要排除所有状态中的共线的状态(对于每一位数乘以2取余3后结果相同为共线),然后我们就一共剩下了下面的13种可能的状态:</p>
+<p><img src="https://i.loli.net/2019/01/13/5c3aecc2807a9.png"> </p>
+<p>当然因为我们这里是需要对硬币称重,所以需要每次上天平的硬币数量相同,那么我们只要保留前12组(没称,左边,右边)就可以了.</p>
+<p>接下来我们要对硬币开始调平,对于第一行来说,有4个0和8个1,所以把最后4组都乘以2取余3:</p>
+<p><img src="https://i.loli.net/2019/01/13/5c3aed5fc7110.png"> </p>
+<p>然后来看第二行:多了2个1,因为第一行已经固定了所以这次只能在第一行为0的列中下手,我们对3,4列乘以2:</p>
+<p><img src="https://i.loli.net/2019/01/13/5c3aedae1cc47.png"> </p>
+<p>整个称重的过程就已经出现了:</p>
+<ul>
+<li>第一次:<ul>
+<li>左边:5,6,7,8</li>
+<li>右边:9,10,11,12</li>
+</ul>
+</li>
+<li>第二次:<ul>
+<li>左边:2,8,11,12</li>
+<li>右边:3,4,9,10</li>
+</ul>
+</li>
+<li>第三次:<ul>
+<li>左边:1,4,6,10</li>
+<li>右边:3,7,9,12</li>
+</ul>
+</li>
+</ul>
+<p>对于结果来说:</p>
+<ul>
+<li>1代表左倾,2代表右倾,0是平衡,如果能够直接在表中找到结果,那么对应的硬币则为假币且比真的更重</li>
+<li>如果在表中找不到结果但是有其共线的向量,那么对应的硬币为假币且更轻.</li>
+</ul>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>比如:</p>
+<ul>
+<li>第一次:右边重(2)</li>
+<li>第二次:右边重(2)</li>
+<li>第三次:右边重(2)</li>
+</ul>
+<p>那么(2,2,2)9号为假币且更重</p>
+<ul>
+<li>第一次:左边重(1)</li>
+<li>第二次:右边重(2)</li>
+<li>第三次:平衡(0)</li>
+</ul>
+<p>那么(1,2,0)其共线向量硬币为11且更轻</p>
+<h2 id="解决了"><a href="#解决了" class="headerlink" title="解决了!"></a>解决了!</h2><p>没错,通过一个简单的矩阵就可以解决这一类的问题并且非常的简单:查表就完事了~当然这需要对纠错码非常的敏感才能映射到这个问题上并且加以运用才行.</p>
+<h2 id="有限域"><a href="#有限域" class="headerlink" title="有限域"></a>有限域</h2><p>当然如果数学非常流批的话,可以直接忽视上面的纠错码而直接进行数学推导也是可行的.在这里给出纯粹的数学推导的方法:(直接给出大佬的博客:<a target="_blank" rel="noopener" href="https://neozhaoliang.github.io/post/coin-and-coding-theory/">称硬币问题、小白鼠找毒药问题与编码理论</a>),在推导结束之后写出矩阵和称重的过程是完全一致的.</p>
+<h1 id="信息论-还是信息论"><a href="#信息论-还是信息论" class="headerlink" title="信息论,还是信息论!"></a>信息论,还是信息论!</h1><p>当然信息论给了我们一个有力的工具:<strong>纠错码</strong>,但是这还不够!如果我们将这个问题进行变种:在要求最少称重次数的情况下需要称过的球的次数也最少.</p>
+<p>纠错码似乎就变得束手无策了,看一下<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%94%99%E8%AF%AF%E6%A3%80%E6%B5%8B%E4%B8%8E%E7%BA%A0%E6%AD%A3">维基百科</a>上对于纠错码的描述:</p>
+<blockquote>
+<p>实现错误检测和纠正的一般思路是添加一些信息冗余（例如一些额外数据）到消息，从而使接收器可以用它来检查消息的一致性，并恢复被确定为损坏的数据。错误检测和纠正的方案可以是系统性或非系统性：在系统性方案中，发射机发送原始数据，并且附加其通过一些确定性算法从数据比特导出的固定数量的校验位（或奇偶校验数据）。如果仅需要错误检测，则接收器可以简单对接收到的数据位应用相同的算法，并将其输出与接收到的校验位进行比较。如果值不匹配，则传输期间的某个点位发生错误。在非系统性的编码系统中，原始消息被变换与原始消息相等或更长比特的被编码消息。</p>
+</blockquote>
+<p>也就是说,纠错码的纠错机制是建立在冗余之上的,而在这个问题中对于称球的次数也明显出现了冗余的信息.</p>
+<h2 id="二分"><a href="#二分" class="headerlink" title="二分"></a>二分</h2><p>其实对于CS的学生来说(最起码对于我)想到的第一个解决的思路就是二分,而二分的可贵之处在于:</p>
+<blockquote>
+<p>二分搜索为什么好，就是因为它每次都将可能性排除一半并且无论如何都能排除一半（它是最糟情况下表现最好的）。</p>
+</blockquote>
+<p>那么对于这道题目的解法就是需要使得左倾,右倾和平衡三种结果的分支上的情况尽可能的相等,而12个硬币的可能情况有24种,也就是可以在$\lceil log_3(24) \rceil &#x3D; 3$次之内解决这个问题.</p>
+<p>下面给出解法(三分):</p>
+<p><img src="http://mindhacks.cn/wp-content/uploads/2009/02/23131201.jpg"></p>
+<p>可以看到后面的称重是有效的利用了前面称重结果中的信息的(比如7轻8轻的情况下1必然已经是重的了,直接和1比较即可)</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这个问题的有趣之处在于其在搜索和信息论之间建立起的那座隐秘的桥梁,而对于这个问题的本质的追寻也是使得我难以忘记它的原因.</p>
+<p>而大刘的这篇<a target="_blank" rel="noopener" href="http://mindhacks.cn/2008/06/13/why-is-quicksort-so-quick/">数学之美番外篇：快排为什么那样快</a>也是十分耐人寻味的一篇文章,可以说对于这一个看似简单的问题而抛出的各种不同的解是很令人着迷的,而这也就是在CS这条路上不感到厌倦的原因吧.</p>
+<p>对于汉明码解决问题的过程完全参考了这篇博客:<a target="_blank" rel="noopener" href="http://paulbourke.net/fun/counterfeit.html">Counterfeit Coin–Contributed by J. Dom nguez Montes</a>.</p>
+<blockquote>
+<p>吾尝终日而思矣,不如须臾之所学也.</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/%E6%A0%87%E7%AD%BE/%E6%95%B0%E5%AD%A6/" rel="tag"># 数学</a>
+              <a href="/%E6%A0%87%E7%AD%BE/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%93%B2%E5%AD%A6/" rel="tag"># 计算机哲学</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/01/12/Life-is-Strange/" rel="prev" title="Life is Strange">
+                  <i class="fa fa-chevron-left"></i> Life is Strange
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/02/12/%E4%BB%A3%E7%A0%81%E6%95%B4%E6%B4%81%E4%B9%8B%E9%81%93%E7%AC%94%E8%AE%B0/" rel="next" title="代码整洁之道笔记">
+                  代码整洁之道笔记 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">MisakaTang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/TangMisaka23001" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":false,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

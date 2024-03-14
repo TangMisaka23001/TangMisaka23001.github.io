@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"misakatang.cn","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.17.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"style":null,"show_result":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="简介暑假开始了，自己打算在暑假自学的同时写点博客，为的是能够再以后想要回忆一些学过的东西的时候有一个可以翻看的地方，感觉之前学习的时候没有记录的原因，很多东西学完许久不用之后再学习成本还是很高，若是有一个博客的话，应该可以解决这个问题。再一个以这种方式来自学可以更好的梳理一些内容。所以在开始之前就先来搭一个博客，自己选择的是Hexo以及GithubPage的方式来搭建博客，Hexo的安装以及使用都">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Hexo以及GithubPage搭建个人博客历程">
+<meta property="og:url" content="http://misakatang.cn/2017/07/04/%E4%BD%BF%E7%94%A8Hexo%E4%BB%A5%E5%8F%8AGithubPage%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%8E%86%E7%A8%8B/index.html">
+<meta property="og:site_name" content="MisakaTang&#39;s Blog">
+<meta property="og:description" content="简介暑假开始了，自己打算在暑假自学的同时写点博客，为的是能够再以后想要回忆一些学过的东西的时候有一个可以翻看的地方，感觉之前学习的时候没有记录的原因，很多东西学完许久不用之后再学习成本还是很高，若是有一个博客的话，应该可以解决这个问题。再一个以这种方式来自学可以更好的梳理一些内容。所以在开始之前就先来搭一个博客，自己选择的是Hexo以及GithubPage的方式来搭建博客，Hexo的安装以及使用都">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://misakatang.oss-cn-beijing.aliyuncs.com/cnamejietu.jpg">
+<meta property="og:image" content="http://misakatang.oss-cn-beijing.aliyuncs.com/jiexi1.jpg">
+<meta property="og:image" content="http://misakatang.oss-cn-beijing.aliyuncs.com/2017741.jpg">
+<meta property="article:published_time" content="2017-07-04T13:06:51.000Z">
+<meta property="article:modified_time" content="2024-03-14T08:33:24.910Z">
+<meta property="article:author" content="MisakaTang">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="Blog">
+<meta property="article:tag" content="博客">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://misakatang.oss-cn-beijing.aliyuncs.com/cnamejietu.jpg">
+
+
+<link rel="canonical" href="http://misakatang.cn/2017/07/04/%E4%BD%BF%E7%94%A8Hexo%E4%BB%A5%E5%8F%8AGithubPage%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%8E%86%E7%A8%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://misakatang.cn/2017/07/04/%E4%BD%BF%E7%94%A8Hexo%E4%BB%A5%E5%8F%8AGithubPage%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%8E%86%E7%A8%8B/","path":"2017/07/04/使用Hexo以及GithubPage搭建个人博客历程/","title":"使用Hexo以及GithubPage搭建个人博客历程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>使用Hexo以及GithubPage搭建个人博客历程 | MisakaTang's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4TSLH4NC9H"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-4TSLH4NC9H","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?de7c77febeeac252eee468207ae11ce4"></script>
+
+
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "jtb4czrfeu");
+</script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="MisakaTang's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">MisakaTang's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B-%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="nav-text">开始-环境准备</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Node-js"><span class="nav-text">安装Node.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Git"><span class="nav-text">安装Git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Visual-Studio-Code"><span class="nav-text">安装Visual Studio Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Github"><span class="nav-text">Github</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Hexo"><span class="nav-text">安装Hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2"><span class="nav-text">生成静态页面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E6%B5%8B%E8%AF%95"><span class="nav-text">本地测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%B7%B1%E8%B8%A9%E7%9A%84%E5%9D%91"><span class="nav-text">自己踩的坑</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E5%86%99%E6%96%87%E7%AB%A0"><span class="nav-text">开始写文章</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#config-yml%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-text">_config.yml配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E7%AB%99%E7%82%B9%E4%BF%A1%E6%81%AF%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-text">关于站点信息的配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E7%94%9F%E6%88%90%E7%9A%84public%E7%9B%AE%E5%BD%95%E4%B8%AD%E6%96%87%E4%BB%B6%E5%A4%B9%E5%90%8D%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-text">关于生成的public目录中文件夹名的配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BB%E9%A2%98%E5%AE%89%E8%A3%85"><span class="nav-text">主题安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F%E4%B9%8B%E5%90%8E%E5%B0%86-config-yml%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84theme%E6%94%B9%E6%88%90%E5%AF%B9%E5%BA%94%E4%B8%BB%E9%A2%98%E7%9A%84%E5%90%8D%E5%AD%97%E8%87%AA%E5%B7%B1%E8%B8%A9%E7%9A%84%E5%9D%91"><span class="nav-text">安装成功之后将_config.yml配置文件中的theme改成对应主题的名字1234# Extensions## Plugins: https:&#x2F;&#x2F;hexo.io&#x2F;plugins&#x2F;## Themes: https:&#x2F;&#x2F;hexo.io&#x2F;themes&#x2F;theme: pacman自己踩的坑</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-text">一些主题配置文件中的配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#404%E9%A1%B5%E9%9D%A2"><span class="nav-text">404页面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BE%E5%BA%8A"><span class="nav-text">图床</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%87%AA%E5%B7%B1%E7%94%B3%E8%AF%B7%E5%9F%9F%E5%90%8D"><span class="nav-text">自己申请域名</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#github-io%E7%BB%91%E5%AE%9A%E8%87%AA%E5%B7%B1%E7%9A%84%E5%9F%9F%E5%90%8D"><span class="nav-text">github.io绑定自己的域名</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E5%9D%91"><span class="nav-text">小坑</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%87%AA%E5%B7%B1%E7%9A%84%E6%90%AD%E5%BB%BA%E4%BD%93%E4%BC%9A%E4%BB%A5%E5%8F%8A%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="nav-text">自己的搭建体会以及注意点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5%EF%BC%88%E7%89%B9%E5%88%AB%E9%B8%A3%E8%B0%A2%EF%BC%89"><span class="nav-text">参考链接（特别鸣谢）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%90%8E%E9%9D%A2"><span class="nav-text">写在后面</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MisakaTang"
+      src="/images/misaka.jpg">
+  <p class="site-author-name" itemprop="name">MisakaTang</p>
+  <div class="site-description" itemprop="description">The limits of my language are the limits of my world</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/%E5%BD%92%E6%A1%A3/">
+          <span class="site-state-item-count">101</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TangMisaka23001" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TangMisaka23001" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mikasatang@gmail.com" title="E-Mail → mailto:mikasatang@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="http://blog.bbchen.top/" title="http:&#x2F;&#x2F;blog.bbchen.top" rel="noopener" target="_blank">BB chen的漂流记</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="http://blog.zhuzhenyuan.cn/" title="http:&#x2F;&#x2F;blog.zhuzhenyuan.cn" rel="noopener" target="_blank">Aurthur_的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://misakatang.cn/2017/07/04/%E4%BD%BF%E7%94%A8Hexo%E4%BB%A5%E5%8F%8AGithubPage%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%8E%86%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/misaka.jpg">
+      <meta itemprop="name" content="MisakaTang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MisakaTang's Blog">
+      <meta itemprop="description" content="The limits of my language are the limits of my world">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="使用Hexo以及GithubPage搭建个人博客历程 | MisakaTang's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用Hexo以及GithubPage搭建个人博客历程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-07-04 13:06:51" itemprop="dateCreated datePublished" datetime="2017-07-04T13:06:51+00:00">2017-07-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-14 08:33:24" itemprop="dateModified" datetime="2024-03-14T08:33:24+00:00">2024-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/%E5%88%86%E7%B1%BB/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a><a href="#%E7%AE%80%E4%BB%8B" title="简介"></a>简介</h1><p>暑假开始了，自己打算在暑假自学的同时写点博客，为的是能够再以后想要回忆一些学过的东西的时候有一个可以翻看的地方，感觉之前学习的时候没有记录的原因，很多东西学完许久不用之后再学习成本还是很高，若是有一个博客的话，应该可以解决这个问题。再一个以这种方式来自学可以更好的梳理一些内容。<br>所以在开始之前就先来搭一个博客，自己选择的是Hexo以及GithubPage的方式来搭建博客，Hexo的安装以及使用都很方便，可以直接使用的主题也能够满足我的需求，GithubPage也省去了自己买服务器的钱以及搭建环境的时间。</p>
+<h1 id="开始-环境准备"><a href="#开始-环境准备" class="headerlink" title="开始-环境准备"></a><a href="#%E5%BC%80%E5%A7%8B-%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87" title="开始-环境准备"></a>开始-环境准备</h1><span id="more"></span>
+<h2 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a><a href="#%E5%AE%89%E8%A3%85Node-js" title="安装Node.js"></a>安装Node.js</h2><p>安装Node.js还是很简单的，到<a target="_blank" rel="noopener" href="https://nodejs.org/en/">Node.js</a>官网下载系统对应的安装包然后选择默认一路安装下来就好。</p>
+<h2 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a><a href="#%E5%AE%89%E8%A3%85Git" title="安装Git"></a>安装Git</h2><p>Git是早已经安装好了的，可以查阅<a target="_blank" rel="noopener" href="https://git-scm.com/book/zh/v2/%E8%B5%B7%E6%AD%A5-%E5%AE%89%E8%A3%85-Git">官方自带的教程</a> 下载可执行文件安装之后配置一下Path路径，在cmd中可以启动git就可以了。</p>
+<h2 id="安装Visual-Studio-Code"><a href="#安装Visual-Studio-Code" class="headerlink" title="安装Visual Studio Code"></a><a href="#%E5%AE%89%E8%A3%85Visual-Studio-Code" title="安装Visual Studio Code"></a>安装Visual Studio Code</h2><p>在这之前我都还是主要在使用sublime来写代码，但是发现vs code还是挺好用的，而且对于Markdown的自带支持也比较好，就选择用vs code来作为写博客的工具了。<br><a target="_blank" rel="noopener" href="https://code.visualstudio.com/">下载地址</a>贴在这里，直接一路安装就好。</p>
+<h2 id="Github"><a href="#Github" class="headerlink" title="Github"></a><a href="#Github" title="Github"></a>Github</h2><ul>
+<li>在<a target="_blank" rel="noopener" href="https://github.com/">Github官网</a>注册一个Github帐号</li>
+<li>在帐号下创建一个代码仓库，格式为<strong>github用户名.github.io</strong>(有些教程中创建的仓库为com结尾的，现在github好像只支持io结尾的网址了)</li>
+<li>添加SSH公钥到git账户（具体操作方式查看<a target="_blank" rel="noopener" href="https://help.github.com/articles/connecting-to-github-with-ssh/">Github官方提供的说明</a>）<br>生成的SSHKey默认会在User目录当前用户的.ssh文件夹下（文件夹为隐藏文件夹），也可以在生成的时候指定生成到指定目录，但是我直接生成在.ssh文件夹下了。然后将SSHKey添加到Git账户中就好了。</li>
+</ul>
+<h1 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a><a href="#%E5%AE%89%E8%A3%85Hexo" title="安装Hexo"></a>安装Hexo</h1><p>在cmd中直接输入</p>
+<blockquote>
+<p>$ npm install -g hexo-cli</p>
+</blockquote>
+<p>进行安装</p>
+<p>之后在本地创建一个文件夹来存放Hexo初始化的文件，如：</p>
+<blockquote>
+<p>hexo init hexo</p>
+</blockquote>
+<p>或者创建文件夹之后在里面运行</p>
+<blockquote>
+<p>hexo init</p>
+</blockquote>
+<h2 id="生成静态页面"><a href="#生成静态页面" class="headerlink" title="生成静态页面"></a><a href="#%E7%94%9F%E6%88%90%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2" title="生成静态页面"></a>生成静态页面</h2><p>在安装结束之后cd进入文件夹执行</p>
+<blockquote>
+<p>hexo g 或者 hexo generate</p>
+</blockquote>
+<p>执行之后会生成一个public的目录，里面存放的就是博客的内容。<br>然后执行</p>
+<blockquote>
+<p>npm install</p>
+</blockquote>
+<p>就可以新建完成。</p>
+<h2 id="本地测试"><a href="#本地测试" class="headerlink" title="本地测试"></a><a href="#%E6%9C%AC%E5%9C%B0%E6%B5%8B%E8%AF%95" title="本地测试"></a>本地测试</h2><blockquote>
+<p>hexo s 或者 hexo server</p>
+</blockquote>
+<p>执行上述命令便可以在本地的_localhost:4000&#x2F;_端口启动一个服务器，可以看到一个hexo自带的博客页面。</p>
+<h3 id="自己踩的坑"><a href="#自己踩的坑" class="headerlink" title="自己踩的坑"></a><a href="#%E8%87%AA%E5%B7%B1%E8%B8%A9%E7%9A%84%E5%9D%91" title="自己踩的坑"></a>自己踩的坑</h3><p>在服务启动之后在4000端口始终无法访问到博客的页面，后来才发现是因为4000端口已经被占用了！！略坑<br>在cmd中输入</p>
+<blockquote>
+<p>netstat -ano|findstr “4000”</p>
+</blockquote>
+<p>可以查看是哪个进程占用了4000端口，然后打开任务管理器找到对应pid的进程，先打开所在文件夹确定是什么软件占用的，然后直接结束进程就好，之后在启动项管理里面找到了这个应用的启动服务，直接禁止启动（我找到的是福昕阅读器的启动项服务占了4000端口）。之后再重新开启服务应该就可以在4000端口看到博客页面了。<br>还有一个解决办法是在启动hexo服务的时候更换端口，但是这样可能遇到别的端口冲突问题。启动方式如下：</p>
+<blockquote>
+<p>hexo server -p 5000(自己修改端口)</p>
+</blockquote>
+<h1 id="开始写文章"><a href="#开始写文章" class="headerlink" title="开始写文章"></a><a href="#%E5%BC%80%E5%A7%8B%E5%86%99%E6%96%87%E7%AB%A0" title="开始写文章"></a>开始写文章</h1><p>现在就可以开始写文章了，最基本的命令是</p>
+<blockquote>
+<p>hexo new “文章名”</p>
+</blockquote>
+<p>这样就会生成一个对应文章名称的Markdown文件，就可以开始写东西了。</p>
+<h1 id="config-yml配置文件"><a href="#config-yml配置文件" class="headerlink" title="_config.yml配置文件"></a><a href="#config-yml%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6" title="_config.yml配置文件"></a>_config.yml配置文件</h1><p>关于_config.yml配置文件的详细信息可以直接在<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/configuration.html">官方文档</a>中查看，配置文件里也有详细的注释。</p>
+<h3 id="关于站点信息的配置文件"><a href="#关于站点信息的配置文件" class="headerlink" title="关于站点信息的配置文件"></a><a href="#%E5%85%B3%E4%BA%8E%E7%AB%99%E7%82%B9%E4%BF%A1%E6%81%AF%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6" title="关于站点信息的配置文件"></a>关于站点信息的配置文件</h3><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Site</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">MisakaTang&#x27;s</span> <span class="string">Blog</span></span><br><span class="line"><span class="attr">subtitle:</span></span><br><span class="line"><span class="attr">description:</span></span><br><span class="line"><span class="attr">author:</span> <span class="string">MisakaTang</span></span><br><span class="line"><span class="attr">language:</span></span><br><span class="line"><span class="attr">timezone:</span></span><br></pre></td></tr></table></figure>
+<h3 id="关于生成的public目录中文件夹名的配置"><a href="#关于生成的public目录中文件夹名的配置" class="headerlink" title="关于生成的public目录中文件夹名的配置"></a><a href="#%E5%85%B3%E4%BA%8E%E7%94%9F%E6%88%90%E7%9A%84public%E7%9B%AE%E5%BD%95%E4%B8%AD%E6%96%87%E4%BB%B6%E5%A4%B9%E5%90%8D%E7%9A%84%E9%85%8D%E7%BD%AE" title="关于生成的public目录中文件夹名的配置"></a>关于生成的public目录中文件夹名的配置</h3><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Directory</span></span><br><span class="line"><span class="attr">source_dir:</span> <span class="string">source</span></span><br><span class="line"><span class="attr">public_dir:</span> <span class="string">publi</span></span><br><span class="line"><span class="attr">ctag_dir:</span> <span class="string">标签</span></span><br><span class="line"><span class="attr">archive_dir:</span> <span class="string">归档</span></span><br><span class="line"><span class="attr">category_dir:</span> <span class="string">分类</span></span><br><span class="line"><span class="attr">code_dir:</span> <span class="string">downloads/code</span></span><br><span class="line"><span class="attr">i18n_dir: :</span></span><br><span class="line"><span class="attr">langskip_render:</span></span><br></pre></td></tr></table></figure>
+<h1 id="主题安装"><a href="#主题安装" class="headerlink" title="主题安装"></a><a href="#%E4%B8%BB%E9%A2%98%E5%AE%89%E8%A3%85" title="主题安装"></a>主题安装</h1><p>主题可以在Hexo官方的<a target="_blank" rel="noopener" href="https://hexo.io/themes/">Theme</a>中自己来找喜欢的主题安装。<br>安装命令：</p>
+<blockquote>
+<p>git clone <a target="_blank" rel="noopener" href="https://github.com/A-limon/pacman.git">https://github.com/A-limon/pacman.git</a> themes&#x2F;pacman</p>
+</blockquote>
+<p><em><a target="_blank" rel="noopener" href="http://a-limon.github.io/pacman/hello/introducing-pacman-theme/">Pacman主题介绍</a></em></p>
+<h2 id="安装成功之后将-config-yml配置文件中的theme改成对应主题的名字自己踩的坑"><a href="#安装成功之后将-config-yml配置文件中的theme改成对应主题的名字自己踩的坑" class="headerlink" title="安装成功之后将_config.yml配置文件中的theme改成对应主题的名字自己踩的坑"></a>安装成功之后将_config.yml配置文件中的theme改成对应主题的名字<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">pacman</span></span><br></pre></td></tr></table></figure><br><a href="#%E8%87%AA%E5%B7%B1%E8%B8%A9%E7%9A%84%E5%9D%91-1" title="自己踩的坑"></a>自己踩的坑</h2><p>主要是主题的坑</p>
+<ul>
+<li><p>第一个是主题的author图片加载不出来将_themes&#x2F;pacman&#x2F;_config.yml_文件中的author_img修改成如下：</p>
+<blockquote>
+<p>author_img: ..&#x2F;img&#x2F;author.jpg ## size:220px*220px.</p>
+</blockquote>
+</li>
+<li><p>第二个是代码高亮没有显示在上面的配置文件里面添加：</p>
+</li>
+</ul>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">highlight:</span>    </span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+
+<p>即可。</p>
+<h1 id="一些主题配置文件中的配置"><a href="#一些主题配置文件中的配置" class="headerlink" title="一些主题配置文件中的配置"></a><a href="#%E4%B8%80%E4%BA%9B%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E9%85%8D%E7%BD%AE" title="一些主题配置文件中的配置"></a>一些主题配置文件中的配置</h1><p>官方给的介绍和配置文件中的注释都写的很详细了，就不再做过多的描述，贴一下配置文件（主要是社交帐号的）  </p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">author:</span>  </span><br><span class="line"><span class="attr">google_plus:</span> <span class="number">112654764759361777634</span>  <span class="comment">##eg:116338260303228776998 for https://plus.google.com/u/0/116338260303228776998  </span></span><br><span class="line"><span class="attr">intro_line1:</span> <span class="string">&quot;This is MisakaTang&#x27;Blog&quot;</span> <span class="comment">## eg: &quot;Hello ,I&#x27;m Larry Page in Google.&quot;  </span></span><br><span class="line"><span class="attr">intro_line2:</span> <span class="string">&quot;while true: forever love you;&quot;</span> <span class="comment">## eg: &quot;This is my blog,believe it or not.&quot;  </span></span><br><span class="line"><span class="attr">weibo:</span>      <span class="string">u/1966604454</span> <span class="comment">## e.g. 436062867 for http://weibo.com/436062867  </span></span><br><span class="line"><span class="attr">twitter:</span>    <span class="comment">## e.g. yangjiansky for https://twitter.com/yangjiansky  </span></span><br><span class="line"><span class="attr">github:</span>     <span class="string">TangMisaka23001</span> <span class="comment">## e.g. A-limon for https://github.com/A-limon  </span></span><br><span class="line"><span class="attr">facebook:</span>   <span class="comment">## e.g. yangjian for https://favebook.com/yangjian  </span></span><br><span class="line"><span class="attr">tsina:</span>      <span class="number">1966604454</span> <span class="comment">## e.g. 1664838973  Your weibo ID,It will be used in share button.  </span></span><br><span class="line"><span class="attr">linkedin:</span>   <span class="comment">## e.g. in/jeffweiner08 for https://www.linkedin.com/in/jeffweiner08</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="404页面"><a href="#404页面" class="headerlink" title="404页面"></a><a href="#404%E9%A1%B5%E9%9D%A2" title="404页面"></a>404页面</h1><p>这个用来做一下公益，看过的博客里面都提到过，在public目录下面创建404.html文件然后引入js即可。<br><a target="_blank" rel="noopener" href="http://www.qq.com/404/?r=1499168271827">腾讯公益</a></p>
+<h1 id="图床"><a href="#图床" class="headerlink" title="图床"></a><a href="#%E5%9B%BE%E5%BA%8A" title="图床"></a>图床</h1><p>图床选择了七牛云，现在实名认证之后可以几乎免费使用，而且速度也非常不错。<br>在官网注册好之后创建一个对象存储（记得选公开的仓库），windows端可以下载官方提供的<a target="_blank" rel="noopener" href="https://developer.qiniu.com/kodo/tools/1666/qsunsync">同步工具</a>来将本地文件夹中的图片同步到七牛云，要使用的时候只需要点击内容管理中对应图片的操作，然后选择复制外链，就可以直接填写在Markdown的DataUrl里面。</p>
+<p><a target="_blank" rel="noopener" href="https://portal.qiniu.com/">七牛云官网网站</a><br><a target="_blank" rel="noopener" href="https://portal.qiniu.com/">来贴一个自己的推广链接</a></p>
+<h1 id="自己申请域名"><a href="#自己申请域名" class="headerlink" title="自己申请域名"></a><a href="#%E8%87%AA%E5%B7%B1%E7%94%B3%E8%AF%B7%E5%9F%9F%E5%90%8D" title="自己申请域名"></a>自己申请域名</h1><p>现在我使用的是<a target="_blank" rel="noopener" href="https://www.qcloud.com/">腾讯云</a>，购买域名很优惠，我领券之后可以免费使用一年，解析也可以直接在腾讯云里面进行，很方便。</p>
+<h1 id="github-io绑定自己的域名"><a href="#github-io绑定自己的域名" class="headerlink" title="github.io绑定自己的域名"></a><a href="#github-io%E7%BB%91%E5%AE%9A%E8%87%AA%E5%B7%B1%E7%9A%84%E5%9F%9F%E5%90%8D" title="github.io绑定自己的域名"></a>github.io绑定自己的域名</h1><ul>
+<li>首先来将Hexo写的博客push到自己的github.io的仓库。</li>
+</ul>
+<p>只需要在_config.yml文件里添加  </p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">    <span class="attr">type:</span> </span><br><span class="line">    <span class="attr">gitrepo:</span> <span class="string">git@github.com:TangMisaka23001/TangMisaka23001.github.io.</span></span><br><span class="line">    <span class="attr">gitbranch:</span> <span class="string">master</span></span><br><span class="line">    <span class="attr">message:</span> <span class="string">&quot;update&quot;</span></span><br></pre></td></tr></table></figure>
+<p>repo填写自己的github仓库对应的地址就可以。</p>
+<ul>
+<li><p>然后在public目录下面添加一个CNAME文件，里面写上自己购买的域名就好 <a target="_blank" rel="noopener" href="http://misakatang.oss-cn-beijing.aliyuncs.com/cnamejietu.jpg"><img src="http://misakatang.oss-cn-beijing.aliyuncs.com/cnamejietu.jpg"></a></p>
+</li>
+<li><p>接着在cmd里使用ping来确定自己githubPage的IP地址，然后对于该IP在域名里创建一个A记录的解析<br><a target="_blank" rel="noopener" href="http://misakatang.oss-cn-beijing.aliyuncs.com/jiexi1.jpg"><img src="http://misakatang.oss-cn-beijing.aliyuncs.com/jiexi1.jpg"></a></p>
+</li>
+<li><p>接着在hexo的博客目录下面输入</p>
+<blockquote>
+<p>hexo d<br>就可以将本地的博客文件上传到对应的github.io仓库</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="小坑"><a href="#小坑" class="headerlink" title="小坑"></a><a href="#%E5%B0%8F%E5%9D%91" title="小坑"></a>小坑</h3><p>要先安装一个插件</p>
+<blockquote>
+<p>npm install hexo-deployer-git —save</p>
+</blockquote>
+<p>接下来就可以通过自己的域名来访问博客页面了。<br><a target="_blank" rel="noopener" href="http://misakatang.oss-cn-beijing.aliyuncs.com/2017741.jpg"><img src="http://misakatang.oss-cn-beijing.aliyuncs.com/2017741.jpg"></a><br><strong>注：</strong> 之后可以在写完博客之后使用<code>hexo s -g</code>调试或者<code>hexo d -g</code>来提交，可以少敲一行代码。</p>
+<h1 id="自己的搭建体会以及注意点"><a href="#自己的搭建体会以及注意点" class="headerlink" title="自己的搭建体会以及注意点"></a><a href="#%E8%87%AA%E5%B7%B1%E7%9A%84%E6%90%AD%E5%BB%BA%E4%BD%93%E4%BC%9A%E4%BB%A5%E5%8F%8A%E6%B3%A8%E6%84%8F%E7%82%B9" title="自己的搭建体会以及注意点"></a>自己的搭建体会以及注意点</h1><p>一开始的时候被4000端口先整了一下，排除问题之后在写CNAME的时候将域名写错了，又小坑了一下，所以域名还是<strong>直接复制比较好</strong>！！。接着在配置hexo d命令的时候，在配置文件写的时候<strong>少加了一个空格</strong>，命令总是没用，之后又爬了出来，接下来关于七牛云自带的同步软件也是略坑，第一次同步结束之后自己就停止运行了，但是之后还好没有出现问题，但是每次打开这个软件只能同步一次，第二次报错<strong>获取空间列表时出错</strong>，现在还没有找到问题所在。再然后，其实github的仓库根本是不需要clone下来的，也就是在hexo init 的时候<strong>文件夹一定要是空的</strong>，不然init不了。在这些都解决之后，现在勉强可以开始写博客了，但是可能还是会有一些小问题。之后会仔细看一下hexo和主题的配置文件，尽量把网站做的鲁棒一点。</p>
+<h1 id="参考链接（特别鸣谢）"><a href="#参考链接（特别鸣谢）" class="headerlink" title="参考链接（特别鸣谢）"></a><a href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5%EF%BC%88%E7%89%B9%E5%88%AB%E9%B8%A3%E8%B0%A2%EF%BC%89" title="参考链接（特别鸣谢）"></a>参考链接（特别鸣谢）</h1><p><a target="_blank" rel="noopener" href="https://linghucong.js.org/2016/04/15/2016-04-15-hexo-github-pages-blog/">手把手教你使用Hexo + Github Pages搭建个人独立博客</a><br><a target="_blank" rel="noopener" href="http://ibruce.info/2013/11/22/hexo-your-blog/">hexo你的博客</a><br><a target="_blank" rel="noopener" href="http://blog.csdn.net/jiangwei0910410003/article/details/18967441">Window 通过cmd查看端口占用、相应进程、杀死进程等的命令</a><br><a target="_blank" rel="noopener" href="http://a-limon.github.io/pacman/hello/introducing-pacman-theme/">Pacman主题介绍(以及对应的github主页)</a><br><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzAxMzMxNDIyOA==&mid=508061199&idx=1&sn=634eeb11d11376147d428025e3e29bcc&chksm=0018b7d4376f3ec2430b92840269d9edf0ef884d4d6ee49eaf47679adc079722da4859ba5743&mpshare=1&scene=23&srcid=0704d4AsNI5YWyBSk6xmSppn#rd">神秘的程序员们表情包和头像包</a></p>
+<h1 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a><a href="#%E5%86%99%E5%9C%A8%E5%90%8E%E9%9D%A2" title="写在后面"></a>写在后面</h1><p>这也算是暑假的开始了，用了两天时间把博客搭了起来，希望自己可以坚持写下去，能在暑假给自己更多的收获吧。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/%E6%A0%87%E7%AD%BE/Hexo/" rel="tag"># Hexo</a>
+              <a href="/%E6%A0%87%E7%AD%BE/Blog/" rel="tag"># Blog</a>
+              <a href="/%E6%A0%87%E7%AD%BE/%E5%8D%9A%E5%AE%A2/" rel="tag"># 博客</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/07/04/%E5%AD%A6%E4%B9%A0Markdown%E8%AF%AD%E6%B3%95/" rel="next" title="学习Markdown语法">
+                  学习Markdown语法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">MisakaTang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/TangMisaka23001" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":false,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

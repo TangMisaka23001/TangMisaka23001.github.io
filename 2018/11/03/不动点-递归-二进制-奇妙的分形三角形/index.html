@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"misakatang.cn","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.17.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"style":null,"show_result":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="我看到了它，却不敢相信它.—by康托尔  前言这是一个我想写了很久的话题,但是却迟迟没有开始,因为这个话题过于艰深而且涉及的知识面已经超出了我的边际,然而在这几周重读了递归之后还是打算将其记录下来,记录下这令人神往着迷的美妙的数学世界的经历. 标题很自大地致敬了**哥德尔、艾舍尔、巴赫–集异璧之大成**这本刷新我认知的奇书 **康托尔、哥德尔、图灵——永恒的金色对角线**这篇我非常喜欢的关于不动">
+<meta property="og:type" content="article">
+<meta property="og:title" content="不动点,递归,二进制--奇妙的分形三角形">
+<meta property="og:url" content="http://misakatang.cn/2018/11/03/%E4%B8%8D%E5%8A%A8%E7%82%B9-%E9%80%92%E5%BD%92-%E4%BA%8C%E8%BF%9B%E5%88%B6-%E5%A5%87%E5%A6%99%E7%9A%84%E5%88%86%E5%BD%A2%E4%B8%89%E8%A7%92%E5%BD%A2/index.html">
+<meta property="og:site_name" content="MisakaTang&#39;s Blog">
+<meta property="og:description" content="我看到了它，却不敢相信它.—by康托尔  前言这是一个我想写了很久的话题,但是却迟迟没有开始,因为这个话题过于艰深而且涉及的知识面已经超出了我的边际,然而在这几周重读了递归之后还是打算将其记录下来,记录下这令人神往着迷的美妙的数学世界的经历. 标题很自大地致敬了**哥德尔、艾舍尔、巴赫–集异璧之大成**这本刷新我认知的奇书 **康托尔、哥德尔、图灵——永恒的金色对角线**这篇我非常喜欢的关于不动">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2018/11/03/5bdd674da4399.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/03/5bdd6845048f5.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/04/5bde900e67445.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/11/04/5bde9021b7e04.jpg">
+<meta property="og:image" content="https://img.alicdn.com/imgextra/i3/581166664/TB2lhtEfFXXXXaRXpXXXXXXXXXX_!!581166664.png">
+<meta property="og:image" content="https://pic4.zhimg.com/80/v2-23a777941880395ec1befe510f7d0bbf_hd.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/03/5bdd8a31e0906.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/03/5bdd8b57f364b.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/03/5bdd8bc1c0781.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/03/5bdd8d7c31829.png">
+<meta property="article:published_time" content="2018-11-03T16:46:51.000Z">
+<meta property="article:modified_time" content="2024-03-14T08:33:24.910Z">
+<meta property="article:author" content="MisakaTang">
+<meta property="article:tag" content="函数式编程">
+<meta property="article:tag" content="数学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2018/11/03/5bdd674da4399.png">
+
+
+<link rel="canonical" href="http://misakatang.cn/2018/11/03/%E4%B8%8D%E5%8A%A8%E7%82%B9-%E9%80%92%E5%BD%92-%E4%BA%8C%E8%BF%9B%E5%88%B6-%E5%A5%87%E5%A6%99%E7%9A%84%E5%88%86%E5%BD%A2%E4%B8%89%E8%A7%92%E5%BD%A2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://misakatang.cn/2018/11/03/%E4%B8%8D%E5%8A%A8%E7%82%B9-%E9%80%92%E5%BD%92-%E4%BA%8C%E8%BF%9B%E5%88%B6-%E5%A5%87%E5%A6%99%E7%9A%84%E5%88%86%E5%BD%A2%E4%B8%89%E8%A7%92%E5%BD%A2/","path":"2018/11/03/不动点-递归-二进制-奇妙的分形三角形/","title":"不动点,递归,二进制--奇妙的分形三角形"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>不动点,递归,二进制--奇妙的分形三角形 | MisakaTang's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4TSLH4NC9H"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-4TSLH4NC9H","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?de7c77febeeac252eee468207ae11ce4"></script>
+
+
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "jtb4czrfeu");
+</script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="MisakaTang's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">MisakaTang's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8E%E9%80%92%E5%BD%92%E8%AF%B4%E8%B5%B7"><span class="nav-text">从递归说起</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%89%E8%AF%BA%E5%A1%94"><span class="nav-text">汉诺塔</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6"><span class="nav-text">二进制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%98%E6%98%AF%E9%80%92%E5%BD%92"><span class="nav-text">还是递归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%BF%E5%90%8D%E9%80%92%E5%BD%92"><span class="nav-text">匿名递归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%B6%E4%B9%98"><span class="nav-text">阶乘</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%92%E5%BD%92%E8%89%BA%E6%9C%AF"><span class="nav-text">递归艺术</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#print-itself"><span class="nav-text">print itself</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%92%E5%BD%92%E5%88%86%E5%BD%A2"><span class="nav-text">递归分形</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%98%E6%98%AF%E6%B1%89%E8%AF%BA%E5%A1%94"><span class="nav-text">还是汉诺塔</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E7%94%A8"><span class="nav-text">引用</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MisakaTang"
+      src="/images/misaka.jpg">
+  <p class="site-author-name" itemprop="name">MisakaTang</p>
+  <div class="site-description" itemprop="description">The limits of my language are the limits of my world</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/%E5%BD%92%E6%A1%A3/">
+          <span class="site-state-item-count">101</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TangMisaka23001" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TangMisaka23001" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mikasatang@gmail.com" title="E-Mail → mailto:mikasatang@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="http://blog.bbchen.top/" title="http:&#x2F;&#x2F;blog.bbchen.top" rel="noopener" target="_blank">BB chen的漂流记</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="http://blog.zhuzhenyuan.cn/" title="http:&#x2F;&#x2F;blog.zhuzhenyuan.cn" rel="noopener" target="_blank">Aurthur_的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://misakatang.cn/2018/11/03/%E4%B8%8D%E5%8A%A8%E7%82%B9-%E9%80%92%E5%BD%92-%E4%BA%8C%E8%BF%9B%E5%88%B6-%E5%A5%87%E5%A6%99%E7%9A%84%E5%88%86%E5%BD%A2%E4%B8%89%E8%A7%92%E5%BD%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/misaka.jpg">
+      <meta itemprop="name" content="MisakaTang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MisakaTang's Blog">
+      <meta itemprop="description" content="The limits of my language are the limits of my world">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="不动点,递归,二进制--奇妙的分形三角形 | MisakaTang's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          不动点,递归,二进制--奇妙的分形三角形
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-11-03 16:46:51" itemprop="dateCreated datePublished" datetime="2018-11-03T16:46:51+00:00">2018-11-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-14 08:33:24" itemprop="dateModified" datetime="2024-03-14T08:33:24+00:00">2024-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/%E5%88%86%E7%B1%BB/%E7%94%9F%E6%B4%BB/" itemprop="url" rel="index"><span itemprop="name">生活</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>我看到了它，却不敢相信它.—<em>by康托尔</em></p>
+</blockquote>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这是一个我想写了很久的话题,但是却迟迟没有开始,因为这个话题过于艰深而且涉及的知识面已经超出了我的边际,然而在这几周重读了递归之后还是打算将其记录下来,记录下这令人神往着迷的美妙的数学世界的经历.</p>
+<p>标题很自大地致敬了**<a target="_blank" rel="noopener" href="https://book.douban.com/subject/1291204/">哥德尔、艾舍尔、巴赫–集异璧之大成</a>**这本刷新我认知的奇书</p>
+<p>**<a target="_blank" rel="noopener" href="http://mindhacks.cn/2006/10/15/cantor-godel-turing-an-eternal-golden-diagonal/">康托尔、哥德尔、图灵——永恒的金色对角线</a>**这篇我非常喜欢的关于不动点的博客.</p>
+<h1 id="从递归说起"><a href="#从递归说起" class="headerlink" title="从递归说起"></a>从递归说起</h1><p>递归,这个编程中基础到不能再基础的知识点,却在我开始学习SICP之后一次次刷新着我的编程观,<em>大道化简</em>,即便是这样一个在认知中基础得不能再基础的编程方式也以其独特的魅力向我们展示着编程和数学中隐藏着的深刻而绮丽的美丽之处.</p>
+<h2 id="汉诺塔"><a href="#汉诺塔" class="headerlink" title="汉诺塔"></a>汉诺塔</h2><p>这是一个几乎每个学习编程的人都会学到的关于递归的最好的例子,在此就不再详述这个问题的介绍了,<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%B1%89%E8%AF%BA%E5%A1%94">维基百科链接在这里</a>.</p>
+<p>给出移动的流程:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">移动4个盘子=</span><br><span class="line">    移动3个盘子到B</span><br><span class="line">    移动最大的盘子到C</span><br><span class="line">    移动3个盘子到C</span><br></pre></td></tr></table></figure>
+<p>下面给出python版本的解法:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">solve_toh</span>(<span class="params">n_disks</span>):</span><br><span class="line">    <span class="keyword">if</span> n_disks == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    solve_toh(n_disks-<span class="number">1</span>)</span><br><span class="line">    move_disk(n_disks-<span class="number">1</span>)</span><br><span class="line">    solve_toh(n_disks-<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>这个凝聚了大量的智力劳动的问题却以其极简的表达形式展示了出来而且是这么的容易被理解,这也是递归的魅力所在吧.</p>
+<h2 id="二进制"><a href="#二进制" class="headerlink" title="二进制"></a>二进制</h2><p>下面我们引入二进制,当然这也是非常基础的计算机知识了,但是这里我们需要关注的是它的计数规律:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">数出二进制1111=</span><br><span class="line">    数出二进制0111:     0111</span><br><span class="line">    将首位置1,后三位恢复:1000</span><br><span class="line">    数出二进制0111:     1111</span><br></pre></td></tr></table></figure>
+<p>可以看到的是,这个过程是非常递归的一个过程,1111需要先数0111而0111需要先数0011…..那么这和汉诺塔有什么关系呢?让我们这样来考虑问题:</p>
+<p><img src="https://i.loli.net/2018/11/03/5bdd674da4399.png"></p>
+<p>我们将A柱子上的4个盘子记为一个4位二进制数,它的起始状态就是0000,然后我们开始计数:0001,0010,0011….而每次某个二进制位变成1的时候,就将对应的盘子向右移动一个柱子(到最左的话就移动到A),如:0001就是将编号为0的盘右移到B:</p>
+<p><img src="https://i.loli.net/2018/11/03/5bdd6845048f5.png"></p>
+<p>然后如此循环,我们就可以解决汉诺塔问题.当我看到这里的时候我是很惊异的,这难道只是一个巧合吗?我们来观察一下上面的2段代码:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">solve_toh(n_disks-1)</span><br><span class="line">move_disk(n_disks-1)</span><br><span class="line">solve_toh(n_disks-1)</span><br><span class="line"></span><br><span class="line">数出二进制0111:     0111</span><br><span class="line">将首位置1,后三位恢复:1000</span><br><span class="line">数出二进制0111:     1111</span><br></pre></td></tr></table></figure>
+<p><strong>正好一一对应,不是吗?</strong></p>
+<p>也就是说,移动编号为1的盘子,需要移动0号盘子2^1-1&#x3D;1下,而移动2号盘子需要移动0号和1号盘子总共2^2-1&#x3D;3下,而3下中也是0号2下,1号1下,明显的是:<strong>二进制数字变化是递归的且和每个盘的变化是一一对应的.</strong></p>
+<h1 id="还是递归"><a href="#还是递归" class="headerlink" title="还是递归"></a>还是递归</h1><h2 id="匿名递归"><a href="#匿名递归" class="headerlink" title="匿名递归"></a>匿名递归</h2><p>在SICP第一章中我们就了解到,我们可以将求根的函数和寻找一个函数的不动点结合起来,只要这个函数在迭代的过程中是收敛的,比如(其中的fixed-point就是寻找不动点的函数):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(define (f x)</span><br><span class="line">    (/ 2(+ x (/ x 2))))</span><br><span class="line"></span><br><span class="line">(define (sqrt x)</span><br><span class="line">    (fixed-point f 1))</span><br></pre></td></tr></table></figure>
+<p>在<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E4%B8%8D%E5%8A%A8%E7%82%B9">维基百科</a>的定义中,函数的不动点就是x&#x3D;f(x)的点,但是这对于递归有什么意义呢?我们这样来思考问题:写一个lamdba表达式来实现递归求解阶乘.</p>
+<h2 id="阶乘"><a href="#阶乘" class="headerlink" title="阶乘"></a>阶乘</h2><p>那么就先把函数给写出来:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lamdba n: n==0?1,self*(n-1)</span><br></pre></td></tr></table></figure>
+<p>这里的self就是这个函数的名称,在不使用匿名函数的时候,固然是很简单的,直接将函数名填进去就行了,但是lamdba就不行了,因为在函数被定义之前它是没有名字的.既然我们不能直接填入函数名,那么就将其<em>参数化</em>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lamdba self,n: n==0?1,self*(n-1)</span><br></pre></td></tr></table></figure>
+<p>然后我们给他加一个名字:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let P = lamdba self,n: n==0?1,self*(n-1)</span><br></pre></td></tr></table></figure>
+<p>观察这个函数我们可以发现,如果调用P的时候,我们传一个<strong>真正的阶乘函数</strong>进去,那么P(power, 10)就可以正确的求解阶乘了.恩?但是我们不就是在找一个阶乘函数吗?虽然有这样的疑惑,但是还是先写一个出来再说嘛:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">power(n) = n==0? 1,n*power(n-1)</span><br></pre></td></tr></table></figure>
+<p>然后我们靠柯里把这个函数变成这样:<code>P(power)</code>,也就是说这个函数还等待接收一个数字就能求出对应的阶乘了.恩?等等,这个power也不行啊,这也是个不存在的函数啊!那么别急,先展开一下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">P(power) = n==0?1,power(n-1)</span><br></pre></td></tr></table></figure>
+<p>恩?这不就是power的定义吗,what?是的,<code>P(power)=power</code>了!,这是什么,这不就是函数的不动点吗!也就是说,对于伪递归函数P,存在一个点power使得P(power)&#x3D;power,那么问题就变成了,我们要找到一个工具,只要对P用一下这个工具,我们就能获得power,power是什么?power可是一个<strong>真正的递归函数</strong>啊,那么这个问题就解决了.也就是说:找到一个函数Y,使得Y(P)&#x3D;power:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Y(P)=power</span><br><span class="line">因为:P(power)=power</span><br><span class="line">所以:Y(P)=power=P(power)=P(Y(P))</span><br><span class="line">也就是说:Y(P)=P(Y(P))</span><br></pre></td></tr></table></figure>
+<p>那么问题就变成了寻找这个Y,似乎问题到了这里也没有丝毫推进但是只要得到Y,那么这就是一个银弹可以对任何一个函数使用,就可以得到其真正的递归函数.让我们回到</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let P = lamdba self,n: n==0?1,self*(n-1)</span><br></pre></td></tr></table></figure>
+<p>如果我们调用P(P,3)会得到:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3==0?1,P(3-1)</span><br></pre></td></tr></table></figure>
+<p>发现并不能继续循环调用下去,那么我们调整一下P函数:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let P = lamdba self,n: n==0?1,self*(self, n-1)</span><br></pre></td></tr></table></figure>
+<p>那么上面的调用就会变成:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3==0?1,P(P,3-1) ==&gt; P(P,2)</span><br></pre></td></tr></table></figure>
+<p>诶?这不是就搞定了吗,那我们绕这么远的路还要寻找Y干嘛呢?我们将这个思想代入到Y中:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let Y = lambda F: </span><br><span class="line">    let f= lambda self: F(self(self))</span><br><span class="line">    return f(f)</span><br></pre></td></tr></table></figure>
+<p>用P代入:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Y(P):</span><br><span class="line">    let f = lamdba self: P(self(self))</span><br><span class="line">    return f(f)</span><br><span class="line">也就是:</span><br><span class="line">Y(P)=f(f)</span><br><span class="line">而f(f)根据定义可以得到:</span><br><span class="line">f(f)=P(f(f))</span><br><span class="line">也就是:</span><br><span class="line">Y(P)=f(f)=P(f(f))</span><br></pre></td></tr></table></figure>
+<p>将其代回P函数中:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">P(f(f)) = lambda: n==0?1,n*P(f(f))(n-1)</span><br><span class="line">假设P(f(f))=fib,那么:</span><br><span class="line">fib = lambda: n==0?1,n*fib(n-1)</span><br></pre></td></tr></table></figure>
+<p>终于得到了一个完美的阶乘函数!而这个Y不是别的,就是Y组合子.也就是说,只要使用Y组合子这个神奇的函数,我们就可以获得所有函数的递归形式.</p>
+<blockquote>
+<p>我们赋予了函数式编程能够表达递归的能力</p>
+</blockquote>
+<p>下面给出一个python的实现:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">y_combinator</span>(<span class="params">f</span>):</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">lambda</span> u: u(u))(<span class="keyword">lambda</span> x: f(<span class="keyword">lambda</span> *args: x(x)(*args)))</span><br></pre></td></tr></table></figure>
+<p>那么匿名的阶乘函数就如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y_combinator(<span class="keyword">lambda</span> fab: <span class="keyword">lambda</span> n: <span class="number">1</span> <span class="keyword">if</span> n &lt; <span class="number">2</span> <span class="keyword">else</span> n * fab(n-<span class="number">1</span>))(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
+<p>在SICP的课程开始,老师说过:如果我们想要操纵一个精灵(函数)只要能够叫出它的名字就可以,而有了Y组合子的帮助,我们能够操纵一大类叫做匿名函数的精灵了.</p>
+<p>Congratulations!你已经正式加入了Lisp邪教!这是会徽:</p>
+<p><img src="https://i.loli.net/2018/11/04/5bde900e67445.jpg"></p>
+<h1 id="递归艺术"><a href="#递归艺术" class="headerlink" title="递归艺术"></a>递归艺术</h1><p>爱舍尔有一副很有名的画–画手,这也是一个将递归在绘画艺术中发挥到极致的画家了.</p>
+<p><img src="https://i.loli.net/2018/11/04/5bde9021b7e04.jpg"></p>
+<p>可以看到这也是一个很递归的过程,而在SICP的第四章中,eval和apply就像是图上的两只手,在互相描绘着对方.</p>
+<h2 id="print-itself"><a href="#print-itself" class="headerlink" title="print itself"></a>print itself</h2><p>我们可以让一个程序输出它本身吗?下面给出一个js的实现和一个python的实现:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">function</span> (<span class="params">s</span>) &#123; <span class="variable language_">console</span>.<span class="title function_">log</span>( <span class="string">&#x27;(&#x27;</span> + s + <span class="string">&#x27;)(&#x27;</span> + s + <span class="string">&#x27;)&#x27;</span> )&#125;)(<span class="keyword">function</span> (<span class="params">s</span>) &#123; <span class="variable language_">console</span>.<span class="title function_">log</span>( <span class="string">&#x27;(&#x27;</span> + s + <span class="string">&#x27;)(&#x27;</span> + s + <span class="string">&#x27;)&#x27;</span> )&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="keyword">lambda</span> x:x+`(x,)`)(<span class="string">&#x27;print(lambda x:x+`(x,)`)&#x27;</span>,)</span><br></pre></td></tr></table></figure>
+
+<h1 id="递归分形"><a href="#递归分形" class="headerlink" title="递归分形"></a>递归分形</h1><p>在SICP第二章中,我们使用Lisp来实现过一个能够画出递归的图片的语言,效果如下:</p>
+<p><img src="https://img.alicdn.com/imgextra/i3/581166664/TB2lhtEfFXXXXaRXpXXXXXXXXXX_!!581166664.png"></p>
+<p>还有一种分形的图形叫做<strong>谢尔宾斯基三角形</strong></p>
+<p><img src="https://pic4.zhimg.com/80/v2-23a777941880395ec1befe510f7d0bbf_hd.png"></p>
+<p>一种递归的实现方法是每次连接一个三角形的三条边的中点,然后对所有的三角形重复这个过程.伪代码如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">sierpinski</span>(<span class="params">points,degree</span>):</span><br><span class="line">   drawTriangle(points)</span><br><span class="line">    <span class="keyword">if</span> degree &gt; <span class="number">0</span>:</span><br><span class="line">        sierpinski([points[<span class="number">0</span>],</span><br><span class="line">                        getMid(points[<span class="number">0</span>],points[<span class="number">1</span>]),</span><br><span class="line">                        getMid(points[<span class="number">0</span>],points[<span class="number">2</span>])],</span><br><span class="line">                   degree-<span class="number">1</span>)</span><br><span class="line">        sierpinski([points[<span class="number">1</span>],</span><br><span class="line">                        getMid(points[<span class="number">0</span>],points[<span class="number">1</span>]),</span><br><span class="line">                        getMid(points[<span class="number">1</span>],points[<span class="number">2</span>])],</span><br><span class="line">                   degree-<span class="number">1</span>)</span><br><span class="line">        sierpinski([points[<span class="number">2</span>],</span><br><span class="line">                        getMid(points[<span class="number">2</span>],points[<span class="number">1</span>]),</span><br><span class="line">                        getMid(points[<span class="number">0</span>],points[<span class="number">2</span>])],</span><br><span class="line">                   degree-<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="还是汉诺塔"><a href="#还是汉诺塔" class="headerlink" title="还是汉诺塔"></a>还是汉诺塔</h2><p>(你说的是三角形,关我汉诺塔什么事?)</p>
+<p>我们来改变一下移动汉诺塔的策略,每次移动的时候只能把圆盘移动到相邻的柱子上,改变了策略之后会发生什么呢?我们来假设移动一下4个盘子:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">移动4个盘子=</span><br><span class="line">    移动3个盘子到C</span><br><span class="line">    移动最大的盘子到B</span><br><span class="line">    移动3个盘子到A</span><br><span class="line">    移动最大的盘子到C</span><br><span class="line">    移动三个盘子到B</span><br><span class="line">    移动三个盘子到C</span><br></pre></td></tr></table></figure>
+<p>如果这时候我们还要保持每一位数的变化和对应盘子的移动的话,可以看一下上面的流程:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">移动4个盘子=</span><br><span class="line">    移动3个盘子到B</span><br><span class="line">    移动最大的盘子到C</span><br><span class="line">    移动3个盘子到C</span><br></pre></td></tr></table></figure>
+<p>很自然的可以想到,因为每次都多移动了一下,那么使用<strong>三进制</strong>怎么样?right</p>
+<p>这时候事情就变得有趣了起来,让我们想一下:4个盘子进行移动一共移动多少下?3^4&#x3D;81次.4个盘子总共可以产生的不重复的盘子分布状态是几种?</p>
+<p><img src="https://i.loli.net/2018/11/03/5bdd8a31e0906.png"></p>
+<p>3*3*3*3&#x3D;81种,这是巧合吗?也就是说,上面按照三进制的走法就是最优解了(因为如果前后有重复的状态的话,中间的步骤就可以被省略了),事情变得非常有趣了起来.</p>
+<p>我们把所有可能的盘子状态按照两个直接可以一步做到的方式连在一起,例如(0号盘可以相互一步到达):</p>
+<p><img src="https://i.loli.net/2018/11/03/5bdd8b57f364b.png"></p>
+<p>这样把全部的盘面都连接在一起的话:</p>
+<p><img src="https://i.loli.net/2018/11/03/5bdd8bc1c0781.png"></p>
+<p>恩?这是什么?这不是<strong>谢尔宾斯基三角形</strong>嘛</p>
+<blockquote>
+<p>虽然难以置信,但是事情就是这样发生了</p>
+</blockquote>
+<p>是的,虽然大家平时完全不见面,但是通过递归使得分形和汉诺塔联系在了一起.</p>
+<blockquote>
+<p>当你一旦发现了数学中的某些规律在你的知识的每个角落都散发着光芒的时候,这将你深深吸引的绚丽的光芒就将指引着你去寻找更多美丽的存在. —<em>by沃·兹基硕德</em></p>
+</blockquote>
+<p>那么最优解呢?最优解也是可以找到的</p>
+<p><img src="https://i.loli.net/2018/11/03/5bdd8d7c31829.png"></p>
+<p>看到这里,相信没有人会不感叹数学之美以及这递归中的种种巧合与联系.</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>总感觉意犹未尽但是又说不出来,写完也总是不能令自己满意,但是总也不写的话就会一直惦记着,就先把想到的写出来要是以后还有再继续补充罢.</p>
+<p>关于Y组合子和停机问题以及哥德尔不完备定理的内容还是参见<a target="_blank" rel="noopener" href="http://mindhacks.cn/2006/10/15/cantor-godel-turing-an-eternal-golden-diagonal/">康托尔、哥德尔、图灵——永恒的金色对角线</a>这篇文章和<a target="_blank" rel="noopener" href="https://book.douban.com/subject/1291204/">哥德尔、艾舍尔、巴赫–集异璧之大成</a>这本书,这里空白太小写不下.</p>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/av7398130">用二进制来解汉诺塔问题</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/av7539453?spm_id_from=333.788.b_765f64657363.1">隐藏在汉诺塔中的分形曲线</a></p>
+<p><a target="_blank" rel="noopener" href="http://mindhacks.cn/2006/10/15/cantor-godel-turing-an-eternal-golden-diagonal/">康托尔、哥德尔、图灵——永恒的金色对角线</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/53448865">谢尔宾斯基三角形能用编程写出来么？该怎么写？</a></p>
+<p><a target="_blank" rel="noopener" href="http://zzp.me/2013-09-05/y-combinator/">10种编程语言实现Y组合子</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/python2014/article/details/22604367">python数据结构与算法 23 宾斯基三角形</a></p>
+<p><a target="_blank" rel="noopener" href="http://io.upyun.com/2016/04/05/recursion/">谈谈递归</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.windrunner.me/programming/quine.html">Quine 是什么</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/%E6%A0%87%E7%AD%BE/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" rel="tag"># 函数式编程</a>
+              <a href="/%E6%A0%87%E7%AD%BE/%E6%95%B0%E5%AD%A6/" rel="tag"># 数学</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/10/20/SICP%E8%AF%BB%E4%B9%A6%E6%80%BB%E7%BB%93-%E7%AC%AC%E4%B8%89%E7%AB%A0/" rel="prev" title="SICP读书总结-第三章">
+                  <i class="fa fa-chevron-left"></i> SICP读书总结-第三章
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/01/05/Win10%E6%8A%98%E8%85%BE%E8%AE%B0/" rel="next" title="Win10折腾记">
+                  Win10折腾记 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">MisakaTang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/TangMisaka23001" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":false,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
