@@ -22,6 +22,12 @@ services:
     environment:
       - TZ=Asia/Shanghai
 
+  zashboard:
+    container_name: zashboard
+    image: ghcr.io/zephyruso/zashboard:latest
+    restart: unless-stopped
+    ports:
+      - '9091:80'
 ```
 ### 管理面板
 https://board.zash.run.place
