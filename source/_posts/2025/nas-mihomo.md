@@ -3,7 +3,7 @@ title: 更新NAS代理工具到mihomo
 mathjax: false
 date: 2025-12-29 11:45:14
 categories: [技术]
-tags: ['self hosted']
+tags: ['自托管', 'NAS', 'docker']
 ---
 由于原先的clash版本过于古早且不太兼容新的管理面板，于是选择升级了一下clash内核
 ### 配置文件
