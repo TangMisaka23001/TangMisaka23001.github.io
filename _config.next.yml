@@ -793,7 +793,7 @@ tencent_mta: # <app_id>
 # Umami Analytics
 # See: https://umami.is/
 umami:
-  enable: true
+  enable: false
   script_url: https://umami-kappa-cyan.vercel.app/script.js
   website_id: b9e21e4f-5512-43e5-ab60-01a527a98a8c
   host_url: https://umami-kappa-cyan.vercel.app
