@@ -1,64 +1,33 @@
-name: Deploy My_Blog  #自动化的名称
+name: Deploy to GitHub Pages
 
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
-  push: # push的时候触发
-    branches: [ source ]  # 哪些分支需要触发
-  pull_request:  
+  push:
     branches: [ source ]
+  workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
-  # This workflow contains a single job called "build"
-  Blog_CI-CD:
-    runs-on: ubuntu-latest  # 服务器环境
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    
+  build:
+    runs-on: ubuntu-latest
     steps:
-      # 检查代码
-      - name: Checkout
-        uses: actions/checkout@v2  #软件市场的名称
-        with: # 参数
-          submodules: true
-          persist-credentials: false
-          
-      - name: Setup Node.js
-       # 设置 node.js 环境
-        uses: actions/setup-node@v3
+      - name: Checkout your repository using git
+        uses: actions/checkout@v4
+      - name: Install, build, and upload your site
+        uses: withastro/action@v3
         with:
-          node-version: 'latest'
-          
-      - name: Cache node modules
-      # 设置包缓存目录，避免每次下载
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          
-      # 安装各种插件
-      - name: Setup Plugin
-        env:
-          ACTION_DEPLOY_KEY: ${{ secrets.TRAVIS_CI }}
-        run: |
-          npm install hexo-cli -g
-          npm install hexo-deployer-git --save
-          npm install
-           
-      
-      # 生成静态文件
-      - name: Build
-        run: |
-          hexo clean 
-          hexo g
-        
-      # 2、部署到 GitHub Pages
-      - name: upload GitHub repository
-         # 将编译后的博客文件推送到指定仓库
-        run: |
-          sed -i "s/gh_token/${{ secrets.TRAVIS_CI }}/g" ./_config.yml 
-          echo "misakatang.cn" > ./public/CNAME
-          cp LICENSE ./public
-          cp README.md ./public
-          git config --global user.name "misakatang"
-          git config --global user.email "mikasatang@gmail.com"
-          hexo deploy
+            package-manager: npm
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
