@@ -1,7 +1,5 @@
 ---
-title: >-
-  The Log: What every software engineer should know about real-time data's
-  unifying abstraction
+title: The Log What every software engineer should know about real-time data's unifying abstraction
 mathjax: false
 tags:
   - 笔记

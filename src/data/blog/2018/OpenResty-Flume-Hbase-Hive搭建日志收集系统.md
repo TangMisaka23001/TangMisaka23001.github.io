@@ -125,7 +125,7 @@ nginx采用OpenResty框架,可以在nginx嵌入使用Lua脚本
 2.  在[官网](https://flume.apache.org/download.html)下载Flume,当前版本为apache-flume-1.8.0.
 3.  解压安装包
 4.  配置flume-ng环境变量,在/etc/profile中添加
-    ```profile
+    ```bash
     export JAVA_HOME=/usr/local/jdk  # 自己的JDK目录,版本为1.8
     export FLUME_HOME=/opt/apache-flume-1.8.0-bin
     export FLUME_CLASSPATH=$FLUME_HOME/lib/*
@@ -249,7 +249,7 @@ hdfs-site.xml配置文件
 </configuration>
 ```
 /etc/profile中配置  
-```profile
+```bash
 export HADOOP_HOME=/home/tang/hadoop
 export PATH=$PATH:$HADOOP_HOME/bin
 export PATH=$PATH:$HADOOP_HOME/sbin

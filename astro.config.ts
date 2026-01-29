@@ -1,4 +1,4 @@
-import { defineConfig, envField, fontProviders } from "astro/config";
+import { defineConfig, envField } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import remarkToc from "remark-toc";
@@ -66,16 +66,5 @@ export default defineConfig({
   },
   experimental: {
     preserveScriptOrder: true,
-    fonts: [
-      {
-        name: "Noto Sans SC",
-        cssVariable: "--font-sans",
-        provider: fontProviders.google(),
-        fallbacks: ["Inter", "system-ui", "sans-serif"],
-        weights: [300, 400, 500, 600, 700],
-        styles: ["normal", "italic"],
-        subsets: ["latin", "latin-ext", "chinese-simplified"],
-      },
-    ],
   },
 });

@@ -146,7 +146,7 @@ I/O sum[0]:cur[0], unzip sum[0]:cur[0]
 
 - 标准监视器:
 
-```mysql
+```bash
 mysql> SHOW ENGINE INNODB STATUS\G
 ```
 
@@ -171,7 +171,7 @@ discarded operations:
 > 查询`INNODB_BUFFER_PAGE`表会带来显著的性能损耗.为了避免性能影响,请在测试实例上运行查询和排除问题.
 例如,你可以查询`INNODB_BUFFER_PAGE`表来决定`IBUF_INDEX`和`IBUF_BITMAP`页面占总缓冲池页的百分比.
 
-```mysql
+```bash
 mysql> SELECT (SELECT COUNT(*) FROM INFORMATION_SCHEMA.INNODB_BUFFER_PAGE
        WHERE PAGE_TYPE LIKE 'IBUF%') AS change_buffer_pages, 
        (SELECT COUNT(*) FROM INFORMATION_SCHEMA.INNODB_BUFFER_PAGE) AS total_pages,
