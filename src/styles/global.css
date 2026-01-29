@@ -70,6 +70,7 @@ html[data-theme="dark"] {
   }
   html {
     @apply overflow-y-scroll scroll-smooth;
+    font-size: 18px;
   }
   body {
     @apply flex min-h-svh flex-col bg-background font-sans text-foreground selection:bg-accent/75 selection:text-background;
