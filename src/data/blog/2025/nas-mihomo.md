@@ -7,9 +7,6 @@ tags:
   - docker
   - 技术
 pubDatetime: 2025-12-29T11:45:14.000Z
-description: >-
-  由于原先的clash版本过于古早且不太兼容新的管理面板，于是选择升级了一下clash内核 配置文件  管理面板
-  https://board.zash.run.place
 ---
 由于原先的clash版本过于古早且不太兼容新的管理面板，于是选择升级了一下clash内核
 ### 配置文件

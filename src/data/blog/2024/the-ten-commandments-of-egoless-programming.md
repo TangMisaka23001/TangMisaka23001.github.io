@@ -4,10 +4,6 @@ mathjax: false
 tags:
   - 技术
 pubDatetime: 2024-08-07T11:45:14.000Z
-description: >-
-  The Ten Commandments of Egoless Programming > 无我编程的十诫  1. Understand and
-  accept that you will make mistakes. The point is to find them early before
-  they make it...
 ---
 ## The Ten Commandments of Egoless Programming
 > 无我编程的十诫

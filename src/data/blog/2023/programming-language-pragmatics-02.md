@@ -6,10 +6,6 @@ tags:
   - Programming Language Pragmatics
   - 技术
 pubDatetime: 2023-11-15T23:45:14.000Z
-description: >-
-  An Overview of Compilation Compilers are among the most well-studied classes
-  of computer programs. We will consider them repeatedly throughout the rest of
-  the b...
 ---
 ## An Overview of Compilation
 Compilers are among the most well-studied classes of computer programs. We will consider them repeatedly throughout the rest of the book, and in Chapters 2, 4, 14, and 16 in particular. The remainder of this section provides an introductory overview.

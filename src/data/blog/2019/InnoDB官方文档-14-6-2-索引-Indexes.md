@@ -6,9 +6,6 @@ tags:
   - InnoDB
   - 技术
 pubDatetime: 2019-03-10T18:29:07.000Z
-description: >-
-  14.6.2 索引(Indexes) 14.6.2.1 聚簇和二级索引(Clustered and Secondary Indexes)
-  每个InnoDB表都有一个称作聚簇索引的特殊索引,存储了行的数据.通常情况下,聚簇索引是主键的代名词.为了从查询,插入和其他数据库操作中获得最好的性能,你必须了解InnoDB如何使用...
 ---
 #### 14.6.2 索引(Indexes)
 ##### 14.6.2.1 聚簇和二级索引(Clustered and Secondary Indexes)

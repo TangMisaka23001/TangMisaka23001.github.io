@@ -5,9 +5,6 @@ tags:
   - Spring Boot
   - 技术
 pubDatetime: 2024-11-13T11:45:14.000Z
-description: >-
-  Spring Boot自定义参数处理实体ID 在实际业务中经常需要判断接收的实体ID是否在表中存在和向线程中注入该实体ID对应的数据，下面摘录了两种思路：
-  实现Converter来获取主键ID    实现 HandlerMethodArgumentResolver    REF - $1 - $1
 ---
 ## Spring Boot自定义参数处理实体ID
 在实际业务中经常需要判断接收的实体ID是否在表中存在和向线程中注入该实体ID对应的数据，下面摘录了两种思路：

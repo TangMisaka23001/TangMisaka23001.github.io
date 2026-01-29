@@ -6,10 +6,6 @@ tags:
   - Programming Language Pragmatics
   - 技术
 pubDatetime: 2024-07-15T11:45:14.000Z
-description: >-
-  Subroutines and Control Abstraction Subroutines are the principal mechanism
-  for control abstraction in most programming languages.  - A subroutine that
-  returns ...
 ---
 ## Subroutines and Control Abstraction
 Subroutines are the principal mechanism for control abstraction in most programming languages.

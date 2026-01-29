@@ -9,9 +9,6 @@ tags:
   - Lisp
   - 生活
 pubDatetime: 2018-10-20T15:51:54.000Z
-description: >-
-  > Even while it changes, it stands still --- 前言
-  第三章的阅读之路也算是比较漫长了,和计划的SICP进度可能还是差距很大,但是好歹也是在慢慢推进了..第三章内容算是比较杂的但是挺重要的吧,特别是在这个流和分布式被越来越重视的8102年,而且在工作之后再来看这些问题也是有很多...
 ---
 > Even while it changes, it stands still
 ---

@@ -6,10 +6,6 @@ tags:
   - Programming Language Pragmatics
   - 技术
 pubDatetime: 2024-03-14T11:45:14.000Z
-description: >-
-  Semantic Analysis semantics concerns its **meaning**. Meaning is important for
-  at least two reasons: it allows us to enforce rules (e.g., type consistency)
-  that...
 ---
 ## Semantic Analysis
 semantics concerns its **meaning**. Meaning is important for at least two reasons: it allows us to enforce rules (e.g., type consistency) that go beyond mere form, and it provides the information we need in order to generate an equivalent output program.

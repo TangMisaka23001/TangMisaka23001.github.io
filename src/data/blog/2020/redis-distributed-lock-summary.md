@@ -7,10 +7,6 @@ tags:
   - 分布式锁
   - 技术
 pubDatetime: 2020-04-19T17:25:09.000Z
-description: >-
-  $1 参考文章 $1 分布式锁需求 1. 互斥 2. 过期锁的释放 3. 容错能力  算法设计(主要是获取锁) 1. 获取当前服务时间 2.
-  尝试从全部N个实例获取锁 3. 每个实例计算锁的有效时间为: 需要加锁时间-获取锁消耗时间 4. 只有大部分实例成功获取锁这次加锁才能成功 5.
-  如果加锁成功,锁的有效时间为所有...
 ---
 ![](https://misakatang.oss-cn-beijing.aliyuncs.com/blog_picture/distributed-locks-with-redis.png)
 

@@ -5,7 +5,6 @@ tags:
   - 周报
   - 生活
 pubDatetime: 2020-04-25T13:58:57.000Z
-description: "XMind 在看了$1之后决定尝试使用一下xmind来做一些知识和思路的整理,在使用了一段时间之后发现确实是不错,就是画流程图有点累人.前几个blog也是用xmind来整理知识的架构了. 学了点前端 在摸\U0001F41F期间尝试学习了一点前端,看了一些JavaScript的语法和历史,大概了解一下node js. 从一个Java程..."
 ---
 ![](https://misakatang.oss-cn-beijing.aliyuncs.com/snipaste/Snipaste_2020-04-25_14-50-09.png)
 

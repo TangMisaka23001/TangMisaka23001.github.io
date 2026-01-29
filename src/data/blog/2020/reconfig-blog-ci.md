@@ -9,10 +9,6 @@ tags:
   - hexo
   - 技术
 pubDatetime: 2020-04-25T13:58:28.000Z
-description: >-
-  **leancloud_counter_security插件生成的leancoud.memo问题** 
-  之前在配置了leancloud_counter_security插件之后就没有在意了,但是最近注意到没有收到ci的构建邮件了就去重新看了一下ci配置,果然还是问题重重. 
-  Travis CI 整合 leancloud...
 ---
 **leancloud_counter_security插件生成的leancoud.memo问题**
 

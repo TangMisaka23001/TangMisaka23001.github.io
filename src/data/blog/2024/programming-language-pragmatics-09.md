@@ -6,10 +6,6 @@ tags:
   - Programming Language Pragmatics
   - 技术
 pubDatetime: 2024-07-17T11:45:14.000Z
-description: >-
-  Data Abstraction and Object Orientation Object-Oriented Programming he
-  abstraction provided by modules and module types has at least three important
-  benefits: 1...
 ---
 ## Data Abstraction and Object Orientation
 ### Object-Oriented Programming

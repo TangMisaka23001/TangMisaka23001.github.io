@@ -6,10 +6,6 @@ tags:
   - docker
   - 技术
 pubDatetime: 2025-12-31T11:45:14.000Z
-description: >-
-  在看了$1这篇文章之后有了想把自托管服务的docker compose文件给版本化的想法，这样也更方便后续可能存在的服务器迁移。 
-  而在$1之后，发现了Dockge这个工具可以以文件夹的形式来管理docker compose文件，那么就开始动手。  git仓库
-  https://github.com/TangMisaka...
 ---
 在看了[我的 2025 年度自托管服务报告](https://blog.dejavu.moe/posts/my-2025-selfhosted-services-report/)这篇文章之后有了想把自托管服务的docker compose文件给版本化的想法，这样也更方便后续可能存在的服务器迁移。
 

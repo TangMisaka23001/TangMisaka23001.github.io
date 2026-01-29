@@ -6,10 +6,6 @@ tags:
   - Spring
   - 技术
 pubDatetime: 2023-12-15T11:45:14.000Z
-description: >-
-  起源
-  这个事故来源于某个PHPer转职Javaer时发生的灵异事件，在$1中选择了应用架构为MVC架构之后生成的脚手架打包的jar包启动之后无法访问Controller中配置的路径。 
-  现象 据某PHPer所说，在IDEA中直接启动项目没有问题但是打包成jar之后就访问不到controller中定义的请求路径了。  第...
 ---
 ## 起源
 这个事故来源于某个PHPer转职Javaer时发生的灵异事件，在[云原生应用脚手架](https://start.aliyun.com/)中选择了应用架构为MVC架构之后生成的脚手架打包的jar包启动之后无法访问Controller中配置的路径。

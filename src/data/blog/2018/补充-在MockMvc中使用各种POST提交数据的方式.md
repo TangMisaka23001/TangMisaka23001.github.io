@@ -6,10 +6,6 @@ tags:
   - Java
   - 技术
 pubDatetime: 2018-10-18T21:44:29.000Z
-description: >-
-  application/x-www-form-urlencoded
-  这是比较常用的提交数据的方式,在项目中也使用的是这一种,在MockMvc测试的参数准备时可以这样使用: 
-  主要使用的是类,要注意的是需要设置字符集否则传参的时候中文会变成.  application/json 我使用的是用阿里开源的fastjson直接...
 ---
 # application/x-www-form-urlencoded
 这是比较常用的提交数据的方式,在项目中也使用的是这一种,在MockMvc测试的参数准备时可以这样使用:

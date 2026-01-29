@@ -6,10 +6,6 @@ tags:
   - Programming Language Pragmatics
   - 技术
 pubDatetime: 2023-11-16T11:45:14.000Z
-description: >-
-  Programming Language Syntax Unlike natural languages such as English or
-  Chinese,computer languages must be precise. Both their form (syntax) and
-  meaning (semant...
 ---
 ## Programming Language Syntax
 Unlike natural languages such as English or Chinese,computer languages must be precise. Both their form (syntax) and meaning (semantics) must be specified without ambiguity, so that both programmers and computers can tell what a program is supposed to do. To provide the needed degree of precision, language designers and implementors use formal syntactic and semantic notation. To facilitate the discussion of language features in later chapters, we will cover this notation first: syntax in the current chapter and semantics in Chapter 4.

@@ -5,7 +5,6 @@ tags:
   - 操作系统
   - 技术
 pubDatetime: 2025-09-09T11:45:14.000Z
-description: '- $1 - $1 - $1 - $1 - $1'
 ---
 - [南京大学 操作系统原理](https://space.bilibili.com/202224425)
 - [中科大 高级算计系统结构](https://space.bilibili.com/2069348/upload/video)

@@ -6,10 +6,6 @@ tags:
   - CS6.00
   - 技术
 pubDatetime: 2018-06-24T14:45:29.000Z
-description: >-
-  $1Lec22. =========================  *   正态分布 *   均匀分布 *   指数分布  $1Lec23.
-  =========================  **data enhancement:**extrapolate   **Texas sharp
-  shooter fal...
 ---
 [](#Lec22 "Lec22.")Lec22.
 =========================

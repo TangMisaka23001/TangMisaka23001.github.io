@@ -6,10 +6,6 @@ tags:
   - InnoDB
   - 技术
 pubDatetime: 2019-03-30T15:33:05.000Z
-description: >-
-  14.7 InnoDB锁和事务模型
-  为了实现大规模,繁忙或高可靠的数据库应用,从不同的数据库系统移植大量代码或调整MySQL性能,理解InnoDB锁和InnoDB事务模型是很重要的. 
-  这个部分讨论了几个你应该要熟悉的和InnoDB锁和InnoDB事务模型相关的主题. - 14.7.1 InnoDB锁 描述了InnoD...
 ---
 ### 14.7 InnoDB锁和事务模型
 为了实现大规模,繁忙或高可靠的数据库应用,从不同的数据库系统移植大量代码或调整MySQL性能,理解InnoDB锁和InnoDB事务模型是很重要的.

@@ -6,10 +6,6 @@ tags:
   - Programming Language Pragmatics
   - 技术
 pubDatetime: 2024-07-10T11:45:14.000Z
-description: >-
-  DataTypes Types serve two principal purposes: - Types provide implicit context
-  for many operations, so that the programmer does not have to specify that
-  context...
 ---
 ## DataTypes
 Types serve two principal purposes:

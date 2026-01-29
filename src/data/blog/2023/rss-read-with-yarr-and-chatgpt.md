@@ -10,9 +10,6 @@ tags:
   - Chrome插件
   - 技术
 pubDatetime: 2023-04-01T21:33:12.000Z
-description: >-
-  为什么放弃inoreader
-  在经过漫长的鸽期之后吾辈又回到了博客上，也只有慢节奏的生活享受得起写博客这么奢侈的消遣了。秉持着高效摸鱼（bushi）获取信息的原则一直在使用RSS订阅各种新闻源和博客，从Feedly到TTRSS再到Inoreader再到Yarr也算是经过了许多番的折腾。在订阅了Inoreader一年的基...
 ---
 ## 为什么放弃inoreader
 在经过漫长的鸽期之后吾辈又回到了博客上，也只有慢节奏的生活享受得起写博客这么奢侈的消遣了。秉持着高效摸鱼（bushi）获取信息的原则一直在使用RSS订阅各种新闻源和博客，从Feedly到TTRSS再到Inoreader再到Yarr也算是经过了许多番的折腾。在订阅了Inoreader一年的基础会员快到期的时候为什么又换用（折腾）了Yarr，下面是吾辈的理由（借口 bushi）。

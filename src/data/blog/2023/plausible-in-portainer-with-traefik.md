@@ -9,10 +9,6 @@ tags:
   - Google Analytics
   - 技术
 pubDatetime: 2023-05-12T11:45:14.000Z
-description: >-
-  开头 最近Google Analytics一直在催着升级到GA4，于是作为高级selfshosted
-  OPS工程师当然需要将其部署到自己服务器上了。以下便是吾辈的快速启动配置。  traefik配置
-  traefik配置没有特殊之处，只是配置了自动tls。     plausible配置 $1，但是我们需要做一些改进： ...
 ---
 ## 开头
 最近Google Analytics一直在催着升级到GA4，于是作为高级selfshosted OPS工程师当然需要将其部署到自己服务器上了。以下便是吾辈的快速启动配置。

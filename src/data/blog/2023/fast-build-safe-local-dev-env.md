@@ -9,9 +9,6 @@ tags:
   - tls
   - 技术
 pubDatetime: 2023-04-30T11:45:14.000Z
-description: >-
-  给localhost套上tls的翅膀
-  在tls成为互联网冲浪不可或缺的今天，给localhost加上tls证书也并不是什么很潮流的事情了，换句话说：所有环境尽可能保持一致才能更好的开发和debug。而且吾辈在以前也遭遇过本地http的坑：chrome会因为没有tls证书而给请求加载限速，导致nodejs的dev环境启动...
 ---
 ## 给localhost套上tls的翅膀
 在tls成为互联网冲浪不可或缺的今天，给localhost加上tls证书也并不是什么很潮流的事情了，换句话说：所有环境尽可能保持一致才能更好的开发和debug。而且吾辈在以前也遭遇过本地http的坑：chrome会因为没有tls证书而给请求加载限速，导致nodejs的dev环境启动巨慢。。在各大浏览器厂商都歧视http的今天，我们不得不给我们最经常访问的域名加上tls的魔法了。

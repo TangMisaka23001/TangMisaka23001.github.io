@@ -6,10 +6,6 @@ tags:
   - Programming Language Pragmatics
   - 技术
 pubDatetime: 2023-11-15T11:45:14.000Z
-description: >-
-  The Art of Language Design Today there are thousands of high-level programming
-  languages, and new ones continue to emerge. Human beings use assembly language
-  on...
 ---
 ## The Art of Language Design
 Today there are thousands of high-level programming languages, and new ones continue to emerge. Human beings use assembly language only for specialpurpose applications. In a typical undergraduate class, it is not uncommon to find users of scores of different languages. Why are there so many? There are several possible answers:

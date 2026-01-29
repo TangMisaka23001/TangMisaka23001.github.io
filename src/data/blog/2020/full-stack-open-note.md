@@ -10,10 +10,6 @@ tags:
   - Express
   - 技术
 pubDatetime: 2020-08-30T14:58:27.000Z
-description: >-
-  深入浅出现代Web编程:$1    $1 前端  JavaScript  Variables - const  - let  - var (不建议使用) 
-  Arrays -  -  - 解构赋值:    - 展开语法     - [...numbers, 4, 5]  Objects  - 对象展开    
-  -   F...
 ---
 # 深入浅出现代Web编程:[https://fullstackopen.com/zh/](https://fullstackopen.com/zh/)
 

@@ -6,10 +6,6 @@ tags:
   - CS6.00
   - 技术
 pubDatetime: 2018-06-19T19:12:16.000Z
-description: >-
-  $1Lec16. =========================  **Class:**  *   template for data type *  
-  cluster data & method *   modularity/abstraction *   data hiding:only acess
-  the p...
 ---
 [](#Lec16 "Lec16.")Lec16.
 =========================

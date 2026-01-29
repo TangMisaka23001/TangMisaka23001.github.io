@@ -6,10 +6,6 @@ tags:
   - InnoDB
   - 技术
 pubDatetime: 2019-03-01T17:22:22.000Z
-description: >-
-  14.6 InnoDB在磁盘上的结构(InnoDB On-Disk Structures)  14.6.1 表(Tables)  14.6.1.1
-  创建InnoDB表  使用语句来创建一个InnoDB表   
-  如果InnoDB是默认的存储引擎的话你不需要特定指定,可以使用下面语句检查默认的存储引擎     如果你计划使...
 ---
 ### 14.6 InnoDB在磁盘上的结构(InnoDB On-Disk Structures)
 

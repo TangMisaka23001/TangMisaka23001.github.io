@@ -6,10 +6,6 @@ tags:
   - Programming Language Pragmatics
   - 技术
 pubDatetime: 2024-01-29T11:45:14.000Z
-description: >-
-  Names, Scopes, and Bindings A name is a mnemonic character string used to
-  represent something else.  Names allow us to refer to variables, constants,
-  operations...
 ---
 ## Names, Scopes, and Bindings
 A name is a mnemonic character string used to represent something else.

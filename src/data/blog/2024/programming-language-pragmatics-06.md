@@ -6,10 +6,6 @@ tags:
   - Programming Language Pragmatics
   - 技术
 pubDatetime: 2024-07-09T11:45:14.000Z
-description: >-
-  Control Flow the language mechanisms used to specify ordering into several
-  categories: - Sequencing - Selection - Iteration - Procedural abstraction -
-  Recursion...
 ---
 ## Control Flow
 the language mechanisms used to specify ordering into several categories:

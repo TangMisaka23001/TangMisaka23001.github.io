@@ -8,10 +8,6 @@ tags:
   - Test
   - 技术
 pubDatetime: 2019-09-03T17:00:13.000Z
-description: >-
-  Perface **TDD rules:** 1. write new code only if you first have a failing
-  automated test. 2. eliminate duplication. 消除重复设计  **Technical implications:**
-  1. desig...
 ---
 # Perface
 **TDD rules:**

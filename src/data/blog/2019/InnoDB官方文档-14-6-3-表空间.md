@@ -6,10 +6,6 @@ tags:
   - InnoDB
   - 技术
 pubDatetime: 2019-03-25T22:04:07.000Z
-description: >-
-  14.6.3 表空间(Tablespaces) 14.6.3.1 系统表空间(The System Tablespace)
-  InnoDB系统表空间包含了InnoDB数据文件(InnoDB相关的对象元数据)并且存储区域是双写缓存,变更缓存和undo日志的存储区域.系统表空间也包含了用户创建在系统表空间中的表和索引数据.
-  ...
 ---
 #### 14.6.3 表空间(Tablespaces)
 ##### 14.6.3.1 系统表空间(The System Tablespace)
