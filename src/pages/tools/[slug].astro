@@ -1,0 +1,35 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection, render } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Main from "@/layouts/Main.astro";
+import { SITE } from "@/config";
+
+export const getStaticPaths = (async () => {
+  const tools = await getCollection("tools");
+  return tools.map(tool => ({
+    params: { slug: tool.id },
+    props: { tool },
+  }));
+}) satisfies GetStaticPaths;
+
+const { tool } = Astro.props;
+---
+
+<Layout title={`${tool.data.title} | ${SITE.title}`}>
+  <Header />
+  <Main pageTitle={tool.data.title}>
+    <article class="app-prose mt-4 w-full max-w-none">
+      <a href="/tools" class="text-accent hover:underline">← Back to Tools</a>
+      <div class="mt-4">
+        {(async () => {
+          const { Content } = await render(tool);
+          return <Content />;
+        })()}
+      </div>
+    </article>
+  </Main>
+  <Footer />
+</Layout>

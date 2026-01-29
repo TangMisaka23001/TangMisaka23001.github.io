@@ -11,6 +11,7 @@ import { slugifyStr } from "@/utils/slugify";
 import { getPath } from "@/utils/getPath";
 
 const posts = await getCollection("blog");
+const tools = await getCollection("tools");
 
 const sortedPosts = getSortedPosts(posts);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
@@ -110,6 +111,26 @@ const recentPostsWithContent = await Promise.all(
                 </li>
               );
             })}
+          </ul>
+        </section>
+      )
+    }
+
+    {
+      tools.length > 0 && (
+        <section id="tools" class="pt-12 pb-6">
+          <h2 class="text-2xl font-semibold tracking-wide">Tools</h2>
+          <ul>
+            {tools.map(tool => (
+              <li class="my-4">
+                <a
+                  href={`/tools/${tool.id}`}
+                  class="inline-block text-lg font-medium text-accent decoration-dashed underline-offset-4 hover:underline"
+                >
+                  {tool.data.title}
+                </a>
+              </li>
+            ))}
           </ul>
         </section>
       )

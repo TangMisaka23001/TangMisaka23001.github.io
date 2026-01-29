@@ -1,0 +1,29 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Main from "@/layouts/Main.astro";
+import { SITE } from "@/config";
+
+const tools = await getCollection("tools");
+---
+
+<Layout title={`Tools | ${SITE.title}`}>
+  <Header />
+  <Main pageTitle="Tools" pageDesc="Useful tools and resources">
+    <ul class="space-y-4">
+      {tools.map(tool => (
+        <li>
+          <a 
+            href={`/tools/${tool.id}`}
+            class="inline-block text-xl font-bold text-accent decoration-dashed underline-offset-4 hover:underline"
+          >
+            {tool.data.title}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </Main>
+  <Footer />
+</Layout>
