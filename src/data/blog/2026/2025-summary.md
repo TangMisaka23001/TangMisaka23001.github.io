@@ -1,6 +1,5 @@
 ---
 title: 2025年总结
-mathjax: false
 tags:
   - 生活
 pubDatetime: 2026-01-04T11:45:14.000Z

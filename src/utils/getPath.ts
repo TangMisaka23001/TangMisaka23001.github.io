@@ -1,5 +1,10 @@
 import { slugifyStr } from "./slugify";
 
+function getFileName(filePath: string): string {
+  const fileName = filePath.split("/").pop()?.replace(/\.[^/.]+$/, "") || "";
+  return fileName;
+}
+
 export function getPath(
   id: string,
   filePath: string | undefined,
@@ -16,8 +21,8 @@ export function getPath(
     datePath = `/${year}/${month}/${day}`;
   }
 
-  const titleSlug = slugifyStr(title.replace(/\./g, "-"));
+  const fileNameSlug = filePath ? getFileName(filePath) : slugifyStr(title.replace(/\./g, "-"));
   const basePath = includeBase ? "" : "";
 
-  return `${basePath}${datePath}/${titleSlug}`;
+  return `${basePath}${datePath}/${fileNameSlug}`;
 }
