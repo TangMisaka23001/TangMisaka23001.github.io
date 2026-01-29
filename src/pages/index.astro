@@ -3,13 +3,10 @@ import { getCollection, render } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import Socials from "@/components/Socials.astro";
 import LinkButton from "@/components/LinkButton.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
-import IconRss from "@/assets/icons/IconRss.svg";
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import { SITE } from "@/config";
-import { SOCIALS } from "@/constants";
 import { slugifyStr } from "@/utils/slugify";
 import { getPath } from "@/utils/getPath";
 
@@ -100,7 +97,7 @@ const recentPostsWithContent = await Promise.all(
               return (
                 <li class="my-8 border-b border-border pb-8 last:border-0">
                   <a
-                    href={getPath(post.id, post.filePath, pubDatetime, title)}
+                    href={getPath(post.filePath, pubDatetime, title)}
                     class="inline-block text-xl font-bold text-accent decoration-dashed underline-offset-4 hover:underline focus-visible:no-underline focus-visible:underline-offset-0"
                   >
                     <h3 style={{ viewTransitionName: slugifyStr(title.replaceAll(".", "-")) }}>
@@ -128,7 +125,7 @@ const recentPostsWithContent = await Promise.all(
                 {index > 0 && <hr class="my-8 border-border" />}
                 <li class="my-8">
                   <a
-                    href={getPath(post.id, post.filePath, post.data.pubDatetime, post.data.title)}
+                    href={getPath(post.filePath, post.data.pubDatetime, post.data.title)}
                     class="inline-block text-xl font-bold text-accent decoration-dashed underline-offset-4 hover:underline focus-visible:no-underline focus-visible:underline-offset-0"
                   >
                     <span

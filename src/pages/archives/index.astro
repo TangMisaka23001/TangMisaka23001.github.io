@@ -47,7 +47,7 @@ const posts = await getCollection("blog", ({ data }) => !data.draft);
                   return (
                     <li>
                       <a
-                        href={getPath(post.id, post.filePath, post.data.pubDatetime, title)}
+                        href={getPath(post.filePath, post.data.pubDatetime, title)}
                         class="text-accent decoration-dashed underline-offset-4 hover:underline focus-visible:no-underline focus-visible:underline-offset-0"
                       >
                         <span

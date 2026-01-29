@@ -30,7 +30,7 @@ const { page } = Astro.props;
         return (
           <li class="my-8 border-b border-border pb-8 last:border-0">
             <a
-              href={getPath(post.id, post.filePath, pubDatetime, title)}
+              href={getPath(post.filePath, pubDatetime, title)}
               class="inline-block text-xl font-bold text-accent decoration-dashed underline-offset-4 hover:underline focus-visible:no-underline focus-visible:underline-offset-0"
             >
               <h2 style={{ viewTransitionName: slugifyStr(title.replaceAll(".", "-")) }}>

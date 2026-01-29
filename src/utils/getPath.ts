@@ -6,7 +6,6 @@ function getFileName(filePath: string): string {
 }
 
 export function getPath(
-  id: string,
   filePath: string | undefined,
   pubDatetime: Date | undefined,
   title: string,

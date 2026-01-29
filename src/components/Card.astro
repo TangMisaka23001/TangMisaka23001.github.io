@@ -8,14 +8,14 @@ type Props = {
   variant?: "h2" | "h3";
 } & CollectionEntry<"blog">;
 
-const { variant: Heading = "h2", id, data, filePath } = Astro.props;
+const { variant: Heading = "h2", data, filePath } = Astro.props;
 
 const { title, description, pubDatetime, ...props } = data;
 ---
 
 <li class="my-6">
   <a
-    href={getPath(id, filePath, pubDatetime, title)}
+    href={getPath(filePath, pubDatetime, title)}
     class:list={[
       "inline-block text-lg font-medium text-accent",
       "decoration-dashed underline-offset-4 hover:underline",
