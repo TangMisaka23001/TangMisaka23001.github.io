@@ -1,30 +1,47 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Socials from "@/components/Socials.astro";
 import LinkButton from "@/components/LinkButton.astro";
-import Card from "@/components/Card.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import IconRss from "@/assets/icons/IconRss.svg";
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import { SITE } from "@/config";
 import { SOCIALS } from "@/constants";
+import { slugifyStr } from "@/utils/slugify";
+import { getPath } from "@/utils/getPath";
 
 const posts = await getCollection("blog");
 
 const sortedPosts = getSortedPosts(posts);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
+
+const featuredPostsWithContent = await Promise.all(
+  featuredPosts.map(async (post) => {
+    const { Content } = await render(post);
+    return { post, Content };
+  })
+);
+
+const recentPostsWithContent = await Promise.all(
+  recentPosts
+    .slice(0, SITE.postPerIndex)
+    .map(async (post, index) => {
+      const { Content } = await render(post);
+      return { post, Content, index };
+    })
+);
 ---
 
 <Layout>
   <Header />
   <main id="main-content" data-layout="index" class="app-layout">
-    <section id="hero" class:list={["pt-8 pb-6", "border-b border-border"]}>
+    <!-- <section id="hero" class:list={["pt-8 pb-6", "border-b border-border"]}>
       <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
-        Mingalaba
+        MisakaTang's Blog
       </h1>
       <a
         target="_blank"
@@ -65,36 +82,67 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
           </div>
         )
       }
-    </section>
+    </section> -->
 
     {
-      featuredPosts.length > 0 && (
+      featuredPostsWithContent.length > 0 && (
         <section
           id="featured"
           class:list={[
             "pt-12 pb-6",
-            { "border-b border-border": recentPosts.length > 0 },
+            { "border-b border-border": recentPostsWithContent.length > 0 },
           ]}
         >
           <h2 class="text-2xl font-semibold tracking-wide">Featured</h2>
           <ul>
-            {featuredPosts.map(data => (
-              <Card variant="h3" {...data} />
-            ))}
+            {featuredPostsWithContent.map(({ post, Content }) => {
+              const { title, pubDatetime } = post.data;
+              return (
+                <li class="my-8 border-b border-border pb-8 last:border-0">
+                  <a
+                    href={getPath(post.id, post.filePath, pubDatetime, title)}
+                    class="inline-block text-xl font-bold text-accent decoration-dashed underline-offset-4 hover:underline focus-visible:no-underline focus-visible:underline-offset-0"
+                  >
+                    <h3 style={{ viewTransitionName: slugifyStr(title.replaceAll(".", "-")) }}>
+                      {title}
+                    </h3>
+                  </a>
+                  <article class="app-prose mt-4 w-full max-w-none">
+                    <Content />
+                  </article>
+                </li>
+              );
+            })}
           </ul>
         </section>
       )
     }
 
     {
-      recentPosts.length > 0 && (
+      recentPostsWithContent.length > 0 && (
         <section id="recent-posts" class="pt-12 pb-6">
           <h2 class="text-2xl font-semibold tracking-wide">Recent Posts</h2>
           <ul>
-            {recentPosts.map(
-              (data, index) =>
-                index < SITE.postPerIndex && <Card variant="h3" {...data} />
-            )}
+            {recentPostsWithContent.map(({ post, Content, index }) => (
+              <>
+                {index > 0 && <hr class="my-8 border-border" />}
+                <li class="my-8">
+                  <a
+                    href={getPath(post.id, post.filePath, post.data.pubDatetime, post.data.title)}
+                    class="inline-block text-xl font-bold text-accent decoration-dashed underline-offset-4 hover:underline focus-visible:no-underline focus-visible:underline-offset-0"
+                  >
+                    <span
+                      style={{ viewTransitionName: slugifyStr(post.data.title.replaceAll(".", "-")) }}
+                    >
+                      {post.data.title}
+                    </span>
+                  </a>
+                  <article class="app-prose mt-4 w-full max-w-none">
+                    <Content />
+                  </article>
+                </li>
+              </>
+            ))}
           </ul>
         </section>
       )

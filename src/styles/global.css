@@ -1,6 +1,24 @@
 @import "tailwindcss";
 @import "./typography.css";
 
+@font-face {
+  font-family: 'LXGW WenKai';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://cdn.jsdelivr.net/npm/@lxgw/lxgw-wenkai-webfont@1.1.0/LXGWWenKai-Regular.woff2') format('woff2');
+  unicode-range: U+4E00-9FFF, U+3000-30FFF, U+FF00-FFEF;
+}
+
+@font-face {
+  font-family: 'LXGW WenKai';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('https://cdn.jsdelivr.net/npm/@lxgw/lxgw-wenkai-webfont@1.1.0/LXGWWenKai-Bold.woff2') format('woff2');
+  unicode-range: U+4E00-9FFF, U+3000-30FFF, U+FF00-FFEF;
+}
+
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 :root,
@@ -10,6 +28,7 @@ html[data-theme="light"] {
   --accent: #006cac;
   --muted: #e6e6e6;
   --border: #ece9e9;
+  --font-sans: 'LXGW WenKai', '霞鹜文楷', 'LXGW WenKai GB', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
 html[data-theme="dark"] {

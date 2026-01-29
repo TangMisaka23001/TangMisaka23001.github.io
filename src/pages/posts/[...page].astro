@@ -1,14 +1,16 @@
 ---
 import type { GetStaticPaths } from "astro";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import Main from "@/layouts/Main.astro";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import Card from "@/components/Card.astro";
 import Pagination from "@/components/Pagination.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import { SITE } from "@/config";
+import Datetime from "@/components/Datetime.astro";
+import { slugifyStr } from "@/utils/slugify";
+import { getPath } from "@/utils/getPath";
 
 export const getStaticPaths = (async ({ paginate }) => {
   const posts = await getCollection("blog", ({ data }) => !data.draft);
@@ -22,7 +24,26 @@ const { page } = Astro.props;
   <Header />
   <Main pageTitle="Posts" pageDesc="All the articles I've posted.">
     <ul>
-      {page.data.map(data => <Card {...data} />)}
+      {page.data.map(async (post) => {
+        const { Content } = await render(post);
+        const { title, pubDatetime, description, ...props } = post.data;
+        return (
+          <li class="my-8 border-b border-border pb-8 last:border-0">
+            <a
+              href={getPath(post.id, post.filePath, pubDatetime, title)}
+              class="inline-block text-xl font-bold text-accent decoration-dashed underline-offset-4 hover:underline focus-visible:no-underline focus-visible:underline-offset-0"
+            >
+              <h2 style={{ viewTransitionName: slugifyStr(title.replaceAll(".", "-")) }}>
+                {title}
+              </h2>
+            </a>
+            <Datetime pubDatetime={pubDatetime} {...props} />
+            <article class="app-prose mt-4 w-full max-w-none">
+              <Content />
+            </article>
+          </li>
+        );
+      })}
     </ul>
   </Main>
 

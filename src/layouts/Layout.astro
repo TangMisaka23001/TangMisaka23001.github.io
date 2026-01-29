@@ -166,6 +166,32 @@ const structuredData = {
         };
       })();
     </script>
+
+    <!-- MathJax Configuration -->
+    <script is:inline>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          processEscapes: true,
+        },
+        svg: {
+          fontCache: 'global',
+        },
+        startup: {
+          ready: () => {
+            MathJax.startup.defaultReady();
+            // Re-render on Astro page swaps
+            document.addEventListener('astro:after-swap', () => {
+              if (window.MathJax) {
+                MathJax.typesetPromise();
+              }
+            });
+          }
+        }
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
   </head>
   <body>
     <slot />
