@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-const FONTS_DIR = path.resolve("node_modules/@fontsource/ibm-plex-mono/files");
+const FONTS_DIR = path.resolve("public/fonts");
 
 async function getFontBuffer(filename: string): Promise<ArrayBuffer> {
   const fontPath = path.join(FONTS_DIR, filename);
@@ -12,14 +12,14 @@ async function getFontBuffer(filename: string): Promise<ArrayBuffer> {
 export async function loadLocalFonts() {
   return [
     {
-      name: "IBM Plex Mono",
-      data: await getFontBuffer("ibm-plex-mono-latin-400-normal.woff"),
+      name: "Inter",
+      data: await getFontBuffer("Inter-VariableFont_opsz,wght.ttf"),
       weight: 400,
       style: "normal",
     },
     {
-      name: "IBM Plex Mono",
-      data: await getFontBuffer("ibm-plex-mono-latin-700-normal.woff"),
+      name: "Inter",
+      data: await getFontBuffer("Inter-VariableFont_opsz,wght.ttf"),
       weight: 700,
       style: "normal",
     },

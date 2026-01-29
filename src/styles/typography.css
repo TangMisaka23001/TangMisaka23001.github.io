@@ -5,9 +5,6 @@
   .app-prose {
     @apply prose;
 
-    /* 中文字体设置 */
-    --font-chinese: 'LXGW WenKai', '霞鹜文楷', 'LXGW WenKai GB', system-ui, -apple-system, sans-serif;
-
     h1,
     h2,
     h3,
@@ -32,11 +29,11 @@
 
     /* 为中文内容设置特定字体 */
     p, li, dd {
-      font-family: var(--font-chinese);
+      font-family: var(--font-sans);
     }
 
     h1, h2, h3, h4, h5, h6 {
-      font-family: var(--font-chinese);
+      font-family: var(--font-sans);
     }
 
     a {
