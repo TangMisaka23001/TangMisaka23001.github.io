@@ -55,9 +55,41 @@ spring:
 
 ---
 
-## Mapper 改造
+### 自定义方言
 
-### 创建 ODPS Mapper 接口
+为了支持 ODPS 数据源，需要自定义一个方言类 `ODPSDialect` 实现 `IDialect` 接口。
+
+```java
+public class DynamicDialect implements IDialect {
+
+    private static final Map<String, IDialect> DIALECT_MAP = ImmutableMap.of(
+            "master", new MySqlDialect(),
+            "odps", new MySqlDialect()
+    );
+
+    @Override
+    public DialectModel buildPaginationSql(String originalSql, long offset, long limit) {
+        String ds = DynamicDataSourceContextHolder.peek();
+        IDialect iDialect = DIALECT_MAP.get(ds);
+        if (iDialect == null) {
+            throw new BusinessException("数据源需要手动设置方言");
+        }
+        return iDialect.buildPaginationSql(originalSql, offset, limit);
+    }
+
+}
+```
+手动设置插件的方言处理：
+```java
+    @Bean
+    public PaginationInterceptor paginationInterceptor() {
+        PaginationInterceptor interceptor = new PaginationInterceptor();
+        interceptor.setDialectClazz(DynamicDialect.class.getName());
+        return interceptor;
+    }
+```
+
+### Mapper 改造
 
 ```java
 @DS("odps")
@@ -67,11 +99,11 @@ public interface ODPSMapper {
 }
 ```
 
-### 2. 创建对应的 XML 文件
+#### 创建对应的 XML 文件
 
 在 `src/main/resources/mapper/odps/` 下创建 `ODPSMapper.xml`：
 
-### 3. LocalDate 转 Timestamp 异常
+### LocalDate 转 Timestamp 异常
 
 **问题**：Cannot transform ODPS-SDK Java class java.time.LocalDate to java.sql.Timestamp
 
