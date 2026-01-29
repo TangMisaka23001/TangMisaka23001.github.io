@@ -2,17 +2,19 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ astro ]
+    branches: [astro]
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -23,15 +25,5 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build site
-        run: npm run build
-
-      - name: Deploy to astro-gh-pages branch
-        run: |
-          echo "misakatang.cn" > dist/CNAME
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          cd dist
-          git add . -f
-          git commit -m "Deploy site $(date -u +'%Y-%m-%d %H:%M:%S')"
-          git push origin HEAD:astro-gh-pages --force
+      - name: Build and Deploy
+        uses: withastro/action@v5
