@@ -5,10 +5,6 @@ tags:
   - Django
   - 技术
 pubDatetime: 2017-08-01T11:24:33.000Z
-description: >-
-  中间还有自动化测试和自定义CSS的部分被我先忽略了,最后一块是讲自定义admin后台的内容的.   代码同步在github上$1  $1开始
-  ============== 
-  在一开始的时候,我们把Question引入了admin模块,如果我们需要对字段进行更改的话,可以在admin.py文件中自己来定义,比如字段的顺序...
 ---
 中间还有自动化测试和自定义CSS的部分被我先忽略了,最后一块是讲自定义admin后台的内容的.  
 代码同步在github上[mysite-part5](https://github.com/TangMisaka23001/mysite/tree/part7)

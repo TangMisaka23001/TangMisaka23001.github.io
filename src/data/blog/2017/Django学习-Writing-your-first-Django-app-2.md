@@ -5,10 +5,6 @@ tags:
   - Django
   - 技术
 pubDatetime: 2017-07-30T20:49:20.000Z
-description: >-
-  $1开始 ==============  这是**Writing your first Django app, part 2**  
-  接着第一部分的例子继续,在这个部分我们要设置数据库,创建第一个模型并且快速介绍一下django的自动生成的admin管理页面.  
-  自己写的代码也同步在github的仓库里:$1  $1...
 ---
 [](#开始 "开始")开始
 ==============

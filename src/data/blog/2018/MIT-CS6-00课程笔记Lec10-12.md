@@ -6,10 +6,6 @@ tags:
   - CS6.00
   - 技术
 pubDatetime: 2018-06-15T15:12:28.000Z
-description: >-
-  $1Lec10. =========================  **Search**  *   ordered - binary - log n
-  *   unordered - liner - n  **Divide & conquer(分治)**  *   split the problem
-  into sev...
 ---
 [](#Lec10 "Lec10.")Lec10.
 =========================

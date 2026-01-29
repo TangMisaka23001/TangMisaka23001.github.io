@@ -5,10 +5,6 @@ tags:
   - LeetCode
   - 技术
 pubDatetime: 2017-08-01T20:54:46.000Z
-description: >-
-  $1题目及理解 =======================  **题目连接**$1  Given a string, you need to
-  reverse the order of characters in each word within a sentence while still
-  preserving w...
 ---
 [](#题目及理解 "题目及理解")题目及理解
 =======================

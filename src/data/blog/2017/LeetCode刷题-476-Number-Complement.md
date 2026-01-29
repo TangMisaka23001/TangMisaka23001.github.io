@@ -5,10 +5,6 @@ tags:
   - LeetCode
   - 技术
 pubDatetime: 2017-07-30T16:19:19.000Z
-description: >-
-  $1题目及理解 =======================  题目链接:$1  Given a positive integer, output its
-  complement number. The complement strategy is to flip the bits of its binary
-  repr...
 ---
 [](#题目及理解 "题目及理解")题目及理解
 =======================

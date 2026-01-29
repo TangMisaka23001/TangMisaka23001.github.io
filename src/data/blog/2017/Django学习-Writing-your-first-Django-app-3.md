@@ -5,10 +5,6 @@ tags:
   - Django
   - 技术
 pubDatetime: 2017-07-31T11:09:13.000Z
-description: >-
-  接着上一部分,在这个部分主要是添加网页相关的一些内容.   对应的源码也放在了github仓库中$1  $1开始 ==============  $1概述
-  --------------  在我们的polls的应用中,我们需要以下的四个视图:  *   Question的index页面—显示最近的问题 *  
-  Quest...
 ---
 接着上一部分,在这个部分主要是添加网页相关的一些内容.  
 对应的源码也放在了github仓库中[mysite-part3](https://github.com/TangMisaka23001/mysite/tree/part3)

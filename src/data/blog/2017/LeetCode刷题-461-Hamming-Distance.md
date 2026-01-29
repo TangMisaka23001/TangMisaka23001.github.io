@@ -5,10 +5,6 @@ tags:
   - LeetCode
   - 技术
 pubDatetime: 2017-07-18T15:49:46.000Z
-description: >-
-  从这个博客开始打算坚持在LeetCode上刷一点算法题,之后可能也会有Python版本的现在还是用C++在写了,就先从简单题开始刷起了.  $1题目以及理解
-  ==========================  $1  The Hamming distance between two integers is
-  the ...
 ---
 从这个博客开始打算坚持在LeetCode上刷一点算法题,之后可能也会有Python版本的现在还是用C++在写了,就先从简单题开始刷起了.
 

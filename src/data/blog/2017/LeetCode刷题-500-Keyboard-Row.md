@@ -5,10 +5,6 @@ tags:
   - LeetCode
   - 技术
 pubDatetime: 2017-07-31T19:53:42.000Z
-description: >-
-  $1题目及理解 =======================  Given a List of words, return the words that
-  can be typed using letters of alphabet on only one row’s of American keyboard
-  like...
 ---
 [](#题目及理解 "题目及理解")题目及理解
 =======================

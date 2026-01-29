@@ -5,11 +5,6 @@ tags:
   - Django
   - 技术
 pubDatetime: 2017-08-01T09:18:04.000Z
-description: >-
-  接着第三部分的内容继续app的开发.   代码同步在github上$1  $1写一个简单的表单
-  ================================ 
-  在**template/polls/detail.html**来添加一个form表单:     $1解释 -------------- 
-  在form表单中,...
 ---
 接着第三部分的内容继续app的开发.  
 代码同步在github上[mysite-part4](https://github.com/TangMisaka23001/mysite/tree/part4)

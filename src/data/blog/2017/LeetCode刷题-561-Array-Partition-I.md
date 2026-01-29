@@ -5,10 +5,6 @@ tags:
   - LeetCode
   - 技术
 pubDatetime: 2017-07-20T16:15:33.000Z
-description: >-
-  $1题目及理解 =======================  $1   Given an array of 2n integers, your task
-  is to group these integers into n pairs of integer, say (a1, b1), (a2, b2), …,
-  (a...
 ---
 [](#题目及理解 "题目及理解")题目及理解
 =======================

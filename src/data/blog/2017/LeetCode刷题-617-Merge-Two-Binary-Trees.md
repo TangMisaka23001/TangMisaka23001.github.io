@@ -5,10 +5,6 @@ tags:
   - LeetCode
   - 技术
 pubDatetime: 2017-07-19T18:55:16.000Z
-description: >-
-  $1题目及理解 =======================  $1   Given two binary trees and imagine that
-  when you put one of them to cover the other, some nodes of the two trees are
-  overl...
 ---
 [](#题目及理解 "题目及理解")题目及理解
 =======================

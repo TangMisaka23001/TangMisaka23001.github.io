@@ -6,10 +6,6 @@ tags:
   - CS6.00
   - 技术
 pubDatetime: 2018-06-11T21:17:18.000Z
-description: >-
-  $1Lec4. ======================  *   Decomposition(分解) *   Abstraction(抽象) 
-  $1Function --------------------------------  *   block up into modules *  
-  suppress d...
 ---
 [](#Lec4 "Lec4.")Lec4.
 ======================
