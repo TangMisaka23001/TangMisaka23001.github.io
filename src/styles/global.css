@@ -22,7 +22,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/fonts/LXGWWenKai-Regular.ttf') format('truetype');
+  src: url('/fonts/LXGWWenKai-Regular.woff2') format('woff2');
 }
 
 @font-face {
@@ -30,7 +30,7 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url('/fonts/LXGWWenKai-Medium.ttf') format('truetype');
+  src: url('/fonts/LXGWWenKai-Medium.woff2') format('woff2');
 }
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
