@@ -3,6 +3,24 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+@font-face {
+  font-display: swap;
+  font-family: 'Noto Serif SC';
+  font-style: normal;
+  font-weight: 400;
+  src:
+    local('Noto Serif SC'),
+    url('../../public/fonts/noto-serif-sc-v35-chinese-simplified-regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-display: swap; 
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../../public/fonts/inter-v20-latin-regular.woff2') format('woff2'); 
+}
+
 :root,
 html[data-theme="light"] {
   --background: #fdfdfd;
@@ -10,7 +28,7 @@ html[data-theme="light"] {
   --accent: #006cac;
   --muted: #e6e6e6;
   --border: #ece9e9;
-  --font-sans: 'LXGW WenKai', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Inter', 'Noto Serif SC', system-ui, -apple-system, sans-serif;
 }
 
 html[data-theme="dark"] {
@@ -19,7 +37,7 @@ html[data-theme="dark"] {
   --accent: #ff6b01;
   --muted: #343f60;
   --border: #ab4b08;
-  --font-sans: 'LXGW WenKai', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Inter', 'Noto Serif SC', system-ui, -apple-system, sans-serif;
 }
 
 @theme inline {
@@ -37,17 +55,21 @@ html[data-theme="dark"] {
     scrollbar-width: auto;
     scrollbar-color: var(--color-muted) transparent;
   }
+
   html {
     @apply overflow-y-scroll scroll-smooth;
     font-size: 18px;
   }
+
   body {
     @apply flex min-h-svh flex-col bg-background font-sans text-foreground selection:bg-accent/75 selection:text-background;
   }
+
   a,
   button {
     @apply outline-offset-1 outline-accent focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;
   }
+
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
