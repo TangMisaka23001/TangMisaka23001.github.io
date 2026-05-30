@@ -4,8 +4,9 @@ pubDatetime: 2026-05-30T00:00:00.000Z
 tags:
   - AI
   - GPT
----
+  - write by ai
 
+---
 ## 一、概述（Overview）
 
 本视频是一节由人工智能专家 Andrej Karpathy 主讲的深度实战教学课程。视频的核心论题在于，当今以 ChatGPT 为代表的顶尖大语言模型，其底层架构在技术本质上是一个纯解码器（Decoder-only）的 Transformer 神经网络。视频的核心结论是，通过极其简洁的架构设计和大约几百行原生的 PyTorch 代码，就可以在本地从零开始完整构建、训练并运行一个具备生成莎士比亚风格文本能力的 GPT（Generative Pre-trained Transformer，生成式预训练 Transformer）模型。Andrej Karpathy 强调，虽然现代工业界的超级大模型（如 GPT-3 或 GPT-4）在参数量和数据规模上比视频中的教学模型大出数万到上百万倍，但在数学原理和代码架构上，它们与视频中写出的每一行代码是几乎完全一致的。

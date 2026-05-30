@@ -5,6 +5,7 @@ tags:
   - Docker
   - Self-hosted
   - Homelab
+  - write by ai
 ---
 
 ## 前言
