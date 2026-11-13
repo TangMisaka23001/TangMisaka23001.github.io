@@ -1,0 +1,32 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Main from "@/layouts/Main.astro";
+import { SITE } from "@/config";
+import { LINKS } from "@/data/links";
+---
+
+<Layout title={`Links | ${SITE.title}`}>
+  <Header />
+  <Main pageTitle="Links" pageDesc="Sites worth a visit">
+    <ul class="space-y-4">
+      {
+        LINKS.map(link => (
+          <li>
+            <a
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-block text-xl font-bold text-accent decoration-dashed underline-offset-4 hover:underline"
+            >
+              {link.title}
+            </a>
+            {link.desc && <p class="mt-1 italic opacity-80">{link.desc}</p>}
+          </li>
+        ))
+      }
+    </ul>
+  </Main>
+  <Footer />
+</Layout>

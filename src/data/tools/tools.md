@@ -50,8 +50,6 @@ title: 各种工具汇总
 - [CF免费搭建短链](https://github.com/ccbikai/Sink)
 - [开源的信号切换工具](https://github.com/hrvach/deskhop)
 - [多服务器监控面板](https://nezha.wiki/)
-- [个人账本 Bookkeeping](https://tangmisaka23001.github.io/book-keeping/)：复式记账 + 订阅台账 + 耗材摊销，账本源码在 [book-keeping](https://github.com/TangMisaka23001/book-keeping)
-- [且慢长赢知识库](https://tangmisaka23001.github.io/qieman-finance/)：E 大 645 篇图文帖炼化成的投资知识库
 
 ### Android / iOS
 - [Jetpack Compose 博物馆](https://jetpackcompose.cn/docs/)

@@ -9,6 +9,7 @@ import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import { SITE } from "@/config";
 import { slugifyStr } from "@/utils/slugify";
 import { getPath } from "@/utils/getPath";
+import { LINKS } from "@/data/links";
 
 const posts = await getCollection("blog");
 const tools = await getCollection("tools");
@@ -83,6 +84,31 @@ const recentPostsWithContent = await Promise.all(
     </section> -->
 
         {
+        LINKS.length > 0 && (
+          <section id="links" class="pt-12 pb-6">
+            <h2 class="text-2xl font-semibold tracking-wide">Links</h2>
+            <ul>
+              {LINKS.map(link => (
+                <li class="my-4">
+                  <a
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-block text-lg font-medium text-accent decoration-dashed underline-offset-4 hover:underline"
+                  >
+                    {link.title}
+                  </a>
+                  {link.desc && (
+                    <span class="ms-2 opacity-80">{link.desc}</span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
+
+      {
       tools.length > 0 && (
         <section id="tools" class="pt-12 pb-6">
           <h2 class="text-2xl font-semibold tracking-wide">Tools</h2>
