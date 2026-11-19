@@ -18,4 +18,9 @@ export const LINKS: FriendLink[] = [
     url: "https://tangmisaka23001.github.io/qieman-finance/",
     desc: "E 大 645 篇图文帖炼化成的投资知识库",
   },
+  {
+    title: "B 站播客订阅",
+    url: "https://podcast.0xcafebabe.dpdns.org/index.html",
+    desc: "把 B 站视频合集转成播客 RSS，推理、读书、经济分析",
+  },
 ];
